@@ -110,15 +110,24 @@ const WORK_DIRECTIONS = [
 ];
 
 const DESC =
-  "KSE 運動合作專區：球隊、學校與運動員的合作媒體版位與洽談窗口。合作素材與 Logo 為預留版位，後續替換。";
+  "KSE 運動合作專區：提供專業球隊隨隊恢復支援、校隊運動傷害防護講座、台中運動按摩與肌筋膜放鬆防護計畫。歡迎運動團體與選手洽談合作。";
 
 useHead({
-  title: "運動合作｜球隊・學校・運動員合作｜KSE 美式筋膜放鬆教室",
+  title: "運動合作｜台中運動按摩與團隊傷害防護合作｜KSE 美式筋膜放鬆教室",
   meta: [
     { name: "description", content: DESC },
-    { property: "og:title", content: "運動合作｜KSE 美式筋膜放鬆教室" },
+    {
+      name: "keywords",
+      content:
+        "台中運動按摩合作,球隊運動恢復,運動傷害防護,校隊筋膜放鬆,棒球運動恢復,賽後放鬆支援",
+    },
+    { property: "og:title", content: "運動合作｜台中運動按摩與團隊傷害防護｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://kse-release.com/partners" },
+  ],
+  link: [
+    { rel: "canonical", href: "https://kse-release.com/partners" },
   ],
 });
 </script>

@@ -97,15 +97,24 @@ const ALTS: Record<string, string> = {
 };
 
 const DESC =
-  "KSE 台中南屯提供美式筋膜放鬆、運動按摩、核心穩定修復與肌力體能訓練，依評估結果為運動員與一般訓練者設計完整恢復與表現提升方案。";
+  "KSE 台中南屯提供美式筋膜放鬆、台中運動按摩、核心穩定修復與肌力體能訓練，專處理肌肉緊繃、受傷後身體舒緩與動作功能恢復保養，客製化個人極致恢復方案。";
 
 useHead({
-  title: "服務項目｜台中筋膜放鬆・運動按摩・核心穩定・肌力訓練",
+  title: "專業服務項目｜台中美式筋膜放鬆・運動按摩・受傷後動作恢復｜KSE",
   meta: [
     { name: "description", content: DESC },
-    { property: "og:title", content: "服務項目｜KSE 美式筋膜放鬆教室" },
+    {
+      name: "keywords",
+      content:
+        "台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,受傷放鬆保養,肌肉緊繃舒緩,南屯運動按摩,核心穩定修復,肌力體能訓練",
+    },
+    { property: "og:title", content: "專業服務項目｜台中美式筋膜放鬆・運動按摩｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://kse-release.com/services" },
+  ],
+  link: [
+    { rel: "canonical", href: "https://kse-release.com/services" },
   ],
 });
 </script>

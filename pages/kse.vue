@@ -134,15 +134,24 @@ const FASCIA_ITEMS = [
 ];
 
 const DESC =
-  "KSE 的品牌理念、評估流程、筋膜放鬆技術與動作重建、肌力訓練方法。台中南屯運動恢復與身體功能工作室。";
+  "KSE 品牌理念與核心技術：結合靜態與動態姿勢檢測評估、美式肌筋膜放鬆、動作重建與肌力體能訓練。針對台中運動按摩需求與受傷後不適防護，打造極致恢復品質。";
 
 useHead({
-  title: "KSE專業｜評估、筋膜放鬆與動作重建｜KSE 美式筋膜放鬆教室",
+  title: "KSE 專業技術｜台中美式筋膜放鬆・運動傷害防護與動作重建",
   meta: [
     { name: "description", content: DESC },
-    { property: "og:title", content: "KSE專業｜評估、筋膜放鬆與動作重建" },
+    {
+      name: "keywords",
+      content:
+        "美式筋膜放鬆,台中筋膜放鬆,台中運動按摩,運動傷害防護,受傷後動作重建,肌肉張力鏈,關節活動度",
+    },
+    { property: "og:title", content: "KSE 專業技術｜台中美式筋膜放鬆・動作重建" },
     { property: "og:description", content: DESC },
-    { property: "og:type", content: "article" },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://kse-release.com/kse" },
+  ],
+  link: [
+    { rel: "canonical", href: "https://kse-release.com/kse" },
   ],
 });
 </script>

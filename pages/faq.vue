@@ -88,15 +88,24 @@ const CHANNELS = computed(() => [
 ]);
 
 const DESC =
-  "KSE 常見問題與預約資訊：第一次來訪流程、與一般按摩的差異、運動前後安排、久坐族方案與預約方式。台中南屯運動恢復。";
+  "KSE 常見問題與預約資訊：解答台中運動按摩、美式筋膜放鬆、受傷或肌肉拉傷後處置放鬆建議、與傳統推拿SPA差異及預約方式。";
 
 useHead({
-  title: "FAQ 與預約｜台中南屯筋膜放鬆預約｜KSE 美式筋膜放鬆教室",
+  title: "台中運動按摩與受傷舒緩常見問題｜FAQ與預約｜KSE 美式筋膜放鬆教室",
   meta: [
     { name: "description", content: DESC },
-    { property: "og:title", content: "FAQ 與預約｜KSE 美式筋膜放鬆教室" },
+    {
+      name: "keywords",
+      content:
+        "台中運動按摩,受傷放鬆,台中筋膜放鬆,美式筋膜放鬆問答,拉傷按摩注意事項,肌肉緊繃保養,台中南屯按摩預約",
+    },
+    { property: "og:title", content: "台中運動按摩與受傷舒緩常見問題｜FAQ與預約｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://kse-release.com/faq" },
+  ],
+  link: [
+    { rel: "canonical", href: "https://kse-release.com/faq" },
   ],
   script: [
     {

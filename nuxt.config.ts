@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         { property: "og:site_name", content: "KSE 美式筋膜放鬆教室" },
         { property: "og:locale", content: "zh_TW" },
         { property: "og:type", content: "website" },
+        { name: "keywords", content: "台中運動按摩, 台中筋膜放鬆, 美式筋膜放鬆, 肌肉緊繃放鬆, 受傷後恢復, 運動傷害防護, 台中南屯按摩, 動作訓練" },
         { name: "twitter:card", content: "summary_large_image" },
       ],
       link: [
