@@ -362,14 +362,27 @@
           </div>
         </div>
         <div>
-          <div
-            class="flex aspect-video flex-col items-center justify-center rounded-sm border border-dashed border-border bg-secondary/40 text-center"
-          >
-            <MapPin class="h-6 w-6 text-primary" aria-hidden="true" />
-            <p class="mt-3 text-base font-bold">台中市南屯區</p>
-            <p class="mt-1 text-xs text-muted-foreground">
-              Google Map 版位預留・地址待提供
-            </p>
+          <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
+            <iframe
+              title="KSE 美式筋膜放鬆教室 地圖"
+              src="https://maps.google.com/maps?q=台中市南屯區大墩七街202號&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              class="aspect-video w-full border-0"
+              loading="lazy"
+              allowfullscreen
+            ></iframe>
+            <div class="p-3 bg-card border-t border-border flex items-center justify-between text-xs">
+              <span class="font-medium text-foreground flex items-center gap-1">
+                <MapPin class="h-4 w-4 text-primary shrink-0" /> {{ BRAND.address }}
+              </span>
+              <a
+                :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BRAND.address)}`"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary font-bold hover:underline"
+              >
+                開啟 Google 地圖
+              </a>
+            </div>
           </div>
           <PlaceholderMedia
             label="第三方線上預約系統"

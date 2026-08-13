@@ -19,14 +19,22 @@
       <SectionHeading
         eyebrow="Booking"
         title="立即預約"
-        desc="聯絡方式與線上預約系統版位已預留，實際資訊由品牌方提供後更新，我們不會提供未經確認的聯絡方式。"
+        desc="歡迎透過電話、Instagram、Facebook 與我們聯繫預約，或造訪我們位於台中南屯的教室。"
       />
       <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <div v-for="c in CHANNELS" :key="c.label" class="surface-card rounded-sm p-6">
+        <component
+          :is="c.href ? 'a' : 'div'"
+          v-for="c in CHANNELS"
+          :key="c.label"
+          :href="c.href"
+          :target="c.href && !c.href.startsWith('tel:') ? '_blank' : undefined"
+          :rel="c.href && !c.href.startsWith('tel:') ? 'noopener noreferrer' : undefined"
+          class="surface-card rounded-sm p-6 transition-all hover:border-primary/60 block"
+        >
           <component :is="c.icon" class="h-6 w-6 text-primary" aria-hidden="true" />
           <h3 class="mt-4 text-base font-bold">{{ c.label }}</h3>
-          <p class="mt-1 text-sm text-muted-foreground">{{ c.value }}</p>
-        </div>
+          <p class="mt-1 text-sm text-muted-foreground break-all">{{ c.value }}</p>
+        </component>
       </div>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
@@ -34,14 +42,27 @@
           label="第三方線上預約系統"
           note="系統串接版位預留，開通後可於此直接選擇服務與時段"
         />
-        <div
-          class="flex aspect-video flex-col items-center justify-center rounded-sm border border-dashed border-border bg-secondary/40 p-6 text-center"
-        >
-          <MapPin class="h-6 w-6 text-primary" aria-hidden="true" />
-          <p class="mt-3 text-base font-bold">{{ BRAND.area }}</p>
-          <p class="mt-2 text-xs text-muted-foreground">
-            Google Map 版位預留・地址待提供
-          </p>
+        <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
+          <iframe
+            title="KSE 美式筋膜放鬆教室 地圖"
+            src="https://maps.google.com/maps?q=台中市南屯區大墩七街202號&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            class="aspect-video w-full border-0"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+          <div class="p-3 bg-card border-t border-border flex items-center justify-between text-xs">
+            <span class="font-medium text-foreground flex items-center gap-1">
+              <MapPin class="h-4 w-4 text-primary shrink-0" /> {{ BRAND.address }}
+            </span>
+            <a
+              :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BRAND.address)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary font-bold hover:underline"
+            >
+              開啟 Google 地圖
+            </a>
+          </div>
         </div>
       </div>
     </Section>
@@ -49,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { Phone, MessageCircle, Instagram, Facebook, MapPin } from "lucide-vue-next";
 import PageHero from "~/components/ui/PageHero.vue";
 import Section from "~/components/ui/Section.vue";
@@ -58,12 +80,12 @@ import Accordion from "~/components/ui/Accordion.vue";
 import AccordionItem from "~/components/ui/AccordionItem.vue";
 import { BRAND, FAQS } from "~/utils/site-data";
 
-const CHANNELS = [
-  { icon: Phone, label: "電話", value: "號碼待提供" },
-  { icon: MessageCircle, label: "LINE", value: "官方帳號待提供" },
-  { icon: Instagram, label: "Instagram", value: "帳號待提供" },
-  { icon: Facebook, label: "Facebook", value: "粉絲專頁待提供" },
-];
+const CHANNELS = computed(() => [
+  { icon: Phone, label: "電話", value: BRAND.phone, href: `tel:${BRAND.phone.replace(/-/g, "")}` },
+  { icon: MessageCircle, label: "LINE", value: "官方帳號待提供", href: undefined },
+  { icon: Instagram, label: "Instagram", value: "@kse_release_studio", href: BRAND.ig },
+  { icon: Facebook, label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: BRAND.fb },
+]);
 
 const DESC =
   "KSE 常見問題與預約資訊：第一次來訪流程、與一般按摩的差異、運動前後安排、久坐族方案與預約方式。台中南屯運動恢復。";

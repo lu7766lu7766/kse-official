@@ -2,7 +2,11 @@ export const BRAND = {
   name: "KSE 美式筋膜放鬆教室",
   full: "KSE 美式筋膜放鬆教室｜Kinetic Sports Enhancement",
   slogan: "MOVE BETTER. FEEL BETTER. PERFORM BETTER.",
-  area: "台中市南屯區（完整地址待提供）",
+  address: "台中市南屯區大墩七街202號",
+  phone: "0901-403990",
+  fb: "https://www.facebook.com/profile.php?id=61562337030014",
+  ig: "https://www.instagram.com/kse_release_studio",
+  area: "台中市南屯區大墩七街202號",
 };
 
 export const NAV = [
@@ -295,13 +299,14 @@ export const FAQS = [
   },
   {
     q: "如何預約？",
-    a: "可透過電話、LINE、Instagram 或 Facebook 與我們聯繫，第三方線上預約系統版位已預留，開通後即可直接線上選擇時段。相關聯絡資訊將於品牌方提供後更新。",
+    a: "可透過電話（0901-403990）、Instagram 或 Facebook 粉絲專頁與我們聯繫，第三方線上預約系統開通後亦可直接線上選擇時段。",
   },
 ];
 
 export const CONTACT_CHANNELS = [
-  { label: "電話", value: "號碼待提供" },
-  { label: "LINE", value: "官方帳號待提供" },
-  { label: "Instagram", value: "帳號待提供" },
-  { label: "Facebook", value: "粉絲專頁待提供" },
+  { label: "電話", value: "0901-403990", href: "tel:0901403990" },
+  { label: "地址", value: "台中市南屯區大墩七街202號", href: "https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8D%97%E5%B7%9E%E5%8D%80%E5%A4%A7%E5%A6%A9%E4%B8%83%E8%A1%97202%E8%99%9F" },
+  { label: "LINE", value: "官方帳號待提供", href: undefined },
+  { label: "Instagram", value: "@kse_release_studio", href: "https://www.instagram.com/kse_release_studio" },
+  { label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: "https://www.facebook.com/profile.php?id=61562337030014" },
 ];

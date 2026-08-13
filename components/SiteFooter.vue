@@ -39,9 +39,21 @@
         </h2>
         <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
           <li v-for="c in CONTACT_CHANNELS" :key="c.label">
-            {{ c.label }}：{{ c.value }}
+            <template v-if="c.href">
+              {{ c.label }}：
+              <a
+                :href="c.href"
+                :target="c.href.startsWith('tel:') ? undefined : '_blank'"
+                rel="noopener noreferrer"
+                class="transition-colors hover:text-foreground underline underline-offset-4"
+              >
+                {{ c.value }}
+              </a>
+            </template>
+            <template v-else>
+              {{ c.label }}：{{ c.value }}
+            </template>
           </li>
-          <li>服務區域：{{ BRAND.area }}</li>
         </ul>
       </div>
     </div>
