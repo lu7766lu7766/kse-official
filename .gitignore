@@ -1,0 +1,55 @@
+# Nuxt 3 & Nitro Build Outputs
+.nuxt
+.output
+.nitro
+dist
+dist-ssr
+.cache
+
+# Dependencies
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# IDE & Editor Files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS & System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing & Coverage
+coverage
+.nyc_output
+
+# Temporary Files & Cache
+.cache
+.eslintcache
+.stylelintcache
+*.local
+.temp
+.tmp
