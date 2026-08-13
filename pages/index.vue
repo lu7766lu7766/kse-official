@@ -486,7 +486,7 @@ useHead({
         priceRange: "$$",
         description: DESC,
         slogan: BRAND.slogan,
-        sameAs: [BRAND.fb, BRAND.ig],
+        sameAs: [BRAND.fb, BRAND.ig, BRAND.line],
       }),
     },
   ],

@@ -76,7 +76,7 @@
       >
         <h3 class="text-2xl">洽談合作</h3>
         <p class="mt-3 text-sm text-muted-foreground">
-          聯絡方式（電話／LINE／Instagram／Facebook）版位已預留，資訊提供後即會更新。
+          歡迎透過電話、LINE 官方帳號、Instagram 或 Facebook 粉絲專頁與我們聯繫洽談。
         </p>
         <div class="mt-6 flex justify-center">
           <BookingButton>聯絡我們</BookingButton>

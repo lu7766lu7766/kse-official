@@ -82,7 +82,7 @@ import { BRAND, FAQS } from "~/utils/site-data";
 
 const CHANNELS = computed(() => [
   { icon: Phone, label: "電話", value: BRAND.phone, href: `tel:${BRAND.phone.replace(/-/g, "")}` },
-  { icon: MessageCircle, label: "LINE", value: "官方帳號待提供", href: undefined },
+  { icon: MessageCircle, label: "LINE", value: "LINE 官方帳號", href: BRAND.line },
   { icon: Instagram, label: "Instagram", value: "@kse_release_studio", href: BRAND.ig },
   { icon: Facebook, label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: BRAND.fb },
 ]);

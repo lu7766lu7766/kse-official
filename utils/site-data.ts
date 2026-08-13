@@ -4,6 +4,7 @@ export const BRAND = {
   slogan: "MOVE BETTER. FEEL BETTER. PERFORM BETTER.",
   address: "台中市南屯區大墩七街202號",
   phone: "0901-403990",
+  line: "https://lin.ee/z9MrmKK",
   fb: "https://www.facebook.com/profile.php?id=61562337030014",
   ig: "https://www.instagram.com/kse_release_studio",
   area: "台中市南屯區大墩七街202號",
@@ -314,7 +315,7 @@ export const FAQS = [
 export const CONTACT_CHANNELS = [
   { label: "電話", value: "0901-403990", href: "tel:0901403990" },
   { label: "地址", value: "台中市南屯區大墩七街202號", href: "https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E4%B8%AD%E5%B8%82%E5%8D%97%E5%B7%9E%E5%8D%80%E5%A4%A7%E5%A6%A9%E4%B8%83%E8%A1%97202%E8%99%9F" },
-  { label: "LINE", value: "官方帳號待提供", href: undefined },
+  { label: "LINE", value: "LINE 官方帳號", href: "https://lin.ee/z9MrmKK" },
   { label: "Instagram", value: "@kse_release_studio", href: "https://www.instagram.com/kse_release_studio" },
   { label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: "https://www.facebook.com/profile.php?id=61562337030014" },
 ];
