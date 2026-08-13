@@ -4,7 +4,7 @@
     <section class="relative isolate overflow-hidden border-b border-border">
       <img
         src="~/assets/images/hero.jpg"
-        alt="治療師在深色運動恢復空間中為運動員進行大腿後側筋膜放鬆"
+        alt="放鬆師在深色運動恢復空間中為運動員進行大腿後側筋膜放鬆"
         width="1600"
         height="1008"
         class="absolute inset-0 h-full w-full object-cover opacity-45"

@@ -90,8 +90,8 @@ const IMAGES: Record<string, string> = {
 };
 
 const ALTS: Record<string, string> = {
-  fascia: "治療師為運動員進行深層筋膜放鬆",
-  "sports-massage": "治療師以雙手為跑者進行小腿運動按摩",
+  fascia: "放鬆師為運動員進行深層筋膜放鬆",
+  "sports-massage": "放鬆師以雙手為跑者進行小腿運動按摩",
   core: "訓練者在深色空間進行核心穩定地板動作",
   strength: "運動員在深色健身房進行槓鈴肌力訓練",
 };
