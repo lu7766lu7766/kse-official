@@ -53,3 +53,5 @@ coverage
 *.local
 .temp
 .tmp
+
+.openpost
