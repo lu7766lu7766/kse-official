@@ -1,4 +1,47 @@
+# Default: disallow all crawlers
 User-agent: *
+Disallow: /
+
+# Allow Google to index the public site
+User-agent: Googlebot
 Allow: /
+
+# Allow Bing to index the public site
+User-agent: Bingbot
+Allow: /
+
+# Block common scraping / AI training bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
 
 Sitemap: https://kse-release.com/sitemap.xml
