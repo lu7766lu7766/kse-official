@@ -1,11 +1,25 @@
 import tailwindcss from "@tailwindcss/vite"
 
+const isDev = process.env.NUXT_ENV === "dev"
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2026-08-13",
   devtools: { enabled: false },
   ssr: true,
   css: ["~/assets/css/styles.css"],
+  routeRules: {
+    ...(isDev
+      ? {
+          "/**": {
+            headers: {
+              "X-Robots-Tag": "noindex, nofollow",
+              "X-UA-Compatible": "IE=edge",
+            },
+          },
+        }
+      : {}),
+  },
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3333",
@@ -28,6 +42,7 @@ export default defineNuxtConfig({
         { property: "og:type", content: "website" },
         { name: "keywords", content: "台中運動按摩, 台中筋膜放鬆, 美式筋膜放鬆, 肌肉緊繃放鬆, 受傷後恢復, 運動傷害防護, 台中南屯按摩, 動作訓練" },
         { name: "twitter:card", content: "summary_large_image" },
+        ...(isDev ? [{ name: "robots", content: "noindex, nofollow" }] : []),
       ],
       link: [
         { rel: "icon", type: "image/png", href: "/favicon.png" },
