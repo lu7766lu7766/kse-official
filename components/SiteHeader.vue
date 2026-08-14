@@ -30,7 +30,7 @@
           {{ item.label }}
         </NuxtLink>
         <NuxtLink
-          to="/faq#booking"
+          to="/booking"
           class="ml-3 inline-flex items-center rounded-sm bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform hover:scale-[1.03]"
         >
           立即預約

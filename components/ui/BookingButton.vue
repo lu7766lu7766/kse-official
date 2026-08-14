@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    to="/faq#booking"
+    to="/booking"
     :class="
       cn(
         'inline-flex items-center justify-center rounded-sm px-7 py-3.5 text-sm font-bold tracking-wide transition-all duration-300',

@@ -38,10 +38,24 @@
       </div>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
-        <PlaceholderMedia
-          label="第三方線上預約系統"
-          note="系統串接版位預留，開通後可於此直接選擇服務與時段"
-        />
+        <div class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card">
+          <div>
+            <span class="eyebrow mb-2">Online Reservation</span>
+            <h3 class="text-xl font-extrabold text-foreground">線上預約系統已正式開通</h3>
+            <p class="mt-2 text-xs text-muted-foreground leading-relaxed">
+              即刻前往專屬預約頁面，查看師傅週排班與可用時段，支援即時時段預約與查詢功能。
+            </p>
+          </div>
+          <div class="mt-6">
+            <NuxtLink
+              to="/booking"
+              class="inline-flex items-center justify-center gap-2 rounded-sm bg-primary px-6 py-3 text-xs font-bold text-primary-foreground transition-all hover:scale-[1.03] shadow-lg shadow-primary/20"
+            >
+              <CalendarCheck class="h-4 w-4" />
+              前往線上預約
+            </NuxtLink>
+          </div>
+        </div>
         <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
           <iframe
             title="KSE 美式筋膜放鬆教室 地圖"
@@ -71,7 +85,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Phone, MessageCircle, Instagram, Facebook, MapPin } from "lucide-vue-next";
+import { Phone, MessageCircle, Instagram, Facebook, MapPin, CalendarCheck } from "lucide-vue-next";
 import PageHero from "~/components/ui/PageHero.vue";
 import Section from "~/components/ui/Section.vue";
 import SectionHeading from "~/components/ui/SectionHeading.vue";

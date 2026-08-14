@@ -18,6 +18,7 @@ export const NAV = [
   { to: "/cases", label: "案例分享" },
   { to: "/news", label: "最新消息" },
   { to: "/faq", label: "FAQ" },
+  { to: "/booking", label: "線上預約" },
 ] as const;
 
 export const PROCESS = [
