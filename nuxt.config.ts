@@ -14,6 +14,14 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  routeRules: {
+    "/**": {
+      headers: {
+        "X-Robots-Tag": "noindex, nofollow",
+        "X-UA-Compatible": "IE=edge",
+      },
+    },
+  },
   app: {
     head: {
       htmlAttrs: {
