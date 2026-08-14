@@ -3,6 +3,13 @@ FROM node:24-alpine AS builder
 
 WORKDIR /app
 
+# 宣告 Build 階段環境變數
+ARG NUXT_ENV
+ENV NUXT_ENV=$NUXT_ENV
+
+ARG NUXT_PUBLIC_API_BASE
+ENV NUXT_PUBLIC_API_BASE=$NUXT_PUBLIC_API_BASE
+
 # 安裝套件依賴
 COPY package*.json ./
 RUN npm ci
@@ -14,8 +21,9 @@ RUN npx nuxt generate
 # --- 第二階段：Nginx 靜態伺服器 ---
 FROM nginx:alpine AS runner
 
-ARG APP_ENV=production
-ENV APP_ENV=$APP_ENV
+# 宣告 Runner 階段環境變數（支援 Build-time 與 Runtime 注入）
+ARG NUXT_ENV
+ENV NUXT_ENV=$NUXT_ENV
 
 # 複製 SSG 產出的靜態檔案
 COPY --from=builder /app/.output/public /usr/share/nginx/html
