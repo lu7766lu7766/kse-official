@@ -14,18 +14,31 @@ RUN npx nuxt generate
 # --- 第二階段：Nginx 靜態伺服器 ---
 FROM nginx:alpine AS runner
 
-# 複製自訂的 Nginx 設定（解決 SPA/SSG 路由問題）
+ARG APP_ENV=production
+ENV APP_ENV=$APP_ENV
+
+# 複製 SSG 產出的靜態檔案
 COPY --from=builder /app/.output/public /usr/share/nginx/html
 
-# 調整 Nginx 支援前端路由與港口設定
-RUN echo $'server {\n\
+# 透過 entrypoint 腳本依據環境變數動態生成 Nginx 設定（測試機環境加入防爬蟲 Headers）
+RUN echo $'#!/bin/sh\n\
+ROBOTS_HEADER=""\n\
+if [ "$APP_ENV" = "staging" ] || [ "$APP_ENV" = "dev" ] || [ "$APP_ENV" = "test" ] || [ "$APP_ENV" = "development" ]; then\n\
+  ROBOTS_HEADER="    add_header X-Robots-Tag \\"noindex, nofollow\\" always;\\n    add_header X-UA-Compatible \\"IE=edge\\" always;"\n\
+fi\n\
+\n\
+cat <<EOF > /etc/nginx/conf.d/default.conf\n\
+server {\n\
   listen 80;\n\
   location / {\n\
-  root /usr/share/nginx/html;\n\
-  index index.html index.htm;\n\
-  try_files $uri $uri/ /index.html;\n\
+    root /usr/share/nginx/html;\n\
+    index index.html index.htm;\n\
+    try_files \$uri \$uri/ /index.html;\n\
+$(echo -e "$ROBOTS_HEADER")\n\
   }\n\
-  }' > /etc/nginx/conf.d/default.conf
+}\n\
+EOF\n\
+' > /docker-entrypoint.d/40-configure-nginx.sh && chmod +x /docker-entrypoint.d/40-configure-nginx.sh
 
 EXPOSE 80
 
