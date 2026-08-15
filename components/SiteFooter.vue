@@ -1,5 +1,5 @@
 <template>
-  <footer class="border-t border-border bg-ink pb-28 pt-16 lg:pb-16">
+  <footer class="border-t border-border bg-ink py-16">
     <div class="container-kse grid gap-12 lg:grid-cols-3">
       <div>
         <div class="inline-flex items-center rounded-md bg-white px-5 py-3">

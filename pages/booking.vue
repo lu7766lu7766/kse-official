@@ -107,7 +107,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted, nextTick } from "vue"
+import { useRoute } from "vue-router"
 import { CalendarCheck, Search, Clock, MapPin } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
@@ -119,6 +120,7 @@ import type { HourlySlot } from "~/utils/timeSlotHelper"
 import type { AppointmentRecord } from "~/composables/useBookingApi"
 import { BRAND } from "~/utils/site-data"
 
+const route = useRoute()
 const activeTab = ref<"calendar" | "search">("calendar")
 
 // 選擇時段與預約表單狀態
@@ -161,6 +163,20 @@ function handleGoToSearch(phone: string) {
     searchRef.value.setPhoneAndSearch(phone)
   }
 }
+
+onMounted(() => {
+  if (route.query.tab === "search" || route.query.phone) {
+    activeTab.value = "search"
+    if (route.query.phone) {
+      searchInitialPhone.value = String(route.query.phone)
+      nextTick(() => {
+        if (searchRef.value) {
+          searchRef.value.setPhoneAndSearch(String(route.query.phone))
+        }
+      })
+    }
+  }
+})
 
 const SEO_TITLE = "線上預約｜KSE 美式筋膜放鬆教室｜台中運動按摩與動作評估"
 const SEO_DESC = "KSE 官方線上預約系統：提供專業運動按摩、美式徒手筋膜放鬆、動作評估預約。支援週曆時段點選、線上預約查詢與取消。"

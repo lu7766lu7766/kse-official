@@ -11,14 +11,12 @@
       <slot />
     </main>
     <SiteFooter />
-    <MobileBookingBar />
   </div>
 </template>
 
 <script setup lang="ts">
 import SiteHeader from "~/components/SiteHeader.vue"
 import SiteFooter from "~/components/SiteFooter.vue"
-import MobileBookingBar from "~/components/MobileBookingBar.vue"
 import { BRAND } from "~/utils/site-data"
 
 const siteUrl = "https://www.kse-release.com.tw"

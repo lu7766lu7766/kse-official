@@ -242,38 +242,57 @@
     </Section>
 
     <!-- CTA + Map -->
-    <Section>
+    <Section id="booking">
       <div class="grid gap-10 lg:grid-cols-2">
-        <div>
-          <SectionHeading eyebrow="Booking" title="準備好重新找回活動能力了嗎？" desc="採預約制，第一次來訪將從完整的身體評估開始。" />
-          <div class="mt-8">
-            <BookingButton />
+        <div
+          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card"
+        >
+          <div>
+            <span class="eyebrow mb-2">Online Reservation</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-foreground">線上預約系統已正式開通</h2>
+            <p class="mt-3 text-sm text-muted-foreground leading-relaxed">
+              採預約制。歡迎前往專屬預約頁面，查看師傅週排班與可用時段，支援即時線上預約與查詢取消功能。
+            </p>
+          </div>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <NuxtLink
+              to="/booking"
+              class="inline-flex items-center justify-center gap-2 rounded-sm bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:scale-[1.03] shadow-lg shadow-primary/20"
+            >
+              <CalendarCheck class="h-4 w-4" />
+              前往線上預約
+            </NuxtLink>
+            <NuxtLink
+              to="/booking?tab=search"
+              class="inline-flex items-center justify-center gap-2 rounded-sm border border-border bg-card px-5 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <Search class="h-4 w-4" />
+              查詢 / 取消預約
+            </NuxtLink>
           </div>
         </div>
-        <div>
-          <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
-            <iframe
-              title="KSE 美式筋膜放鬆教室 地圖"
-              src="https://maps.google.com/maps?q=KSE美式筋膜放鬆教室&t=&z=16&ie=UTF8&iwloc=&output=embed"
-              class="aspect-video w-full border-0"
-              loading="lazy"
-              allowfullscreen
-            ></iframe>
-            <div class="p-3 bg-card border-t border-border flex items-center justify-between text-xs">
-              <span class="font-medium text-foreground flex items-center gap-1">
-                <MapPin class="h-4 w-4 text-primary shrink-0" /> {{ BRAND.address }}
-              </span>
-              <a
-                :href="BRAND.mapUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-primary font-bold hover:underline"
-              >
-                開啟 Google 地圖
-              </a>
-            </div>
+
+        <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
+          <iframe
+            title="KSE 美式筋膜放鬆教室 地圖"
+            src="https://maps.google.com/maps?q=KSE美式筋膜放鬆教室&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            class="aspect-video w-full border-0"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+          <div class="p-3 bg-card border-t border-border flex items-center justify-between text-xs">
+            <span class="font-medium text-foreground flex items-center gap-1">
+              <MapPin class="h-4 w-4 text-primary shrink-0" /> {{ BRAND.address }}
+            </span>
+            <a
+              :href="BRAND.mapUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary font-bold hover:underline"
+            >
+              開啟 Google 地圖
+            </a>
           </div>
-          <PlaceholderMedia label="第三方線上預約系統" note="系統串接版位預留，開通後可直接於此選擇時段" />
         </div>
       </div>
     </Section>
@@ -281,11 +300,10 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, Check, X, Waves, HeartPulse, Activity, Dumbbell, MapPin } from "lucide-vue-next"
+import { ArrowRight, Check, X, Waves, HeartPulse, Activity, Dumbbell, MapPin, CalendarCheck, Search } from "lucide-vue-next"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import BookingButton from "~/components/ui/BookingButton.vue"
-import PlaceholderMedia from "~/components/ui/PlaceholderMedia.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
 

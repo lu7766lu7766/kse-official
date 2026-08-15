@@ -83,7 +83,6 @@ import { Phone, MessageCircle, Instagram, Facebook, MapPin, CalendarCheck } from
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import PlaceholderMedia from "~/components/ui/PlaceholderMedia.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
 import { BRAND, FAQS } from "~/utils/site-data"
