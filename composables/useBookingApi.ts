@@ -41,6 +41,9 @@ const ERROR_MESSAGES: Record<number, string> = {
   8004: "顧客姓名格式錯誤或未填",
   8005: "預約起始時間格式錯誤或未填",
   8006: "按摩師編號格式錯誤或未填",
+  8007: "無法取消過去或已開始的預約",
+  8008: "權限不足",
+  8009: "預約時間需至少提前半小時以上（30 分鐘）",
 }
 
 function normalizeCode(code: any): number {

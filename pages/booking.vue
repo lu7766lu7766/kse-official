@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 頂部 Hero 區塊 -->
-    <PageHero eyebrow="Online Booking" title="線上預約放鬆" desc="採預約制。歡迎點選合適的師傅與時段，體驗美式筋膜放鬆、運動按摩與動作評估服務。" />
+    <PageHero eyebrow="Online Booking" title="線上預約放鬆" desc="採預約制（請至少提前半小時以上預約）。歡迎點選合適的師傅與時段，體驗美式筋膜放鬆、運動按摩與動作評估服務。" />
 
     <Section tone="ink">
       <!-- 雙分頁切換 Tabs -->
@@ -44,7 +44,7 @@
           <div class="surface-card rounded-sm p-4 text-xs border border-border/70">
             <span class="eyebrow text-[10px] mb-1">Step 01</span>
             <h4 class="text-sm font-bold text-foreground">選擇師傅與時段</h4>
-            <p class="mt-1 text-muted-foreground">瀏覽週曆各整點時段，點選符合您行程的 1 小時服務區間。</p>
+            <p class="mt-1 text-muted-foreground">瀏覽週曆各整點時段，點選合適的 1 小時服務區間（請至少提前半小時以上預約）。</p>
           </div>
           <div class="surface-card rounded-sm p-4 text-xs border border-border/70">
             <span class="eyebrow text-[10px] mb-1">Step 02</span>
@@ -77,7 +77,7 @@
               <Clock class="h-4 w-4 text-primary" />
               服務須知與收費
             </h3>
-            <p class="text-xs text-muted-foreground leading-relaxed">每次預約服務時間為 1 小時（含身體動作評估、徒手放鬆與動作優化建議）。</p>
+            <p class="text-xs text-muted-foreground leading-relaxed">採預約制，請至少提前半小時以上預約。每次預約服務時間為 1 小時（含身體動作評估、徒手放鬆與動作優化建議）。</p>
           </div>
 
           <div class="surface-card rounded-sm p-6 border border-border/70">

@@ -37,11 +37,12 @@
             <Calendar class="h-4 w-4 shrink-0" />
             <span>{{ slot.date }} ({{ slot.label }})</span>
           </div>
-          <div class="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-            <UserCheck class="h-4 w-4 shrink-0 text-primary" />
+          <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             <span>服務按摩師：<strong class="text-foreground">{{ slot.masseur_name }}</strong></span>
             <span class="mx-1">•</span>
             <span>服務時間：1 小時</span>
+            <span class="mx-1">•</span>
+            <span class="text-primary font-medium">需至少提前半小時以上</span>
           </div>
         </div>
       </div>

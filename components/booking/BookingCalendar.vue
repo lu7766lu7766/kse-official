@@ -86,7 +86,7 @@
           <span class="h-2.5 w-2.5 rounded-full bg-primary"></span> 可預約時段 (1小時)
         </span>
         <span class="flex items-center gap-1">
-          <span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span> 已過期/無法預約
+          <span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span> 已過期/需提前半小時以上
         </span>
       </div>
     </div>

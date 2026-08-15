@@ -164,7 +164,9 @@ export function sliceToHourlySlots(
         const endHour = padZero(nextHour.getHours())
         const endMin = padZero(nextHour.getMinutes())
 
-        const isPast = current.getTime() <= nowTime
+        // 至少需提前 30 分鐘預約，小於 30 分鐘或過去時段視為無法預約
+        const minAdvanceMs = 30 * 60 * 1000
+        const isPast = current.getTime() < nowTime + minAdvanceMs
 
         if (!slotsByDate[dateStr]) {
           slotsByDate[dateStr] = []
