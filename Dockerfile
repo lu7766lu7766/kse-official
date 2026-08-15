@@ -28,25 +28,9 @@ ENV NUXT_ENV=$NUXT_ENV
 # 複製 SSG 產出的靜態檔案
 COPY --from=builder /app/.output/public /usr/share/nginx/html
 
-# 透過 entrypoint 腳本依據環境變數動態生成 Nginx 設定（測試機環境加入防爬蟲 Headers）
-RUN echo '#!/bin/sh' > /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'set -e' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'ROBOTS_HEADER=""' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'if [ "$NUXT_ENV" = "staging" ] || [ "$NUXT_ENV" = "dev" ] || [ "$NUXT_ENV" = "test" ] || [ "$NUXT_ENV" = "development" ]; then' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '  ROBOTS_HEADER="    add_header X-Robots-Tag \"noindex, nofollow\" always;\n    add_header X-UA-Compatible \"IE=edge\" always;"' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'fi' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'cat <<EOF > /etc/nginx/conf.d/default.conf' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'server {' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '  listen 80;' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '  location / {' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '    root /usr/share/nginx/html;' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '    index index.html index.htm;' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '    try_files \$uri \$uri/ /index.html;' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '$ROBOTS_HEADER' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '  }' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo '}' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    echo 'EOF' >> /docker-entrypoint.d/40-configure-nginx.sh && \
-    chmod +x /docker-entrypoint.d/40-configure-nginx.sh
+# 複製 entrypoint 腳本依據環境變數動態生成 Nginx 設定（測試機環境加入防爬蟲 Headers）
+COPY nginx-entrypoint.sh /docker-entrypoint.d/40-configure-nginx.sh
+RUN chmod +x /docker-entrypoint.d/40-configure-nginx.sh
 
 EXPOSE 80
 
