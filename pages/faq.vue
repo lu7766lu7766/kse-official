@@ -1,10 +1,6 @@
 <template>
   <div>
-    <PageHero
-      eyebrow="FAQ & Booking"
-      title="常見問題與預約"
-      desc="採預約制。第一次來訪會從完整的靜態與動態評估開始，再依結果安排後續處理。"
-    />
+    <PageHero eyebrow="FAQ & Booking" title="常見問題與預約" desc="採預約制。第一次來訪會從完整的靜態與動態評估開始，再依結果安排後續處理。" />
 
     <Section>
       <SectionHeading eyebrow="Questions" title="常見問題" />
@@ -16,11 +12,7 @@
     </Section>
 
     <Section id="booking" tone="ink">
-      <SectionHeading
-        eyebrow="Booking"
-        title="立即預約"
-        desc="歡迎透過電話、Instagram、Facebook 與我們聯繫預約，或造訪我們位於台中南屯的教室。"
-      />
+      <SectionHeading eyebrow="Booking" title="立即預約" desc="歡迎透過電話、Instagram、Facebook 與我們聯繫預約，或造訪我們位於台中南屯的教室。" />
       <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <component
           :is="c.href ? 'a' : 'div'"
@@ -38,7 +30,9 @@
       </div>
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
-        <div class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card">
+        <div
+          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card"
+        >
           <div>
             <span class="eyebrow mb-2">Online Reservation</span>
             <h3 class="text-xl font-extrabold text-foreground">線上預約系統已正式開通</h3>
@@ -59,7 +53,7 @@
         <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
           <iframe
             title="KSE 美式筋膜放鬆教室 地圖"
-            src="https://maps.google.com/maps?q=台中市南屯區大墩七街202號&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=KSE美式筋膜放鬆教室&t=&z=16&ie=UTF8&iwloc=&output=embed"
             class="aspect-video w-full border-0"
             loading="lazy"
             allowfullscreen
@@ -69,7 +63,7 @@
               <MapPin class="h-4 w-4 text-primary shrink-0" /> {{ BRAND.address }}
             </span>
             <a
-              :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BRAND.address)}`"
+              :href="BRAND.mapUrl"
               target="_blank"
               rel="noopener noreferrer"
               class="text-primary font-bold hover:underline"
@@ -84,25 +78,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { Phone, MessageCircle, Instagram, Facebook, MapPin, CalendarCheck } from "lucide-vue-next";
-import PageHero from "~/components/ui/PageHero.vue";
-import Section from "~/components/ui/Section.vue";
-import SectionHeading from "~/components/ui/SectionHeading.vue";
-import PlaceholderMedia from "~/components/ui/PlaceholderMedia.vue";
-import Accordion from "~/components/ui/Accordion.vue";
-import AccordionItem from "~/components/ui/AccordionItem.vue";
-import { BRAND, FAQS } from "~/utils/site-data";
+import { computed } from "vue"
+import { Phone, MessageCircle, Instagram, Facebook, MapPin, CalendarCheck } from "lucide-vue-next"
+import PageHero from "~/components/ui/PageHero.vue"
+import Section from "~/components/ui/Section.vue"
+import SectionHeading from "~/components/ui/SectionHeading.vue"
+import PlaceholderMedia from "~/components/ui/PlaceholderMedia.vue"
+import Accordion from "~/components/ui/Accordion.vue"
+import AccordionItem from "~/components/ui/AccordionItem.vue"
+import { BRAND, FAQS } from "~/utils/site-data"
 
 const CHANNELS = computed(() => [
   { icon: Phone, label: "電話", value: BRAND.phone, href: `tel:${BRAND.phone.replace(/-/g, "")}` },
   { icon: MessageCircle, label: "LINE", value: "LINE 官方帳號", href: BRAND.line },
   { icon: Instagram, label: "Instagram", value: "@kse_release_studio", href: BRAND.ig },
   { icon: Facebook, label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: BRAND.fb },
-]);
+])
 
-const DESC =
-  "KSE 常見問題與預約資訊：解答台中運動按摩、美式筋膜放鬆、受傷或肌肉拉傷後放鬆保養建議、與傳統推拿SPA差異及預約方式。";
+const DESC = "KSE 常見問題與預約資訊：解答台中運動按摩、美式筋膜放鬆、受傷或肌肉拉傷後放鬆保養建議、與傳統推拿SPA差異及預約方式。"
 
 useHead({
   title: "台中運動按摩與受傷舒緩常見問題｜FAQ與預約｜KSE 美式筋膜放鬆教室",
@@ -110,17 +103,14 @@ useHead({
     { name: "description", content: DESC },
     {
       name: "keywords",
-      content:
-        "台中運動按摩,受傷放鬆,台中筋膜放鬆,美式筋膜放鬆問答,拉傷按摩注意事項,肌肉緊繃保養,台中南屯按摩預約",
+      content: "台中運動按摩,受傷放鬆,台中筋膜放鬆,美式筋膜放鬆問答,拉傷按摩注意事項,肌肉緊繃保養,台中南屯按摩預約",
     },
     { property: "og:title", content: "台中運動按摩與受傷舒緩常見問題｜FAQ與預約｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://kse-release.com/faq" },
+    { property: "og:url", content: "https://www.kse-release.com.tw/faq" },
   ],
-  link: [
-    { rel: "canonical", href: "https://kse-release.com/faq" },
-  ],
+  link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/faq" }],
   script: [
     {
       type: "application/ld+json",
@@ -135,5 +125,5 @@ useHead({
       }),
     },
   ],
-});
+})
 </script>

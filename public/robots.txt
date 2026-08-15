@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kse-release.com/sitemap.xml
+Sitemap: https://www.kse-release.com.tw/sitemap.xml
