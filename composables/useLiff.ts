@@ -132,7 +132,6 @@ export function useLiff() {
             weight: "bold",
             color: "#f97316",
             size: "xs",
-            letterSpacing: "2px",
           },
           {
             type: "text",
