@@ -123,7 +123,7 @@
               </span>
             </div>
             <h4 class="mt-1.5 text-lg font-black text-foreground">
-              {{ item.masseur_name }} 師傅
+              {{ item.masseur_name }} 按摩師
             </h4>
           </div>
 

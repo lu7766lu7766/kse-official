@@ -37,7 +37,7 @@
             <span class="eyebrow mb-2">Online Reservation</span>
             <h3 class="text-xl font-extrabold text-foreground">線上預約系統已正式開通</h3>
             <p class="mt-2 text-xs text-muted-foreground leading-relaxed">
-              即刻前往專屬預約頁面，查看師傅週排班與可用時段，支援即時時段預約與查詢功能。
+              即刻前往專屬預約頁面，查看按摩師週排班與可用時段，支援即時時段預約與查詢功能。
             </p>
           </div>
           <div class="mt-6">

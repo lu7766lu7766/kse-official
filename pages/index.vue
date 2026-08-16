@@ -250,8 +250,8 @@
           <div>
             <span class="eyebrow mb-2">Online Reservation</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-foreground">線上預約系統已正式開通</h2>
-            <p class="mt-3 text-sm text-muted-foreground leading-relaxed">
-              採預約制。歡迎前往專屬預約頁面，查看師傅週排班與可用時段，支援即時線上預約與查詢取消功能。
+            <p class="mt-2 text-xs text-muted-foreground leading-relaxed">
+              採預約制。歡迎前往專屬預約頁面，查看按摩師週排班與可用時段，支援即時線上預約與查詢取消功能。
             </p>
           </div>
           <div class="mt-8 flex flex-wrap items-center gap-3">

@@ -50,7 +50,7 @@ export function createGoogleCalendarUrl(event: AppointmentCalendarData): string 
   const masseurName = event.masseur_name
     ? event.masseur_name.includes("師")
       ? event.masseur_name
-      : `${event.masseur_name} 師傅`
+      : `${event.masseur_name} 按摩師`
     : "運動按摩師"
   const title = `【KSE 運動放鬆】預約 - ${masseurName}`
   const location = event.location || "台中市南屯區大墩七街202號"
@@ -58,7 +58,7 @@ export function createGoogleCalendarUrl(event: AppointmentCalendarData): string 
   const lines = [
     `📋 預約資訊`,
     `• 預約編號：${event.booking_no || "無"}`,
-    `• 預約師傅：${masseurName}`,
+    `• 預約按摩師：${masseurName}`,
     `• 預約時段：${typeof event.start_at === "string" ? event.start_at : startDate.toLocaleString("zh-TW")}`,
   ]
 

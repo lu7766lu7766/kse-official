@@ -63,13 +63,12 @@ export function formatDateTime(d: Date): string {
 }
 
 /**
- * 解析 "YYYY-MM-DD HH:mm:ss" 或 "YYYY-MM-DD"
+ * 解析 "YYYY-MM-DD HH:mm:ss" 或 "YYYY-MM-DD"（以本地時間安全解析）
  */
 export function parseDateString(str: string): Date {
-  const normalized = str.replace(" ", "T")
-  const parsed = new Date(normalized)
-  if (isNaN(parsed.getTime())) {
-    const parts = str.split(/[- :]/)
+  if (!str) return new Date()
+  const parts = str.trim().split(/[- :T]/)
+  if (parts.length >= 3) {
     const year = parseInt(parts[0] || "0", 10)
     const month = Math.max(0, parseInt(parts[1] || "1", 10) - 1)
     const day = parseInt(parts[2] || "1", 10)
@@ -78,7 +77,17 @@ export function parseDateString(str: string): Date {
     const sec = parts[5] ? parseInt(parts[5], 10) : 0
     return new Date(year, month, day, hour, min, sec)
   }
-  return parsed
+  return new Date(str)
+}
+
+/**
+ * 判斷特定起始時間是否已過期（需至少提前 minAdvanceMinutes 分鐘）
+ */
+export function isSlotPast(startAtStr: string, minAdvanceMinutes: number = 30): boolean {
+  if (!startAtStr) return true
+  const slotTime = parseDateString(startAtStr).getTime()
+  const minValidTime = Date.now() + minAdvanceMinutes * 60 * 1000
+  return slotTime < minValidTime
 }
 
 /**
@@ -189,7 +198,7 @@ export function sliceToHourlySlots(
     }
   }
 
-  // 排序每個日期的時段（先按開始時間，再按師傅）
+  // 排序每個日期的時段（先按開始時間，再按按摩師）
   for (const date in slotsByDate) {
     const list = slotsByDate[date]
     if (list) {
