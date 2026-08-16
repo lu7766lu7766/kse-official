@@ -17,18 +17,15 @@
     <main class="flex-1 flex items-center justify-center p-4 sm:p-6">
       <div class="rise-in surface-card w-full max-w-md rounded-sm border border-border p-6 sm:p-8 relative overflow-hidden">
         <!-- 成功覆蓋畫面 (綁定成功後倒數關閉) -->
-        <div
-          v-if="isSuccess"
-          class="flex flex-col items-center justify-center py-6 text-center"
-        >
-          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 ring-8 ring-emerald-500/10 mb-4 animate-bounce">
+        <div v-if="isSuccess" class="flex flex-col items-center justify-center py-6 text-center">
+          <div
+            class="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 ring-8 ring-emerald-500/10 mb-4 animate-bounce"
+          >
             <CheckCircle2 class="h-10 w-10" />
           </div>
 
           <span class="eyebrow mb-1 text-emerald-400">Success</span>
-          <h2 class="text-2xl font-black text-foreground">
-            LINE 帳號綁定成功！
-          </h2>
+          <h2 class="text-2xl font-black text-foreground">LINE 帳號綁定成功！</h2>
 
           <p class="mt-2 text-xs text-muted-foreground leading-relaxed max-w-xs">
             您的 LINE 帳號已成功與會員完成綁定，未來將自動透過 LINE 接收預約確認與通知。
@@ -66,25 +63,28 @@
           <!-- 標題區 -->
           <div class="mb-6 border-b border-border/60 pb-4">
             <span class="eyebrow mb-1">Account Binding</span>
-            <h1 class="text-xl font-extrabold text-foreground sm:text-2xl">
-              綁定 LINE 官方帳號
-            </h1>
-            <p class="mt-1 text-xs text-muted-foreground">
-              連結您的會員帳號，即時享有預約通知與排程提醒服務。
-            </p>
+            <h1 class="text-xl font-extrabold text-foreground sm:text-2xl">綁定 LINE 官方帳號</h1>
+            <p class="mt-1 text-xs text-muted-foreground">連結您的會員帳號，即時享有預約通知與排程提醒服務。</p>
           </div>
 
           <!-- LINE 使用者資訊卡片 -->
           <div class="mb-5 rounded-sm border border-border/70 bg-background/60 p-3.5 backdrop-blur">
             <div class="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center justify-between">
               <span>LINE 授權身分</span>
-              <span v-if="liff.isLoggedIn.value || liff.isInClient.value" class="text-emerald-400 flex items-center gap-1 font-semibold text-[10px]">
+              <span v-if="liff.profile.value" class="text-emerald-400 flex items-center gap-1 font-semibold text-[10px]">
                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
                 已連動
               </span>
+              <span v-else-if="liff.isInitializing.value" class="text-amber-400 flex items-center gap-1 font-semibold text-[10px]">
+                <span class="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                驗證中
+              </span>
+              <span v-else class="text-muted-foreground text-[10px]">
+                未連動
+              </span>
             </div>
 
-            <!-- 已取得 LINE Profile -->
+            <!-- 1. 已取得 LINE Profile -->
             <div v-if="liff.profile.value" class="space-y-3">
               <div class="flex items-center gap-3">
                 <img
@@ -93,10 +93,7 @@
                   :alt="liff.profile.value.displayName"
                   class="h-11 w-11 shrink-0 rounded-full border-2 border-primary/50 object-cover"
                 />
-                <div
-                  v-else
-                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary font-bold text-base"
-                >
+                <div v-else class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary font-bold text-base">
                   {{ liff.profile.value.displayName.charAt(0) }}
                 </div>
                 <div class="min-w-0 flex-1">
@@ -116,33 +113,63 @@
                   <span>LINE User ID</span>
                   <span class="text-[10px] font-normal text-muted-foreground">已讀取</span>
                 </div>
-                <div class="mt-1 font-mono text-xs font-semibold text-foreground select-all break-all bg-background/60 rounded px-2.5 py-1.5 border border-border/50">
+                <div
+                  class="mt-1 font-mono text-xs font-semibold text-foreground select-all break-all bg-background/60 rounded px-2.5 py-1.5 border border-border/50"
+                >
                   {{ liff.profile.value.userId }}
                 </div>
               </div>
             </div>
 
-            <!-- 載入中 -->
-            <div v-else-if="liff.isInitializing.value" class="flex items-center gap-2 py-2 text-xs text-muted-foreground">
-              <Loader2 class="h-4 w-4 animate-spin text-primary" />
-              <span>正在讀取 LINE 授權資訊...</span>
+            <!-- 2. 載入中 (帶有提示與手動跳轉按鈕) -->
+            <div v-else-if="liff.isInitializing.value" class="space-y-3 py-2">
+              <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                <Loader2 class="h-4 w-4 animate-spin text-primary shrink-0" />
+                <span>正在讀取 LINE 授權資訊...</span>
+              </div>
+              <p class="text-[11px] text-muted-foreground/70 leading-relaxed">
+                若超過數秒未完成讀取，可點擊下方按鈕進行手動授權。
+              </p>
+              <div class="flex gap-2">
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-1.5 rounded-sm bg-[#06C755] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#05b34c] transition-colors cursor-pointer"
+                  @click="handleForceLogin"
+                >
+                  <span>立即手動授權</span>
+                </button>
+              </div>
             </div>
 
-            <!-- 未登入 (外部瀏覽器開啟) -->
-            <div v-else class="flex flex-col gap-2 py-1">
-              <p class="text-xs text-muted-foreground">
-                尚未登入 LINE，請點擊下方按鈕進行授權：
+            <!-- 3. 未登入或初始化失敗 (提供一鍵登入與 LIFF 專屬連結) -->
+            <div v-else class="space-y-3 py-1">
+              <div v-if="liff.initError.value" class="rounded-sm bg-amber-500/10 border border-amber-500/30 p-2.5 text-xs text-amber-300">
+                {{ liff.initError.value }}
+              </div>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                尚未取得您的 LINE 身分，請點擊下方按鈕登入授權：
               </p>
-              <button
-                type="button"
-                class="inline-flex items-center justify-center gap-2 rounded-sm bg-[#06C755] px-4 py-2 text-xs font-bold text-white hover:bg-[#05b34c] transition-colors cursor-pointer"
-                @click="liff.login()"
-              >
-                <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99" />
-                </svg>
-                <span>使用 LINE 帳號登入授權</span>
-              </button>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <button
+                  type="button"
+                  class="flex-1 inline-flex items-center justify-center gap-2 rounded-sm bg-[#06C755] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#05b34c] transition-all cursor-pointer shadow-md shadow-[#06C755]/20"
+                  @click="handleForceLogin"
+                >
+                  <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99"
+                    />
+                  </svg>
+                  <span>使用 LINE 帳號登入授權</span>
+                </button>
+
+                <a
+                  :href="bindLiffUrl"
+                  class="inline-flex items-center justify-center rounded-sm border border-border/80 bg-card px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-muted transition-colors text-center"
+                >
+                  LIFF 專屬連結開啟 ↗
+                </a>
+              </div>
             </div>
           </div>
 
@@ -212,6 +239,8 @@ const bindLiffId = (config.public.bindLiffId as string) || "2011127433-o3my6dZx"
 const liff = useLiff()
 const api = useBookingApi()
 
+const bindLiffUrl = computed(() => `https://liff.line.me/${bindLiffId}`)
+
 const username = ref("")
 const submitting = ref(false)
 const errorMessage = ref("")
@@ -223,6 +252,14 @@ let timer: any = null
 const canSubmit = computed(() => {
   return username.value.trim().length > 0 && !!liff.profile.value?.userId
 })
+
+function handleForceLogin() {
+  if (liff.isReady.value) {
+    liff.login()
+  } else if (typeof window !== "undefined") {
+    window.location.href = bindLiffUrl.value
+  }
+}
 
 async function handleBind() {
   errorMessage.value = ""
