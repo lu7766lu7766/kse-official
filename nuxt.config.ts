@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3333",
       liffId: process.env.NUXT_PUBLIC_LIFF_ID || "",
+      bindLiffId: process.env.NUXT_PUBLIC_BIND_LIFF_ID || "",
     },
   },
   vite: {

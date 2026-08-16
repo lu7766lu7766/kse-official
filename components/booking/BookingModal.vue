@@ -235,8 +235,10 @@ async function handleSubmit() {
       customer_name: form.customer_name.trim(),
       customer_phone: phoneClean,
       note: form.note.trim() || undefined,
+      line_user_id: liff.profile.value?.userId || undefined,
     })
 
+    liff.savePhone(phoneClean)
     emit("success", result)
     emit("close")
   } catch (err: any) {

@@ -11,6 +11,7 @@ export interface AppointmentPayload {
   customer_name: string
   customer_phone: string
   note?: string
+  line_user_id?: string
 }
 
 export interface AppointmentRecord {
@@ -34,6 +35,8 @@ export interface ApiResponse<T> {
 }
 
 const ERROR_MESSAGES: Record<number, string> = {
+  3001: "請輸入有效的帳號 / 手機號碼",
+  3004: "查無此會員帳號，請確認帳號是否正確",
   8000: "查無此預約或預約編號/電話號碼不符",
   8001: "選擇的時間不在按摩師可預約排班範圍內，或已被其他客人預約",
   8002: "預約編號格式錯誤或未填",
@@ -121,6 +124,10 @@ export function useBookingApi() {
         body.note = payload.note.trim()
       }
 
+      if (payload.line_user_id && payload.line_user_id.trim()) {
+        body.line_user_id = payload.line_user_id.trim()
+      }
+
       const res = await $fetch<ApiResponse<AppointmentRecord>>(
         `${baseUrl}/api/client/booking/appointments`,
         {
@@ -139,6 +146,39 @@ export function useBookingApi() {
     } catch (error: any) {
       console.error("submitBooking failed:", error)
       throw new Error(extractErrorMessage(error, "預約送出失敗，請確認時段是否已被預約"))
+    }
+  }
+
+  /**
+   * 綁定 LINE 帳號
+   */
+  async function bindLine(payload: { username: string; line_user_id: string }): Promise<{
+    username: string
+    name: string
+    line_user_id: string
+  }> {
+    try {
+      const res = await $fetch<ApiResponse<{ username: string; name: string; line_user_id: string }>>(
+        `${baseUrl}/api/client/booking/bind-line`,
+        {
+          method: "POST",
+          body: {
+            username: payload.username.trim(),
+            line_user_id: payload.line_user_id.trim(),
+          },
+        }
+      )
+
+      if (!isSuccess(res.code)) {
+        const codeNum = normalizeCode(res.code)
+        const errorMsg = ERROR_MESSAGES[codeNum] || res.message || "綁定失敗"
+        throw new Error(errorMsg)
+      }
+
+      return res.data
+    } catch (error: any) {
+      console.error("bindLine failed:", error)
+      throw new Error(extractErrorMessage(error, "綁定 LINE 帳號失敗，請確認帳號是否正確"))
     }
   }
 
@@ -229,6 +269,7 @@ export function useBookingApi() {
     fetchMasseurs,
     fetchAvailabilities,
     submitBooking,
+    bindLine,
     searchAppointments,
     cancelAppointment,
   }

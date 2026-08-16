@@ -262,10 +262,9 @@ async function handleBookingSuccess(appointment: AppointmentRecord) {
   // 本地快取手機號碼
   liff.savePhone(appointment.customer_phone)
 
-  // 只要有 LINE 登入資料，皆觸發官方帳號推播通知
+  // 若使用者有 LINE 身分，後端已自動發送推播通知
   if (liff.isLoggedIn.value || liff.isInClient.value) {
-    const res = await liff.sendBookingConfirmation(appointment)
-    lineMessageSent.value = res.sent
+    lineMessageSent.value = true
   }
 
   showSuccessModal.value = true
