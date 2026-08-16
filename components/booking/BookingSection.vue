@@ -275,8 +275,8 @@ async function handleBookingSuccess(appointment: AppointmentRecord) {
   // 本地快取手機號碼
   liff.savePhone(appointment.customer_phone)
 
-  // 若在 LINE App 內 (LIFF 環境) 發送預約確認 Flex Message 至聊天室
-  if (liff.isInClient.value && liff.isLoggedIn.value) {
+  // 只要有 LINE 登入資料，皆觸發官方帳號推播通知
+  if (liff.isLoggedIn.value || liff.isInClient.value) {
     const res = await liff.sendBookingConfirmation(appointment)
     lineMessageSent.value = res.sent
   }

@@ -28,6 +28,9 @@ FROM nginx:alpine AS runner
 ARG NUXT_ENV
 ENV NUXT_ENV=$NUXT_ENV
 
+ARG LINE_CHANNEL_ACCESS_TOKEN
+ENV LINE_CHANNEL_ACCESS_TOKEN=$LINE_CHANNEL_ACCESS_TOKEN
+
 # 複製 SSG 產出的靜態檔案
 COPY --from=builder /app/.output/public /usr/share/nginx/html
 

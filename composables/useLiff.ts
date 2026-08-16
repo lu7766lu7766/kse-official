@@ -329,38 +329,47 @@ export function useLiff() {
   }
 
   /**
-   * 在 LINE 聊天室內發送預約確認 Flex Message
+   * 發送預約確認 Flex Message（優先由 LINE 官方帳號主動推播）
    */
   async function sendBookingConfirmation(appointment: AppointmentRecord): Promise<{
     sent: boolean
     message?: string
   }> {
-    if (!liffInstance.value) {
-      return { sent: false, message: "LIFF 未就緒" }
+    const flexBubble = buildBookingFlexMessage(appointment)
+    const flexPayload = {
+      type: "flex",
+      altText: `【KSE 預約確認】${appointment.customer_name} 您好，您已成功預約 ${appointment.start_at}`,
+      contents: flexBubble,
     }
 
-    if (!liffInstance.value.isInClient()) {
-      return { sent: false, message: "非 LINE App 內部環境，無法直接發送聊天室訊息" }
+    // 優先策略 1: 若有 LINE userId，直接由官方帳號發送 Push Message
+    if (profile.value?.userId) {
+      try {
+        await $fetch("/api/line-push", {
+          method: "POST",
+          body: {
+            to: profile.value.userId,
+            messages: [flexPayload],
+          },
+        })
+        return { sent: true }
+      } catch (pushErr: any) {
+        console.warn("[LINE Bot Push] 官方帳號推播失敗，嘗試備用機制:", pushErr)
+      }
     }
 
-    if (!liffInstance.value.isLoggedIn()) {
-      return { sent: false, message: "尚未登入 LINE" }
+    // 備用策略 2: 若在 LINE App 內 (LIFF)，嘗試透過當前聊天室發送
+    if (liffInstance.value && liffInstance.value.isInClient() && liffInstance.value.isLoggedIn()) {
+      try {
+        await liffInstance.value.sendMessages([flexPayload])
+        return { sent: true }
+      } catch (err: any) {
+        console.warn("[LIFF] 聊天室發送失敗:", err)
+        return { sent: false, message: err?.message || "發送訊息失敗" }
+      }
     }
 
-    try {
-      const flexBubble = buildBookingFlexMessage(appointment)
-      await liffInstance.value.sendMessages([
-        {
-          type: "flex",
-          altText: `【KSE 預約確認】${appointment.customer_name} 您好，您已預約 ${appointment.start_at}`,
-          contents: flexBubble,
-        },
-      ])
-      return { sent: true }
-    } catch (err: any) {
-      console.warn("[LIFF] 發送預約訊息失敗 (可能未取得 chat_message.write 權限):", err)
-      return { sent: false, message: err?.message || "發送訊息失敗" }
-    }
+    return { sent: false, message: "尚未登入 LINE 或無法發送推播" }
   }
 
   /**
