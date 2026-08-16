@@ -77,6 +77,20 @@
         </ul>
       </div>
 
+      <!-- LINE 訊息提醒已發送通知 -->
+      <div
+        v-if="lineMessageSent"
+        class="mb-5 flex items-center gap-2.5 rounded-sm border border-[#06C755]/40 bg-[#06C755]/10 p-3 text-xs text-[#06C755]"
+      >
+        <svg class="h-5 w-5 shrink-0 fill-current" viewBox="0 0 24 24">
+          <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99" />
+        </svg>
+        <div class="leading-tight">
+          <div class="font-bold">LINE 預約通知已發送</div>
+          <div class="text-[11px] opacity-90">已將預約確認卡片直接傳送至您的 LINE 聊天室。</div>
+        </div>
+      </div>
+
       <!-- 加入 Google 行事曆按鈕 -->
       <div class="mb-5">
         <button
@@ -89,16 +103,27 @@
         </button>
       </div>
 
-      <!-- 操作按鈕 -->
+      <!-- 操作按鈕 (若在 LINE 內優先提供返回聊天室) -->
       <div class="flex items-center gap-3">
         <button
           type="button"
           class="flex-1 rounded-sm border border-border py-2.5 text-xs font-bold text-foreground transition-colors hover:border-primary hover:text-primary cursor-pointer"
           @click="handleViewSearch"
         >
-          查看我的預約記錄
+          查看預約記錄
         </button>
+
         <button
+          v-if="liff.isInClient.value"
+          type="button"
+          class="flex-1 inline-flex items-center justify-center gap-1.5 rounded-sm bg-[#06C755] py-2.5 text-xs font-bold text-white transition-all hover:bg-[#05b34c] hover:scale-[1.02] cursor-pointer shadow-md shadow-[#06C755]/20"
+          @click="handleReturnToLine"
+        >
+          <span>返回 LINE 聊天室</span>
+        </button>
+
+        <button
+          v-else
           type="button"
           class="flex-1 rounded-sm bg-primary py-2.5 text-xs font-bold text-primary-foreground transition-all hover:scale-[1.02] cursor-pointer shadow-md shadow-primary/20"
           @click="handleClose"
@@ -114,18 +139,26 @@
 import { ref } from "vue"
 import { CheckCircle2, CalendarPlus } from "lucide-vue-next"
 import type { AppointmentRecord } from "~/composables/useBookingApi"
+import { useLiff } from "~/composables/useLiff"
 import { createGoogleCalendarUrl } from "~/utils/calendarHelper"
 
-const props = defineProps<{
-  show: boolean
-  appointment: AppointmentRecord | null
-}>()
+const props = withDefaults(
+  defineProps<{
+    show: boolean
+    appointment: AppointmentRecord | null
+    lineMessageSent?: boolean
+  }>(),
+  {
+    lineMessageSent: false,
+  }
+)
 
 const emit = defineEmits<{
   (e: "close"): void
   (e: "go-to-search", phone: string): void
 }>()
 
+const liff = useLiff()
 const copied = ref(false)
 
 function formatSlotTime(start: string, end: string): string {
@@ -150,6 +183,14 @@ function handleAddToCalendar() {
   if (!props.appointment) return
   const url = createGoogleCalendarUrl(props.appointment)
   window.open(url, "_blank", "noopener,noreferrer")
+}
+
+function handleReturnToLine() {
+  if (liff.isInClient.value) {
+    liff.closeWindow()
+  } else {
+    emit("close")
+  }
 }
 
 function handleClose() {

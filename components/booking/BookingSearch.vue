@@ -236,6 +236,7 @@ import {
   AlertTriangle,
 } from "lucide-vue-next"
 import { useBookingApi, type AppointmentRecord } from "~/composables/useBookingApi"
+import { useLiff } from "~/composables/useLiff"
 import { createGoogleCalendarUrl } from "~/utils/calendarHelper"
 
 const props = defineProps<{
@@ -243,6 +244,7 @@ const props = defineProps<{
 }>()
 
 const api = useBookingApi()
+const liff = useLiff()
 
 const searchPhone = ref(props.initialPhone || "")
 const searchBookingNo = ref("")
@@ -334,6 +336,12 @@ function setPhoneAndSearch(phone: string) {
 onMounted(() => {
   if (props.initialPhone) {
     handleSearch()
+  } else {
+    // 若有已儲存的手機號碼，自動帶入並嘗試查詢
+    const saved = liff.getSavedPhone()
+    if (saved) {
+      searchPhone.value = saved
+    }
   }
 })
 
