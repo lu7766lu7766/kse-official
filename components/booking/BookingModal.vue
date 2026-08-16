@@ -63,19 +63,19 @@
           <div class="flex items-center justify-between">
             <label for="customer_name" class="block text-xs font-bold uppercase tracking-wider text-muted-foreground">
               您的姓名 <span class="text-primary">*</span>
-              <span v-if="liff.profile.value" class="ml-1 text-[11px] font-normal text-[#06C755]">
-                (已由 LINE 帶入)
+              <span v-if="liff.profile.value" class="ml-1 text-[11px] font-normal text-muted-foreground/70">
+                （LINE 已自動填入）
               </span>
             </label>
 
-            <!-- 外部未登入時的快速登入按鈕 -->
+            <!-- 外部未登入時的快速登入按鈕 (低調設計) -->
             <button
               v-if="liff.isReady.value && !liff.isInClient.value && !liff.isLoggedIn.value"
               type="button"
-              class="inline-flex items-center gap-1 rounded bg-[#06C755]/10 px-2 py-0.5 text-[10px] font-bold text-[#06C755] border border-[#06C755]/30 hover:bg-[#06C755]/20 transition-colors cursor-pointer"
+              class="inline-flex items-center gap-1 rounded-sm border border-border/60 bg-muted/40 px-2 py-0.5 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
               @click="liff.login()"
             >
-              <svg class="h-3 w-3 fill-current" viewBox="0 0 24 24">
+              <svg class="h-2.5 w-2.5 fill-[#06C755] opacity-80" viewBox="0 0 24 24">
                 <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99" />
               </svg>
               <span>LINE 快速帶入</span>

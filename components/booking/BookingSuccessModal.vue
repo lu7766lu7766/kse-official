@@ -77,17 +77,17 @@
         </ul>
       </div>
 
-      <!-- LINE 訊息提醒已發送通知 -->
+      <!-- LINE 訊息提醒已發送通知 (低調精緻設計) -->
       <div
         v-if="lineMessageSent"
-        class="mb-5 flex items-center gap-2.5 rounded-sm border border-[#06C755]/40 bg-[#06C755]/10 p-3 text-xs text-[#06C755]"
+        class="mb-5 flex items-center gap-2.5 rounded-sm border border-border/70 bg-card/60 p-3 text-xs text-muted-foreground"
       >
-        <svg class="h-5 w-5 shrink-0 fill-current" viewBox="0 0 24 24">
+        <svg class="h-4 w-4 shrink-0 fill-[#06C755] opacity-90" viewBox="0 0 24 24">
           <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99" />
         </svg>
         <div class="leading-tight">
-          <div class="font-bold">LINE 預約通知已發送</div>
-          <div class="text-[11px] opacity-90">已將預約確認卡片直接傳送至您的 LINE 聊天室。</div>
+          <div class="font-medium text-foreground">LINE 預約通知已發送</div>
+          <div class="text-[11px] text-muted-foreground/80 mt-0.5">預約確認卡片已傳送至您的 LINE 聊天室。</div>
         </div>
       </div>
 
