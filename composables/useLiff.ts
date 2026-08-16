@@ -19,15 +19,11 @@ const initError = ref<string | null>(null)
 const liffInstance = ref<any>(null)
 
 export function useLiff() {
-  const config = useRuntimeConfig()
-  const defaultLiffId = (config.public.liffId as string) || ""
-
   /**
    * 初始化 LIFF SDK (僅在 client 端執行)
    */
-  async function init(customLiffId?: string) {
+  async function init(targetLiffId: string) {
     if (import.meta.server) return
-    const targetLiffId = customLiffId || defaultLiffId
 
     if (isInitialized.value && initializedLiffId.value === targetLiffId) return
     if (isInitializing.value) return
