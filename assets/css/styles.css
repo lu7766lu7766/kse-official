@@ -98,6 +98,8 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
   }
 
   body {
@@ -107,6 +109,15 @@
     font-family:
       "Helvetica Neue", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui,
       sans-serif;
+    touch-action: manipulation;
+  }
+
+  /* 防止 iOS 裝置在點擊 input / textarea / select 時畫面自動放大 (小於 16px 會觸發 iOS 強制縮放) */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+    touch-action: manipulation;
   }
 
   h1,

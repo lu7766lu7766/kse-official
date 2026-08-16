@@ -87,7 +87,7 @@
             type="text"
             required
             placeholder="請輸入姓名（例如：陳小明）"
-            class="mt-1.5 w-full rounded-sm border border-input bg-background/60 px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            class="mt-1.5 w-full rounded-sm border border-input bg-background/60 px-3.5 py-2.5 text-base sm:text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
 
@@ -104,7 +104,7 @@
             required
             maxlength="10"
             placeholder="0912345678 (10 碼數字)"
-            class="mt-1.5 w-full rounded-sm border border-input bg-background/60 px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary font-mono"
+            class="mt-1.5 w-full rounded-sm border border-input bg-background/60 px-3.5 py-2.5 text-base sm:text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary font-mono"
           />
         </div>
 
@@ -118,7 +118,7 @@
             v-model="form.note"
             rows="2"
             placeholder="例如：肩頸容易緊繃、腰部曾受傷、希望能加強下肢放鬆..."
-            class="mt-1.5 w-full rounded-sm border border-input bg-background/60 px-3.5 py-2 text-xs text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+            class="mt-1.5 w-full rounded-sm border border-input bg-background/60 px-3.5 py-2 text-base sm:text-xs text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
           ></textarea>
         </div>
 
