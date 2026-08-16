@@ -26,8 +26,11 @@ export default defineNuxtConfig({
         { charset: "utf-8" },
         {
           name: "viewport",
-          content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover",
+          content: "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover",
         },
+        { "http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate" },
+        { "http-equiv": "Pragma", content: "no-cache" },
+        { "http-equiv": "Expires", content: "0" },
         { property: "og:site_name", content: "KSE 美式筋膜放鬆教室" },
         { property: "og:locale", content: "zh_TW" },
         { property: "og:type", content: "website" },
@@ -38,6 +41,15 @@ export default defineNuxtConfig({
         { rel: "icon", type: "image/png", href: "/favicon.png" },
         { rel: "apple-touch-icon", href: "/favicon.png" },
       ],
+    },
+  },
+  routeRules: {
+    "/**": {
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
     },
   },
 })
