@@ -10,7 +10,7 @@ export const BRAND = {
   area: "台中市南屯區大墩七街202號",
   mapQuery: "KSE美式筋膜放鬆教室",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=KSE%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4",
-};
+}
 
 export const NAV = [
   { to: "/", label: "首頁" },
@@ -21,7 +21,7 @@ export const NAV = [
   { to: "/news", label: "最新消息" },
   { to: "/faq", label: "FAQ" },
   { to: "/booking", label: "線上預約" },
-] as const;
+] as const
 
 export const PROCESS = [
   {
@@ -44,7 +44,7 @@ export const PROCESS = [
     title: "強化",
     desc: "核心穩定與肌力體能訓練，把恢復到的活動能力轉化成場上可用的力量與續航。",
   },
-];
+]
 
 export const COMPARISON = [
   { topic: "目的", kse: "恢復動作能力與運動表現", other: "當下舒緩、放鬆感受" },
@@ -53,7 +53,7 @@ export const COMPARISON = [
   { topic: "後續", kse: "提供居家動作與訓練建議", other: "多半無後續安排" },
   { topic: "情境", kse: "運動前準備、賽後恢復、傷後回場", other: "以放鬆休閒為主" },
   { topic: "環境", kse: "運動恢復與訓練空間", other: "SPA／美容式空間" },
-];
+]
 
 export const SERVICES = [
   {
@@ -66,7 +66,7 @@ export const SERVICES = [
       "搭配主動動作的筋膜鬆動（Active Release 概念）",
       "處理後即時複評，確認活動度改變",
     ],
-    duration: "單次約 60–90 分鐘（依評估結果調整）",
+    duration: "單次約 60 分鐘（依評估結果調整）",
   },
   {
     slug: "sports-massage",
@@ -84,27 +84,17 @@ export const SERVICES = [
     slug: "core",
     title: "核心穩定修復方案",
     short: "為久坐族與下背、肩頸不適者設計的呼吸、核心與動作控制重建課程。",
-    points: [
-      "呼吸模式與肋廓位置重建",
-      "深層核心（橫膈、腹橫肌、骨盆底）啟動",
-      "髖與胸椎活動度整合",
-      "日常姿勢與辦公室動作策略",
-    ],
+    points: ["呼吸模式與肋廓位置重建", "深層核心（橫膈、腹橫肌、骨盆底）啟動", "髖與胸椎活動度整合", "日常姿勢與辦公室動作策略"],
     duration: "系列課程，單堂約 50 分鐘",
   },
   {
     slug: "strength",
     title: "肌力與體能訓練",
     short: "把恢復到的活動能力轉化為力量、速度與續航的個人化訓練。",
-    points: [
-      "個人化課表設計與週期安排",
-      "基礎肌力、爆發力與加減速訓練",
-      "專項體能與傷後回場漸進計畫",
-      "青少年運動員長期發展導向訓練",
-    ],
+    points: ["個人化課表設計與週期安排", "基礎肌力、爆發力與加減速訓練", "專項體能與傷後回場漸進計畫", "青少年運動員長期發展導向訓練"],
     duration: "單堂約 60 分鐘，建議每週 1–2 次",
   },
-];
+]
 
 export const AUDIENCES = [
   { title: "運動員", desc: "需要穩定維持狀態、縮短恢復時間並降低受傷風險。" },
@@ -113,7 +103,7 @@ export const AUDIENCES = [
   { title: "健身族", desc: "活動度不足導致的動作代償與訓練卡關。" },
   { title: "久坐上班族", desc: "肩頸緊繃、下背不適與核心無力。" },
   { title: "青少年運動員", desc: "成長期的動作控制、姿勢與基礎肌力建立。" },
-];
+]
 
 export const PARTNERS = [
   {
@@ -131,7 +121,7 @@ export const PARTNERS = [
     note: "合作素材／Logo 預留，後續替換",
     desc: "合作內容與說明待品牌方提供後補上，本區塊僅為版位示意。",
   },
-];
+]
 
 export const CASES = [
   {
@@ -167,27 +157,20 @@ export const CASES = [
       { label: "肌力訓練", text: "以自身體重到外部負荷的漸進課表，配合學校訓練週期。" },
     ],
   },
-];
+]
 
-export const CATEGORIES = [
-  "KSE活動",
-  "合作消息",
-  "運動恢復",
-  "筋膜放鬆",
-  "動作訓練",
-  "肌力與體能",
-] as const;
+export const CATEGORIES = ["KSE活動", "合作消息", "運動恢復", "筋膜放鬆", "動作訓練", "肌力與體能"] as const
 
 export type Post = {
-  slug: string;
-  title: string;
-  date: string;
-  category: (typeof CATEGORIES)[number];
-  excerpt: string;
-  image: "hero" | "baseball" | "assess" | "core" | "strength" | "massage";
-  alt: string;
-  body: string[];
-};
+  slug: string
+  title: string
+  date: string
+  category: (typeof CATEGORIES)[number]
+  excerpt: string
+  image: "hero" | "baseball" | "assess" | "core" | "strength" | "massage"
+  alt: string
+  body: string[]
+}
 
 export const POSTS: Post[] = [
   {
@@ -223,7 +206,8 @@ export const POSTS: Post[] = [
     title: "賽後 48 小時運動恢復與筋膜放鬆指南（示範文章）",
     date: "2026-06-30",
     category: "運動恢復",
-    excerpt: "高強度比賽與訓練後，台中運動按摩與筋膜放鬆如何發揮作用？從運動後軟組織修復的時間軸出發，解析賽後 48 小時內肌肉緊繃與受傷預防的恢復策略。",
+    excerpt:
+      "高強度比賽與訓練後，台中運動按摩與筋膜放鬆如何發揮作用？從運動後軟組織修復的時間軸出發，解析賽後 48 小時內肌肉緊繃與受傷預防的恢復策略。",
     image: "massage",
     alt: "深色空間中，放鬆師以雙手處理跑者小腿軟組織與筋膜放鬆",
     body: [
@@ -274,7 +258,7 @@ export const POSTS: Post[] = [
       "訓練量需與學校球隊的練習與比賽週期整合，避免累積過度負荷。",
     ],
   },
-];
+]
 
 export const FAQS = [
   {
@@ -313,12 +297,16 @@ export const FAQS = [
     q: "如何預約？",
     a: "可直接透過官網線上預約系統選擇合適時段（請至少提前半小時以上預約），亦可透過電話（0901-403990）、LINE、Instagram 或 Facebook 粉絲專頁與我們聯繫預約。",
   },
-];
+]
 
 export const CONTACT_CHANNELS = [
   { label: "電話", value: "0901-403990", href: "tel:0901403990" },
-  { label: "地址", value: "台中市南屯區大墩七街202號", href: "https://www.google.com/maps/search/?api=1&query=KSE%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4" },
+  {
+    label: "地址",
+    value: "台中市南屯區大墩七街202號",
+    href: "https://www.google.com/maps/search/?api=1&query=KSE%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4",
+  },
   { label: "LINE", value: "LINE 官方帳號", href: "https://lin.ee/z9MrmKK" },
   { label: "Instagram", value: "@kse_release_studio", href: "https://www.instagram.com/kse_release_studio" },
   { label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: "https://www.facebook.com/profile.php?id=61562337030014" },
-];
+]

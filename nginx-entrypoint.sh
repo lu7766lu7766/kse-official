@@ -2,7 +2,7 @@
 set -e
 
 ROBOTS_HEADER=""
-if [ "$NUXT_ENV" = "staging" ] || [ "$NUXT_ENV" = "dev" ] || [ "$NUXT_ENV" = "test" ] || [ "$NUXT_ENV" = "development" ]; then
+if [ "$NUXT_CRAWLER_ALLOW" != "true" ]; then
   ROBOTS_HEADER="    add_header X-Robots-Tag \"noindex, nofollow\" always;
     add_header X-UA-Compatible \"IE=edge\" always;"
 fi

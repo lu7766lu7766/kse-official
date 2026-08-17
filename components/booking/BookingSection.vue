@@ -42,7 +42,7 @@
           <div>
             <span class="eyebrow text-[10px] mb-1">Step 01</span>
             <h4 class="text-sm font-bold text-foreground">加入官方 LINE</h4>
-            <p class="mt-1 text-muted-foreground">若要接收預約通知與排程提醒，請先加入官方 LINE 帳號。</p>
+            <p class="mt-1 text-muted-foreground">若要接收預約通知與排程提醒，請先加入官方 LINE 帳號，並登入 LINE 帳號。</p>
           </div>
           <div class="mt-3 flex flex-wrap items-center gap-2 pt-1 border-t border-border/40">
             <a
@@ -56,17 +56,23 @@
                   d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99"
                 />
               </svg>
-              <span>加入好友</span>
+              <span>加官方好友</span>
               <span class="text-[10px] text-muted-foreground">↗</span>
             </a>
 
             <button
               v-if="liff.isReady.value && !liff.isInClient.value && !liff.isLoggedIn.value"
               type="button"
-              class="inline-flex items-center gap-1 rounded-sm border border-border/70 bg-card/60 px-2 py-1 text-[11px] font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors cursor-pointer"
+              class="inline-flex items-center gap-1 rounded-sm border border-border/70 bg-card/60 px-2 py-1 text-[11px] font-medium text-foreground hover:text-foreground hover:border-primary/40 transition-colors cursor-pointer"
               @click="liff.login()"
             >
-              <span>快速登入</span>
+            <svg class="h-2.5 w-2.5 fill-[#06C755]" viewBox="0 0 24 24">
+                <path
+                  d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99"
+                />
+              </svg>
+              <span>登入LINE</span>
+              <span class="text-[10px] text-muted-foreground">↗</span>
             </button>
             <span v-else-if="liff.profile.value" class="text-[11px] text-emerald-400 font-medium truncate">
               已連動: {{ liff.profile.value.displayName }}
@@ -79,7 +85,7 @@
           <div>
             <span class="eyebrow text-[10px] mb-1">Step 02</span>
             <h4 class="text-sm font-bold text-foreground">選擇按摩師與時段</h4>
-            <p class="mt-1 text-muted-foreground">瀏覽週曆各整點時段，點選合適的 1 小時服務區間（需提前半小時以上）。</p>
+            <p class="mt-1 text-muted-foreground">瀏覽週曆各時段，點選合適的 1 小時服務區間（需提前半小時以上）。</p>
           </div>
         </div>
 

@@ -2,9 +2,7 @@
   <div class="w-full">
     <!-- 按摩師切換 Tabs -->
     <div class="mb-5 flex flex-wrap items-center gap-2 border-b border-border/70 pb-4">
-      <span class="mr-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-        選擇按摩師：
-      </span>
+      <span class="mr-1 text-xs font-bold uppercase tracking-widest text-muted-foreground"> 選擇按摩師： </span>
       <button
         type="button"
         :class="[
@@ -44,12 +42,8 @@
           </span>
         </div>
         <div class="flex items-center gap-2.5 text-xs text-muted-foreground">
-          <span class="flex items-center gap-1">
-            <span class="h-2.5 w-2.5 rounded-full bg-primary"></span> 可預約
-          </span>
-          <span class="hidden md:flex items-center gap-1">
-            <span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span> 已過期
-          </span>
+          <span class="flex items-center gap-1"> <span class="h-2.5 w-2.5 rounded-full bg-primary"></span> 可預約 </span>
+          <span class="hidden md:flex items-center gap-1"> <span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span> 已過期 </span>
         </div>
       </div>
 
@@ -94,11 +88,7 @@
 
     <!-- 載入中骨架畫面 -->
     <div v-if="loading" class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-      <div
-        v-for="i in 7"
-        :key="i"
-        class="animate-pulse rounded-sm border border-border/60 bg-card/40 p-4"
-      >
+      <div v-for="i in 7" :key="i" class="animate-pulse rounded-sm border border-border/60 bg-card/40 p-4">
         <div class="mb-3 h-5 w-16 rounded bg-muted/60"></div>
         <div class="space-y-2">
           <div class="h-10 rounded bg-muted/40"></div>
@@ -126,20 +116,10 @@
           <div class="mb-3 flex items-center justify-between border-b border-border/50 pb-2.5">
             <div>
               <div class="flex items-center gap-1.5">
-                <span
-                  :class="[
-                    'text-xs font-bold',
-                    day.isToday ? 'text-primary' : 'text-muted-foreground',
-                  ]"
-                >
+                <span :class="['text-xs font-bold', day.isToday ? 'text-primary' : 'text-muted-foreground']">
                   {{ day.dayLabel }}
                 </span>
-                <span
-                  v-if="day.isToday"
-                  class="rounded-full bg-primary/20 px-1.5 py-0.2 text-[10px] font-bold text-primary"
-                >
-                  今天
-                </span>
+                <span v-if="day.isToday" class="rounded-full bg-primary/20 px-1.5 py-0.2 text-[10px] font-bold text-primary"> 今天 </span>
               </div>
               <div class="text-sm font-extrabold text-foreground">
                 {{ day.shortDate }}
@@ -149,9 +129,7 @@
             <span class="text-[11px] font-medium text-muted-foreground hidden md:inline">
               {{ getGroupedSlotsForDay(day.dateString).length }} 個時段
             </span>
-            <span class="text-[11px] font-bold text-primary md:hidden">
-              {{ getAvailableGroupedSlotsForDay(day.dateString).length }} 個可選
-            </span>
+            <span class="text-[11px] font-bold text-primary md:hidden"> {{ getAvailableGroupedSlotsForDay(day.dateString).length }} 個可選 </span>
           </div>
 
           <!-- 該日可用時段列表（依時段分組，多位按摩師並排展示） -->
@@ -169,12 +147,7 @@
               >
                 <!-- 時段標題列 -->
                 <div class="mb-2 flex items-center justify-between">
-                  <span
-                    :class="[
-                      'font-mono text-xs font-black tracking-tight',
-                      group.isPast ? 'text-muted-foreground' : 'text-foreground',
-                    ]"
-                  >
+                  <span :class="['font-mono text-xs font-black tracking-tight', group.isPast ? 'text-muted-foreground' : 'text-foreground']">
                     {{ group.time_display }}
                   </span>
                   <span
@@ -226,9 +199,7 @@
       >
         <CalendarX class="mb-3 h-10 w-10 text-muted-foreground/40" />
         <h4 class="text-base font-bold text-foreground">本週目前無可預約時段</h4>
-        <p class="mt-1 text-xs text-muted-foreground">
-          您可以點選「下一週」按鈕查看後續日期的排班與可用時段。
-        </p>
+        <p class="mt-1 text-xs text-muted-foreground">您可以點選「下一週」按鈕查看後續日期的排班與可用時段。</p>
         <button
           type="button"
           class="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-primary px-4 py-2 text-xs font-bold text-primary-foreground hover:scale-[1.02] transition-all cursor-pointer shadow-md shadow-primary/20"
@@ -244,20 +215,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue"
-import {
-  ChevronLeft,
-  ChevronRight,
-  Calendar as CalendarIcon,
-  CalendarX,
-  Clock,
-} from "lucide-vue-next"
-import {
-  getWeekDays,
-  sliceToHourlySlots,
-  formatDateTime,
-  isSlotPast,
-  type HourlySlot,
-} from "~/utils/timeSlotHelper"
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, CalendarX, Clock } from "lucide-vue-next"
+import { getWeekDays, sliceToHourlySlots, formatDateTime, isSlotPast, type HourlySlot } from "~/utils/timeSlotHelper"
 import { useBookingApi, type Masseur } from "~/composables/useBookingApi"
 
 export interface GroupedTimeSlot {
@@ -291,9 +250,7 @@ const isCurrentWeek = computed(() => currentWeekOffset.value === 0)
 // 取得特定日期的所有時段
 function getAllSlotsForDay(dateString: string): HourlySlot[] {
   const slots = rawSlotsByDate.value[dateString] || []
-  return selectedMasseurId.value === null
-    ? slots
-    : slots.filter((s) => s.masseur_id === selectedMasseurId.value)
+  return selectedMasseurId.value === null ? slots : slots.filter((s) => s.masseur_id === selectedMasseurId.value)
 }
 
 // 依時段分組（包含所有時段，精確標註 isPast）
