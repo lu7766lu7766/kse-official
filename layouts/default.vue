@@ -20,14 +20,19 @@ import SiteFooter from "~/components/SiteFooter.vue"
 import { BRAND } from "~/utils/site-data"
 
 const siteUrl = "https://www.kse-release.com.tw"
-const defaultTitle = "(未完成開發中)KSE 美式筋膜放鬆教室｜台中南屯運動按摩・動作控制與運動恢復"
+const defaultTitle = "(開發中)KSE 美式筋膜放鬆教室｜台中南屯運動按摩・動作控制與運動恢復"
 const defaultDesc =
   "位於台中南屯的專業筋膜放鬆與運動按摩教室。結合靜態與動態動作評估、徒手美式筋膜技術與核心動作控制訓練，協助運動員與久坐族改善活動度、緩解緊繃並預防運動傷害。"
 const ogImageUrl = `${siteUrl}/og-image.jpg`
 
 useSeoMeta({
   title: defaultTitle,
-  titleTemplate: (titleChunk) => (titleChunk ? (titleChunk.includes("KSE") ? titleChunk : `${titleChunk}｜KSE 美式筋膜放鬆教室`) : defaultTitle),
+  titleTemplate: (titleChunk) => {
+    if (!titleChunk) return defaultTitle
+    const clean = titleChunk.replace(/^\(開發中\)/, "").trim()
+    const base = clean.includes("KSE") ? clean : `${clean}｜KSE 美式筋膜放鬆教室`
+    return `(開發中)${base}`
+  },
   description: defaultDesc,
   // Open Graph
   ogSiteName: "KSE 美式筋膜放鬆教室",
