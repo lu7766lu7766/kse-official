@@ -94,15 +94,17 @@
         </NuxtLink>
       </div>
       <div class="mt-12 grid gap-6 sm:grid-cols-2">
-        <article v-for="(service, i) in SERVICES" :key="service.slug" class="surface-card overflow-hidden rounded-sm">
-          <img
-            :src="SERVICE_IMAGES[i]"
-            :alt="`${service.title}情境照片`"
-            width="1200"
-            height="900"
-            loading="lazy"
-            class="h-48 w-full object-cover opacity-80"
-          />
+        <article v-for="(service, i) in SERVICES" :key="service.slug" class="surface-card group overflow-hidden rounded-sm">
+          <div class="overflow-hidden">
+            <img
+              :src="SERVICE_IMAGES[i]"
+              :alt="`${service.title}情境照片`"
+              width="1200"
+              height="900"
+              loading="lazy"
+              class="h-64 w-full object-cover opacity-85 transition-transform duration-500 group-hover:scale-105 sm:h-72 lg:h-80"
+            />
+          </div>
           <div class="p-7">
             <component :is="SERVICE_ICONS[i]" class="h-6 w-6 text-primary" aria-hidden="true" />
             <h3 class="mt-4 text-xl">{{ service.title }}</h3>
