@@ -25,8 +25,8 @@ RUN npx nuxt generate
 FROM nginx:alpine AS runner
 
 # 宣告 Runner 階段環境變數（支援 Build-time 與 Runtime 注入）
-ARG NUXT_CRAWLER_ALLOW
-ENV NUXT_CRAWLER_ALLOW=$NUXT_CRAWLER_ALLOW
+ARG CRAWLER_ALLOW
+ENV CRAWLER_ALLOW=$CRAWLER_ALLOW
 
 # 複製 SSG 產出的靜態檔案
 COPY --from=builder /app/.output/public /usr/share/nginx/html
