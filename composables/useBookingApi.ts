@@ -28,6 +28,14 @@ export interface AppointmentRecord {
   created_at?: string
 }
 
+export interface UserRecord {
+  id: number
+  name: string
+  username: string
+  line_user_id: string | null
+  role?: string
+}
+
 export interface ApiResponse<T> {
   code: number | number[]
   data: T
@@ -243,6 +251,25 @@ export function useBookingApi() {
   }
 
   /**
+   * 憑 LINE User ID 查詢 USER 角色之會員資料
+   */
+  async function getUserByLine(lineUserId: string): Promise<UserRecord | null> {
+    try {
+      const res = await $fetch<ApiResponse<UserRecord | null>>(
+        `${baseUrl}/api/client/booking/user-by-line`,
+        {
+          method: "GET",
+          params: { line_user_id: lineUserId.trim() },
+        }
+      )
+      return res.data || null
+    } catch (error) {
+      console.warn("[BookingApi] getUserByLine 失敗:", error)
+      return null
+    }
+  }
+
+  /**
    * 統一錯誤訊息提取
    */
   function extractErrorMessage(error: any, fallback: string): string {
@@ -272,5 +299,6 @@ export function useBookingApi() {
     bindLine,
     searchAppointments,
     cancelAppointment,
+    getUserByLine,
   }
 }

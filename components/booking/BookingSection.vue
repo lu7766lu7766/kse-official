@@ -35,16 +35,16 @@
 
     <!-- Tab 1: 週行事曆線上預約 -->
     <div v-show="activeTab === 'calendar'" class="space-y-10">
-      <!-- 預約流程指引卡片 (4 步驟，風格統一) -->
-      <div v-if="!shouldHideSteps" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <!-- Step 01: 加入官方 LINE -->
+      <!-- 預約流程指引卡片 (5 步驟) -->
+      <div v-if="!shouldHideSteps" class="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-5">
+        <!-- Step 01: 加入官方 LINE 帳號 -->
         <div class="surface-card rounded-sm p-4 text-xs border border-border/70 flex flex-col justify-between">
           <div>
             <span class="eyebrow text-[10px] mb-1">Step 01</span>
-            <h4 class="text-sm font-bold text-foreground">加入官方 LINE</h4>
-            <p class="mt-1 text-muted-foreground">若要接收預約通知與排程提醒，請先加入官方 LINE 帳號，並登入 LINE 帳號。</p>
+            <h4 class="text-sm font-bold text-foreground">加入官方 LINE 帳號</h4>
+            <p class="mt-1 text-muted-foreground">若要接收預約通知與排程提醒，請先加入官方 LINE 帳號。</p>
           </div>
-          <div class="mt-3 flex flex-wrap items-center gap-2 pt-1 border-t border-border/40">
+          <div class="mt-3 pt-2 border-t border-border/40">
             <a
               :href="BRAND.line"
               target="_blank"
@@ -59,49 +59,61 @@
               <span>加官方好友</span>
               <span class="text-[10px] text-muted-foreground">↗</span>
             </a>
+          </div>
+        </div>
 
+        <!-- Step 02: 登入 LINE 帳號 -->
+        <div class="surface-card rounded-sm p-4 text-xs border border-border/70 flex flex-col justify-between">
+          <div>
+            <span class="eyebrow text-[10px] mb-1">Step 02</span>
+            <h4 class="text-sm font-bold text-foreground">登入 LINE 帳號</h4>
+            <p class="mt-1 text-muted-foreground">點擊登入 LINE 帳號進行身分認證以解鎖預約表單。</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-border/40">
             <button
               v-if="liff.isReady.value && !liff.isInClient.value && !liff.isLoggedIn.value"
               type="button"
-              class="inline-flex items-center gap-1 rounded-sm border border-border/70 bg-card/60 px-2 py-1 text-[11px] font-medium text-foreground hover:text-foreground hover:border-primary/40 transition-colors cursor-pointer"
+              class="inline-flex items-center gap-1.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold text-emerald-400 hover:bg-emerald-500/20 transition-colors cursor-pointer"
               @click="liff.login()"
             >
-            <svg class="h-2.5 w-2.5 fill-[#06C755]" viewBox="0 0 24 24">
+              <svg class="h-2.5 w-2.5 fill-[#06C755]" viewBox="0 0 24 24">
                 <path
                   d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99"
                 />
               </svg>
-              <span>登入LINE</span>
-              <span class="text-[10px] text-muted-foreground">↗</span>
+              <span>登入 LINE 帳號</span>
             </button>
-            <span v-else-if="liff.profile.value" class="text-[11px] text-emerald-400 font-medium truncate">
-              已連動: {{ liff.profile.value.displayName }}
+            <span v-else-if="liff.profile.value" class="text-[11px] text-emerald-400 font-medium truncate inline-block pt-1">
+              ✓ 已登入: {{ liff.profile.value.displayName }}
+            </span>
+            <span v-else class="text-[11px] text-muted-foreground/70 inline-block pt-1">
+              載入中...
             </span>
           </div>
         </div>
 
-        <!-- Step 02: 選擇按摩師與時段 (原 Step 01) -->
+        <!-- Step 03: 選擇按摩師與時段 -->
         <div class="surface-card rounded-sm p-4 text-xs border border-border/70 flex flex-col justify-between">
           <div>
-            <span class="eyebrow text-[10px] mb-1">Step 02</span>
+            <span class="eyebrow text-[10px] mb-1">Step 03</span>
             <h4 class="text-sm font-bold text-foreground">選擇按摩師與時段</h4>
             <p class="mt-1 text-muted-foreground">瀏覽週曆各時段，點選合適的 1 小時服務區間（需提前半小時以上）。</p>
           </div>
         </div>
 
-        <!-- Step 03: 填寫預約者資料 (原 Step 02) -->
+        <!-- Step 04: 填寫預約者資料 -->
         <div class="surface-card rounded-sm p-4 text-xs border border-border/70 flex flex-col justify-between">
           <div>
-            <span class="eyebrow text-[10px] mb-1">Step 03</span>
+            <span class="eyebrow text-[10px] mb-1">Step 04</span>
             <h4 class="text-sm font-bold text-foreground">填寫預約者資料</h4>
             <p class="mt-1 text-muted-foreground">填寫姓名與手機號碼，方便後續查詢與確認預約。</p>
           </div>
         </div>
 
-        <!-- Step 04: 完成預約與到訪 (原 Step 03) -->
+        <!-- Step 05: 完成預約與到訪 -->
         <div class="surface-card rounded-sm p-4 text-xs border border-border/70 flex flex-col justify-between">
           <div>
-            <span class="eyebrow text-[10px] mb-1">Step 04</span>
+            <span class="eyebrow text-[10px] mb-1">Step 05</span>
             <h4 class="text-sm font-bold text-foreground">完成預約與到訪</h4>
             <p class="mt-1 text-muted-foreground">取得專屬預約編號，請於預約時間前 5~10 分鐘抵達教室。</p>
           </div>
