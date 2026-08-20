@@ -18,7 +18,32 @@ const profile = ref<LiffProfile | null>(null)
 const initError = ref<string | null>(null)
 const liffInstance = ref<any>(null)
 
+const dbUser = ref<any | null>(null)
+const isFetchingDbUser = ref(false)
+
 export function useLiff() {
+  /**
+   * 第一時間憑 LINE User ID 查詢資料庫中的 USER 會員
+   */
+  async function fetchDbUser() {
+    if (!profile.value?.userId) {
+      dbUser.value = null
+      return
+    }
+    isFetchingDbUser.value = true
+    try {
+      const api = useBookingApi()
+      console.log("[LIFF] 一取得 LINE User ID，立即查詢 DB USER 資料:", profile.value.userId)
+      const user = await api.getUserByLine(profile.value.userId)
+      dbUser.value = user
+    } catch (e) {
+      console.warn("[LIFF] 查詢 DB USER 失敗:", e)
+      dbUser.value = null
+    } finally {
+      isFetchingDbUser.value = false
+    }
+  }
+
   /**
    * 初始化 LIFF SDK (僅在 client 端執行)
    */
@@ -87,6 +112,11 @@ export function useLiff() {
             }
           }
         }
+
+        // 取得 Profile 後第一時間自動發送 API 查詢會員資料
+        if (profile.value?.userId) {
+          await fetchDbUser()
+        }
       }
     } catch (err: any) {
       console.error("[LIFF] 初始化失敗:", err)
@@ -139,6 +169,7 @@ export function useLiff() {
       liffInstance.value.logout()
       isLoggedIn.value = false
       profile.value = null
+      dbUser.value = null
     }
   }
 
@@ -197,7 +228,10 @@ export function useLiff() {
     isLoggedIn: readonly(isLoggedIn),
     isInClient: readonly(isInClient),
     profile: readonly(profile),
+    dbUser: readonly(dbUser),
+    isFetchingDbUser: readonly(isFetchingDbUser),
     initError: readonly(initError),
+    fetchDbUser,
     init,
     login,
     logout,

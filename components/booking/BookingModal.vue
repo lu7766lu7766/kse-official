@@ -216,8 +216,8 @@ const liff = useLiff()
 
 const submitting = ref(false)
 const errorMessage = ref("")
-const loadingUser = ref(false)
-const fetchedUser = ref<UserRecord | null>(null)
+const fetchedUser = computed(() => liff.dbUser.value)
+const loadingUser = computed(() => liff.isFetchingDbUser.value)
 
 const isLoggedIn = computed(() => liff.isLoggedIn.value || liff.isInClient.value)
 
@@ -233,60 +233,46 @@ function resetForm() {
   form.customer_phone = ""
   form.note = ""
   errorMessage.value = ""
-  fetchedUser.value = null
-  loadingUser.value = false
 }
 
-// 根據 LINE Profile 及本地快取自動帶入預設姓名與快取電話
-function populateLineData() {
-  if (liff.profile.value?.displayName && !form.customer_name) {
-    form.customer_name = liff.profile.value.displayName
-  }
-  const savedPhone = liff.getSavedPhone()
-  if (savedPhone && !form.customer_phone) {
-    form.customer_phone = savedPhone
-  }
-}
-
-// 查詢 LINE User 綁定資料
-async function checkUserStatus() {
-  const lineUserId = liff.profile.value?.userId
-  if (!lineUserId) {
-    fetchedUser.value = null
-    populateLineData()
-    return
-  }
-
-  loadingUser.value = true
-  try {
-    const user = await api.getUserByLine(lineUserId)
-    fetchedUser.value = user
-    if (user) {
-      form.customer_phone = user.username
-      if (user.name && !form.customer_name) {
-        form.customer_name = user.name
-      }
-    } else {
-      populateLineData()
+// 根據 LINE Profile/DB User 及本地快取自動帶入預設值
+function populateFormData() {
+  const dbUserObj = liff.dbUser.value
+  if (dbUserObj) {
+    form.customer_phone = dbUserObj.username
+    if (dbUserObj.name) {
+      form.customer_name = dbUserObj.name
     }
-  } catch (e) {
-    console.warn("checkUserStatus Error:", e)
-    populateLineData()
-  } finally {
-    loadingUser.value = false
+  } else {
+    if (liff.profile.value?.displayName && !form.customer_name) {
+      form.customer_name = liff.profile.value.displayName
+    }
+    const savedPhone = liff.getSavedPhone()
+    if (savedPhone && !form.customer_phone) {
+      form.customer_phone = savedPhone
+    }
   }
 }
 
 watch(
   () => props.show,
-  async (val) => {
+  (val) => {
     if (val) {
       errorMessage.value = ""
-      if (isLoggedIn.value) {
-        await checkUserStatus()
-      }
+      populateFormData()
     } else {
       resetForm()
+    }
+  },
+  { immediate: true }
+)
+
+// 監聽全域 dbUser 變動同步帶入
+watch(
+  () => liff.dbUser.value,
+  () => {
+    if (props.show) {
+      populateFormData()
     }
   }
 )
