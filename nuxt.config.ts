@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3333",
-      liffId: process.env.NUXT_PUBLIC_LIFF_ID || "",
+      reserveLiffId: process.env.NUXT_PUBLIC_RESERVE_LIFFF_ID || "",
+      bookingLiffId: process.env.NUXT_PUBLIC_BOOKING_LIFF_ID || "",
       bindLiffId: process.env.NUXT_PUBLIC_BIND_LIFF_ID || "",
     },
   },
@@ -26,7 +27,8 @@ export default defineNuxtConfig({
         { charset: "utf-8" },
         {
           name: "viewport",
-          content: "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover",
+          content:
+            "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover",
         },
         { "http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate" },
         { "http-equiv": "Pragma", content: "no-cache" },

@@ -4,7 +4,7 @@
     <PageHero eyebrow="Online Booking" title="線上預約放鬆" desc="採預約制（請至少提前半小時以上預約）。歡迎點選合適的按摩師與時段，體驗美式筋膜放鬆、運動按摩與動作評估服務。" />
 
     <!-- 預約核心區塊元件 -->
-    <BookingSection />
+    <BookingSection :liff-id="config.public.bookingLiffId" />
   </div>
 </template>
 
@@ -12,6 +12,8 @@
 import PageHero from "~/components/ui/PageHero.vue"
 import BookingSection from "~/components/booking/BookingSection.vue"
 import { BRAND } from "~/utils/site-data"
+
+const config = useRuntimeConfig()
 
 const SEO_TITLE = "線上預約｜KSE 美式筋膜放鬆教室｜台中運動按摩與動作評估"
 const SEO_DESC = "KSE 官方線上預約系統：提供專業運動按摩、美式徒手筋膜放鬆、動作評估預約。支援週曆時段點選、線上預約查詢與取消。"

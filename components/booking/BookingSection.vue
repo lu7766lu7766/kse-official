@@ -199,6 +199,7 @@ const props = withDefaults(
     hideSteps?: boolean
     hideInfo?: boolean
     onlySlots?: boolean
+    liffId: string
   }>(),
   {
     onlyAvailable: false,
@@ -271,9 +272,8 @@ function handleGoToSearch(phone: string) {
 }
 
 onMounted(() => {
-  const config = useRuntimeConfig()
   // 初始化 LINE LIFF SDK
-  liff.init(config.public.liffId)
+  liff.init(props.liffId)
 
   if (route.query.tab === "search" || route.query.phone) {
     activeTab.value = "search"

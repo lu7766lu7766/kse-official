@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-background text-foreground">
     <main id="main">
-      <BookingSection />
+      <BookingSection :liff-id="config.public.reserveLiffId" />
     </main>
   </div>
 </template>
@@ -9,6 +9,8 @@
 <script setup lang="ts">
 import BookingSection from "~/components/booking/BookingSection.vue"
 import { BRAND } from "~/utils/site-data"
+
+const config = useRuntimeConfig()
 
 definePageMeta({
   layout: false,
