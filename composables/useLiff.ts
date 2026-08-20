@@ -53,6 +53,19 @@ export function useLiff() {
       isLoggedIn.value = liff.isLoggedIn()
 
       if (liff.isLoggedIn()) {
+        // 還原登入前之 URL 狀態
+        if (typeof window !== "undefined") {
+          try {
+            const preLoginUrl = sessionStorage.getItem("kse_pre_login_url")
+            if (preLoginUrl) {
+              sessionStorage.removeItem("kse_pre_login_url")
+              if (preLoginUrl !== window.location.href && preLoginUrl.startsWith(window.location.origin)) {
+                window.history.replaceState(null, "", preLoginUrl)
+              }
+            }
+          } catch (e) {}
+        }
+
         try {
           const userProfile = await liff.getProfile()
           profile.value = {
@@ -86,13 +99,35 @@ export function useLiff() {
   /**
    * 觸發 LINE 登入 (外部瀏覽器跳轉)
    */
-  function login(redirectUri?: string) {
+  function login(customRedirectUri?: string) {
     if (!liffInstance.value) {
       console.warn("[LIFF] 尚未初始化，無法執行登入")
       return
     }
-    const targetUri = redirectUri || (typeof window !== "undefined" ? window.location.href : undefined)
-    liffInstance.value.login(targetUri ? { redirectUri: targetUri } : undefined)
+
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.setItem("kse_pre_login_url", window.location.href)
+      } catch (e) {}
+    }
+
+    // 預設帶入當前環境之純淨重定向網址 (無 query/hash)
+    const targetRedirectUri =
+      customRedirectUri ||
+      (typeof window !== "undefined"
+        ? window.location.origin + window.location.pathname
+        : undefined)
+
+    if (targetRedirectUri) {
+      try {
+        liffInstance.value.login({ redirectUri: targetRedirectUri })
+        return
+      } catch (err) {
+        console.warn("[LIFF] 帶 redirectUri 登入失敗，降級預設登入:", err)
+      }
+    }
+
+    liffInstance.value.login()
   }
 
   /**

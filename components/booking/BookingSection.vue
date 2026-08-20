@@ -73,7 +73,7 @@
             <button
               v-if="liff.isReady.value && !liff.isInClient.value && !liff.isLoggedIn.value"
               type="button"
-              class="inline-flex items-center gap-1.5 rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold text-emerald-400 hover:bg-emerald-500/20 transition-colors cursor-pointer"
+              class="inline-flex items-center gap-1.5 rounded-sm border border-border/70 bg-secondary/40 px-2.5 py-1 text-[11px] font-medium text-foreground hover:bg-secondary hover:border-primary/50 transition-colors cursor-pointer"
               @click="liff.login()"
             >
               <svg class="h-2.5 w-2.5 fill-[#06C755]" viewBox="0 0 24 24">
@@ -82,6 +82,7 @@
                 />
               </svg>
               <span>登入 LINE 帳號</span>
+              <span class="text-[10px] text-muted-foreground">↗</span>
             </button>
             <span v-else-if="liff.profile.value" class="text-[11px] text-emerald-400 font-medium truncate inline-block pt-1">
               ✓ 已登入: {{ liff.profile.value.displayName }}
