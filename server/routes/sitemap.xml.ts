@@ -1,16 +1,17 @@
-import { POSTS } from "~/utils/site-data";
+import { POSTS, SITE_URL } from "~/utils/site-data";
 
 export default defineEventHandler((event) => {
-  const baseUrl = "https://kse-release.com";
+  const baseUrl = SITE_URL;
 
   const staticPages = [
     "",
-    "/kse",
+    "/booking",
     "/services",
-    "/partners",
+    "/kse",
+    "/faq",
     "/cases",
     "/news",
-    "/faq",
+    "/partners",
   ];
 
   const articlePages = POSTS.map((post) => `/news/${post.slug}`);
@@ -27,7 +28,7 @@ ${allPages
     <loc>${baseUrl}${page}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>${page.startsWith("/news/") ? "monthly" : "weekly"}</changefreq>
-    <priority>${page === "" ? "1.0" : page.startsWith("/news/") ? "0.7" : "0.8"}</priority>
+    <priority>${page === "" ? "1.0" : page === "/booking" ? "0.9" : page.startsWith("/news/") ? "0.7" : "0.8"}</priority>
   </url>`
   )
   .join("\n")}

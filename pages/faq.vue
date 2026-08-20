@@ -94,35 +94,28 @@ const CHANNELS = computed(() => [
   { icon: Facebook, label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: BRAND.fb },
 ])
 
-const DESC = "KSE 常見問題與預約資訊：解答台中運動按摩、美式筋膜放鬆、受傷或肌肉拉傷後放鬆保養建議、與傳統推拿SPA差異及預約方式。"
+const { injectFaqSchema, injectBreadcrumbsSchema } = useGeoSchema()
+injectFaqSchema()
+injectBreadcrumbsSchema([
+  { name: "首頁", item: "/" },
+  { name: "FAQ 與預約", item: "/faq" },
+])
+
+const DESC = "KSE 常見問題與預約資訊：解答台中按摩、南屯筋膜放鬆、美式筋膜放鬆、受傷或肌肉拉傷後放鬆保養建議、與傳統推拿SPA差異及預約方式。"
 
 useHead({
-  title: "台中運動按摩與受傷舒緩常見問題｜FAQ與預約｜KSE 美式筋膜放鬆教室",
+  title: "常見問題FAQ｜台中按摩・南屯筋膜放鬆與運動按摩｜KSE 美式筋膜放鬆教室",
   meta: [
     { name: "description", content: DESC },
     {
       name: "keywords",
-      content: "台中運動按摩,受傷放鬆,台中筋膜放鬆,美式筋膜放鬆問答,拉傷按摩注意事項,肌肉緊繃保養,台中南屯按摩預約",
+      content: "台中按摩,南屯按摩,台中運動按摩,受傷放鬆,台中筋膜放鬆,美式筋膜放鬆問答,拉傷按摩注意事項,肌肉緊繃保養,台中南屯按摩預約",
     },
-    { property: "og:title", content: "台中運動按摩與受傷舒緩常見問題｜FAQ與預約｜KSE" },
+    { property: "og:title", content: "常見問題FAQ｜台中按摩・南屯筋膜放鬆與運動按摩｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://www.kse-release.com.tw/faq" },
   ],
   link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/faq" }],
-  script: [
-    {
-      type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: FAQS.map((f) => ({
-          "@type": "Question",
-          name: f.q,
-          acceptedAnswer: { "@type": "Answer", text: f.a },
-        })),
-      }),
-    },
-  ],
 })
 </script>

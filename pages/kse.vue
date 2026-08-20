@@ -110,18 +110,24 @@ const FASCIA_ITEMS = [
   { t: "居家延續", d: "提供對應的自我放鬆與活動度練習，維持課後效果。" },
 ]
 
+const { injectBreadcrumbsSchema } = useGeoSchema()
+injectBreadcrumbsSchema([
+  { name: "首頁", item: "/" },
+  { name: "KSE專業", item: "/kse" },
+])
+
 const DESC =
-  "KSE 品牌理念與核心技術：結合靜態與動態姿勢檢測評估、美式肌筋膜放鬆、動作重建與肌力體能訓練。針對台中運動按摩需求與受傷後不適防護，打造極致恢復品質。"
+  "KSE 品牌理念與核心技術：位於台中市南屯區大墩七街202號。結合靜態與動態姿勢檢測評估、美式肌筋膜放鬆、動作重建與肌力體能訓練。針對台中按摩、南屯筋膜放鬆與受傷防護，打造極致恢復品質。"
 
 useHead({
-  title: "KSE 專業技術｜台中美式筋膜放鬆・運動傷害防護與動作重建",
+  title: "KSE 品牌專業理念｜台中按摩・南屯筋膜放鬆與動作重建｜KSE",
   meta: [
     { name: "description", content: DESC },
     {
       name: "keywords",
-      content: "美式筋膜放鬆,台中筋膜放鬆,台中運動按摩,運動傷害防護,受傷後動作重建,肌肉張力鏈,關節活動度",
+      content: "台中按摩,南屯按摩,美式筋膜放鬆,台中筋膜放鬆,台中運動按摩,運動傷害防護,受傷後動作重建,肌肉張力鏈,關節活動度",
     },
-    { property: "og:title", content: "KSE 專業技術｜台中美式筋膜放鬆・動作重建" },
+    { property: "og:title", content: "KSE 品牌專業理念｜台中按摩・南屯筋膜放鬆與動作重建" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://www.kse-release.com.tw/kse" },

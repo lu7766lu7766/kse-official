@@ -1,16 +1,28 @@
+export const SITE_URL = "https://www.kse-release.com.tw"
+
 export const BRAND = {
   name: "KSE 美式筋膜放鬆教室",
   full: "KSE 美式筋膜放鬆教室｜Kinetic Sports Enhancement",
   slogan: "MOVE BETTER. FEEL BETTER. PERFORM BETTER.",
+  url: SITE_URL,
   address: "台中市南屯區大墩七街202號",
+  addressLocality: "南屯區",
+  addressRegion: "台中市",
+  postalCode: "408",
   phone: "0901-403990",
   line: "https://lin.ee/z9MrmKK",
   fb: "https://www.facebook.com/profile.php?id=61562337030014",
   ig: "https://www.instagram.com/kse_release_studio",
   area: "台中市南屯區大墩七街202號",
+  geo: {
+    latitude: 24.14324,
+    longitude: 120.64756,
+  },
+  priceRange: "$$",
   mapQuery: "KSE美式筋膜放鬆教室",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=KSE%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4",
 }
+
 
 export const NAV = [
   { to: "/", label: "首頁" },

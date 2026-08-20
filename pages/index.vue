@@ -333,46 +333,25 @@ function getPostImage(img: string) {
 }
 
 const DESC =
-  "KSE 美式筋膜放鬆教室位於台中南屯，提供專業美式筋膜放鬆、台中運動按摩、靜態與動態姿勢評估、受傷後肌肉緊繃舒緩與動作恢復訓練，協助運動員與久坐族重塑動作品質與運動表現。"
+  "KSE 美式筋膜放鬆教室位於台中市南屯區大墩七街202號，專為運動員、久坐族與健身愛好者提供專業美式筋膜放鬆、台中運動按摩、南屯肌肉放鬆、靜態與動態姿勢評估及受傷防護訓練，採全線上預約制。"
+
+const { injectLocalBusinessSchema, injectFaqSchema } = useGeoSchema()
+injectLocalBusinessSchema()
+injectFaqSchema()
 
 useHead({
-  title: "KSE 美式筋膜放鬆教室｜台中運動按摩・受傷後動作恢復與肌肉舒緩",
+  title: "KSE 美式筋膜放鬆教室｜台中按摩・南屯筋膜放鬆與運動按摩・線上預約",
   meta: [
     { name: "description", content: DESC },
     {
       name: "keywords",
-      content: "台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,受傷放鬆,肌肉緊繃舒緩,運動傷害恢復,台中南屯按摩,動作訓練,運動恢復",
+      content: "台中按摩,南屯按摩放鬆,台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,肌肉緊繃舒緩,運動傷害防護,台中南屯按摩,線上預約按摩,大墩七街按摩",
     },
-    { property: "og:title", content: "KSE 美式筋膜放鬆教室｜台中運動按摩・受傷後動作恢復" },
+    { property: "og:title", content: "KSE 美式筋膜放鬆教室｜台中按摩・南屯筋膜放鬆與運動按摩" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://www.kse-release.com.tw/" },
   ],
   link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/" }],
-  script: [
-    {
-      type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": ["LocalBusiness", "SportsActivityLocation"],
-        name: BRAND.full,
-        image: "https://www.kse-release.com.tw/favicon.png",
-        telephone: BRAND.phone,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "大墩七街202號",
-          addressLocality: "台中市",
-          addressRegion: "南屯區",
-          postalCode: "408",
-          addressCountry: "TW",
-        },
-        url: "https://www.kse-release.com.tw/",
-        priceRange: "$$",
-        description: DESC,
-        slogan: BRAND.slogan,
-        sameAs: [BRAND.fb, BRAND.ig, BRAND.line],
-      }),
-    },
-  ],
 })
 </script>

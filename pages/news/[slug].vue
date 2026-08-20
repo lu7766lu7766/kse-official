@@ -102,23 +102,49 @@ useHead(() => {
     };
   }
 
+  const url = `https://www.kse-release.com.tw/news/${post.value.slug}`;
+
   return {
     title: `${post.value.title}｜KSE 美式筋膜放鬆教室`,
     meta: [
       { name: "description", content: post.value.excerpt },
+      {
+        name: "keywords",
+        content: `台中按摩,南屯按摩,台中運動按摩,${post.value.category},美式筋膜放鬆,運動恢復`,
+      },
       { property: "og:title", content: post.value.title },
       { property: "og:description", content: post.value.excerpt },
       { property: "og:type", content: "article" },
+      { property: "og:url", content: url },
     ],
+    link: [{ rel: "canonical", href: url }],
     script: [
       {
-        type: "application/ld+json",
+        type: "application/ld+json" as any,
         innerHTML: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Article",
           headline: post.value.title,
+          description: post.value.excerpt,
           datePublished: post.value.date,
           articleSection: post.value.category,
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": url,
+          },
+          author: {
+            "@type": "Organization",
+            name: "KSE 美式筋膜放鬆教室",
+            url: "https://www.kse-release.com.tw",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "KSE 美式筋膜放鬆教室",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://www.kse-release.com.tw/favicon.png",
+            },
+          },
         }),
       },
     ],

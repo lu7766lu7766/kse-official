@@ -75,18 +75,25 @@ const ALTS: Record<string, string> = {
   strength: "運動員在深色健身房進行槓鈴肌力訓練",
 }
 
+const { injectServicesSchema, injectBreadcrumbsSchema } = useGeoSchema()
+injectServicesSchema()
+injectBreadcrumbsSchema([
+  { name: "首頁", item: "/" },
+  { name: "服務項目", item: "/services" },
+])
+
 const DESC =
-  "KSE 台中南屯提供美式筋膜放鬆、台中運動按摩、核心穩定修復與肌力體能訓練，專處理肌肉緊繃、受傷後身體舒緩與動作功能恢復保養，客製化個人極致恢復方案。"
+  "KSE 位於台中市南屯區大墩七街202號，提供美式筋膜放鬆、台中運動按摩、南屯肌肉放鬆舒緩、核心穩定修復與肌力體能訓練，採全線上預約制。"
 
 useHead({
-  title: "專業服務項目｜台中美式筋膜放鬆・運動按摩・受傷後動作恢復｜KSE",
+  title: "服務項目｜台中按摩・南屯筋膜放鬆與運動按摩｜KSE 美式筋膜放鬆教室",
   meta: [
     { name: "description", content: DESC },
     {
       name: "keywords",
-      content: "台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,受傷放鬆保養,肌肉緊繃舒緩,南屯運動按摩,核心穩定修復,肌力體能訓練",
+      content: "台中按摩,南屯按摩,台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,受傷放鬆保養,肌肉緊繃舒緩,南屯運動按摩,核心穩定修復,肌力體能訓練",
     },
-    { property: "og:title", content: "專業服務項目｜台中美式筋膜放鬆・運動按摩｜KSE" },
+    { property: "og:title", content: "服務項目｜台中按摩・南屯筋膜放鬆與運動按摩｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://www.kse-release.com.tw/services" },

@@ -83,16 +83,28 @@ const posts = computed(() =>
     : POSTS.filter((p) => p.category === active.value)
 );
 
+const { injectBreadcrumbsSchema } = useGeoSchema()
+injectBreadcrumbsSchema([
+  { name: "首頁", item: "/" },
+  { name: "最新消息", item: "/news" },
+])
+
 const DESC =
-  "KSE 美式筋膜放鬆教室最新消息：活動公告、運動團隊合作、運動恢復知識，以及筋膜放鬆、動作訓練與肌力體能專業文章。";
+  "KSE 美式筋膜放鬆教室最新消息：位於台中市南屯區大墩七街202號。提供活動公告、運動團隊合作、台中按摩與運動恢復知識、筋膜放鬆、動作訓練與肌力體能專業文章。";
 
 useHead({
-  title: "最新消息｜運動恢復與筋膜放鬆文章｜KSE 美式筋膜放鬆教室",
+  title: "最新消息｜台中按摩・南屯筋膜放鬆與運動恢復專欄｜KSE",
   meta: [
     { name: "description", content: DESC },
-    { property: "og:title", content: "最新消息｜KSE 美式筋膜放鬆教室" },
+    {
+      name: "keywords",
+      content: "台中按摩,南屯按摩,台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,運動恢復專欄,運動傷害防護,肌力體能文章",
+    },
+    { property: "og:title", content: "最新消息｜台中按摩・南屯筋膜放鬆與運動恢復專欄｜KSE" },
     { property: "og:description", content: DESC },
     { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://www.kse-release.com.tw/news" },
   ],
+  link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/news" }],
 });
 </script>
