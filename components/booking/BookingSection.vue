@@ -84,12 +84,19 @@
               <span>登入 LINE 帳號</span>
               <span class="text-[10px] text-muted-foreground">↗</span>
             </button>
-            <span v-else-if="liff.profile.value" class="text-[11px] text-emerald-400 font-medium truncate inline-block pt-1">
-              ✓ 已登入: {{ liff.profile.value.displayName }}
-            </span>
-            <span v-else class="text-[11px] text-muted-foreground/70 inline-block pt-1">
-              載入中...
-            </span>
+
+            <div v-else-if="liff.profile.value" class="flex flex-wrap items-center justify-between gap-1.5 pt-1">
+              <span class="text-[11px] text-emerald-400 font-medium truncate"> ✓ 已登入: {{ liff.profile.value.displayName }} </span>
+              <button
+                type="button"
+                class="text-[11px] text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0 ml-1"
+                title="切換其他 LINE 帳號"
+                @click="liff.switchAccount()"
+              >
+                更換帳號
+              </button>
+            </div>
+            <span v-else class="text-[11px] text-muted-foreground/70 inline-block pt-1"> 載入中... </span>
           </div>
         </div>
 

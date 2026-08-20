@@ -97,6 +97,15 @@
                   （LINE 已帶入）
                 </span>
               </label>
+              <button
+                v-if="liff.profile.value"
+                type="button"
+                class="text-[11px] text-muted-foreground underline hover:text-foreground transition-colors cursor-pointer"
+                title="切換其他 LINE 帳號"
+                @click="liff.switchAccount()"
+              >
+                更換帳號
+              </button>
             </div>
             <input
               id="customer_name"

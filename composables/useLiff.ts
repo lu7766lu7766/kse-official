@@ -143,6 +143,14 @@ export function useLiff() {
   }
 
   /**
+   * 登出並更換 LINE 帳號
+   */
+  function switchAccount() {
+    logout()
+    login()
+  }
+
+  /**
    * 關閉當前 LIFF 視窗返回 LINE 聊天室
    */
   function closeWindow() {
@@ -193,6 +201,7 @@ export function useLiff() {
     init,
     login,
     logout,
+    switchAccount,
     closeWindow,
     savePhone,
     getSavedPhone,
