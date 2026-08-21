@@ -48,24 +48,27 @@
       </div>
 
       <!-- 1. 未登入 LINE 帳號 (隱藏預約表單) -->
-      <div v-if="!isLoggedIn" class="py-8 text-center space-y-4">
-        <div class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 mb-2">
-          <Lock class="h-7 w-7" />
+      <div v-if="!isLoggedIn" class="py-8 text-center space-y-3.5">
+        <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-muted/40 text-muted-foreground mb-1">
+          <Lock class="h-5 w-5" />
         </div>
-        <h3 class="text-lg font-bold text-foreground">預約前請先登入 LINE 帳號</h3>
-        <p class="text-xs text-muted-foreground max-w-xs mx-auto leading-relaxed">
-          為了提供即時預約確認推播與到訪提醒服務，請先完成 LINE 帳號登入身分驗證。
-        </p>
-        <div class="pt-3">
+        <div>
+          <h3 class="text-base font-bold text-foreground">預約前請先登入 LINE 帳號</h3>
+          <p class="mt-1 text-xs text-muted-foreground max-w-xs mx-auto leading-relaxed">
+            為了提供即時預約確認推播與到訪提醒服務，請先完成 LINE 帳號登入身分驗證。
+          </p>
+        </div>
+        <div class="pt-2">
           <button
             type="button"
-            class="inline-flex items-center gap-2 rounded-sm bg-[#06C755] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#06C755]/20 transition-all hover:bg-[#05b34c] hover:scale-[1.02] cursor-pointer"
+            class="inline-flex items-center gap-1.5 rounded-sm border border-border/70 bg-secondary/40 px-3.5 py-1.5 text-xs font-medium text-foreground hover:bg-secondary hover:border-primary/50 transition-colors cursor-pointer"
             @click="liff.login()"
           >
-            <svg class="h-4 w-4 fill-white" viewBox="0 0 24 24">
+            <svg class="h-3 w-3 fill-[#06C755]" viewBox="0 0 24 24">
               <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.608.391.084.922.258 1.057.592.121.303.079.777.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.645 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.589-3.844 2.589-5.99" />
             </svg>
-            <span>點此登入 LINE 帳號</span>
+            <span>登入 LINE 帳號</span>
+            <span class="text-[10px] text-muted-foreground">↗</span>
           </button>
         </div>
       </div>
