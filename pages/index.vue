@@ -9,7 +9,7 @@
         height="1008"
         class="absolute inset-0 h-full w-full object-cover opacity-45"
       />
-      <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30" />
+      <div class="absolute inset-0 bg-linear-to-r from-ink via-ink/85 to-ink/30" />
       <div class="container-kse relative py-28 lg:py-40">
         <div class="rise-in max-w-3xl">
           <span class="eyebrow">Kinetic Sports Enhancement ・ 台中南屯</span>
@@ -130,14 +130,14 @@
         class="absolute inset-0 h-full w-full object-cover opacity-40"
       />
       <div class="absolute inset-0 cinematic opacity-80" />
-      <div class="container-kse relative py-24 text-center lg:py-36">
-        <span class="eyebrow">Collaboration</span>
-        <h2 class="mt-4 text-4xl leading-tight sm:text-6xl">KSE × 中信兄弟</h2>
-        <p class="mx-auto mt-6 max-w-2xl text-sm text-muted-foreground">合作素材／Logo 預留，後續替換。實際合作內容與說明將於品牌方提供後更新。</p>
+      <div class="container-kse relative py-24 text-center lg:py-36 text-white">
+        <span class="eyebrow text-primary">Collaboration</span>
+        <h2 class="mt-4 text-4xl leading-tight sm:text-6xl text-white">KSE × 中信兄弟</h2>
+        <p class="mx-auto mt-6 max-w-2xl text-sm text-stone-200">合作素材／Logo 預留，後續替換。實際合作內容與說明將於品牌方提供後更新。</p>
         <div class="mt-8 flex justify-center">
           <NuxtLink
             to="/partners"
-            class="inline-flex items-center gap-2 rounded-sm border border-border bg-background/60 px-7 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
+            class="inline-flex items-center gap-2 rounded-sm border border-white/25 bg-white/10 backdrop-blur-sm px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105"
           >
             查看運動合作 <ArrowRight class="h-4 w-4" aria-hidden="true" />
           </NuxtLink>
@@ -149,12 +149,26 @@
     <Section tone="ink">
       <SectionHeading eyebrow="Partners" title="合作單位" desc="以下為合作版位示意，素材與說明後續替換。" />
       <div class="mt-12 grid gap-6 sm:grid-cols-3">
-        <div v-for="p in PARTNERS" :key="p.name" class="surface-card rounded-sm p-7">
-          <div class="flex h-24 items-center justify-center rounded-sm border border-dashed border-border text-xs text-muted-foreground">
-            Logo 版位
+        <div
+          v-for="p in PARTNERS"
+          :key="p.name"
+          :class="[
+            'surface-card rounded-sm p-7 transition-all',
+            p.name === '中信兄弟' && 'border-primary/50 ring-1 ring-primary/20 bg-linear-to-b from-card via-card to-secondary/30'
+          ]"
+        >
+          <div
+            :class="[
+              'flex h-24 items-center justify-center rounded-sm text-xs transition-colors',
+              p.name === '中信兄弟'
+                ? 'bg-navy text-amber-300 font-bold border border-primary/40 shadow-sm'
+                : 'border border-dashed border-border text-muted-foreground'
+            ]"
+          >
+            {{ p.name === '中信兄弟' ? '中信兄弟 Logo 版位' : 'Logo 版位' }}
           </div>
           <h3 class="mt-5 text-lg">{{ p.name }}</h3>
-          <p class="mt-2 text-xs uppercase tracking-widest text-primary">
+          <p class="mt-2 text-xs uppercase tracking-widest text-primary font-bold">
             {{ p.note }}
           </p>
           <p class="mt-3 text-sm text-muted-foreground">{{ p.desc }}</p>
@@ -247,7 +261,7 @@
     <Section id="booking">
       <div class="grid gap-10 lg:grid-cols-2">
         <div
-          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card"
+          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-linear-to-br from-primary/10 via-card to-card"
         >
           <div>
             <span class="eyebrow mb-2">Online Reservation</span>

@@ -28,12 +28,6 @@
             <p class="mt-6 text-sm font-bold text-foreground">
               {{ service.duration }}
             </p>
-            <div class="mt-8 flex flex-wrap gap-3">
-              <BookingButton>預約此服務</BookingButton>
-              <BookingButton variant="outline">
-                <span>詢問詳情</span>
-              </BookingButton>
-            </div>
           </div>
         </article>
       </div>

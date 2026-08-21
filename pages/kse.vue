@@ -85,9 +85,6 @@
               </div>
             </li>
           </ol>
-          <div class="mt-8">
-            <BookingButton />
-          </div>
         </div>
       </div>
     </Section>
@@ -98,7 +95,6 @@
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import BookingButton from "~/components/ui/BookingButton.vue"
 import { PROCESS } from "~/utils/site-data"
 
 const FASCIA_ITEMS = [

@@ -21,7 +21,6 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: "zh-Hant-TW",
-        class: "dark",
       },
       meta: [
         { charset: "utf-8" },

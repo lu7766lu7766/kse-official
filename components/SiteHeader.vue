@@ -20,7 +20,7 @@
 
       <nav aria-label="主要導覽" class="hidden items-center gap-1 lg:flex">
         <NuxtLink
-          v-for="item in NAV"
+          v-for="item in navItems"
           :key="item.to"
           :to="item.to"
           class="rounded-sm px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
@@ -31,9 +31,9 @@
         </NuxtLink>
         <NuxtLink
           to="/booking"
-          class="ml-3 inline-flex items-center rounded-sm bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform hover:scale-[1.03]"
+          class="ml-3 inline-flex items-center rounded-sm bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform hover:scale-[1.03] shadow-md shadow-primary/20"
         >
-          立即預約
+          線上預約
         </NuxtLink>
       </nav>
 
@@ -74,9 +74,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Menu, X } from "lucide-vue-next";
 import { NAV } from "~/utils/site-data";
 
 const open = ref(false);
+const navItems = computed(() => NAV.filter((item) => item.to !== "/booking"));
 </script>

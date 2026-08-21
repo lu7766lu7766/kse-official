@@ -107,7 +107,7 @@
           :class="[
             'flex flex-col rounded-sm border p-3.5 transition-all duration-300',
             day.isToday
-              ? 'border-primary/70 bg-gradient-to-b from-primary/10 via-card/80 to-card shadow-lg shadow-primary/5'
+              ? 'border-primary/70 bg-linear-to-b from-primary/10 via-card/80 to-card shadow-lg shadow-primary/5'
               : 'border-border/70 bg-card/40 hover:border-border',
             !hasAvailableSlotsForDay(day.dateString) && 'hidden md:flex',
           ]"

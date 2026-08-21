@@ -31,7 +31,7 @@
 
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
         <div
-          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card"
+          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-linear-to-br from-primary/10 via-card to-card"
         >
           <div>
             <span class="eyebrow mb-2">Online Reservation</span>

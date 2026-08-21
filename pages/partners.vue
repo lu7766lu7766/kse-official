@@ -16,22 +16,36 @@
         class="absolute inset-0 h-full w-full object-cover opacity-35"
       />
       <div class="absolute inset-0 cinematic opacity-80" />
-      <div class="container-kse relative py-24 text-center lg:py-32">
-        <span class="eyebrow">Media Slot</span>
-        <h2 class="mt-4 text-3xl sm:text-5xl">合作主視覺版位</h2>
-        <p class="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">合作素材／Logo 預留，後續替換。</p>
+      <div class="container-kse relative py-24 text-center lg:py-32 text-white">
+        <span class="eyebrow text-primary">Media Slot</span>
+        <h2 class="mt-4 text-3xl sm:text-5xl text-white">合作主視覺版位</h2>
+        <p class="mx-auto mt-4 max-w-xl text-sm text-stone-200">合作素材／Logo 預留，後續替換。</p>
       </div>
     </section>
 
     <Section>
       <SectionHeading eyebrow="Partners" title="合作單位版位" />
       <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        <article v-for="p in PARTNERS" :key="p.name" class="surface-card rounded-sm p-7">
-          <div class="flex h-28 items-center justify-center rounded-sm border border-dashed border-border text-xs text-muted-foreground">
-            Logo 版位（待提供）
+        <article
+          v-for="p in PARTNERS"
+          :key="p.name"
+          :class="[
+            'surface-card rounded-sm p-7 transition-all',
+            p.name === '中信兄弟' && 'border-primary/50 ring-1 ring-primary/20 bg-linear-to-b from-card via-card to-secondary/30'
+          ]"
+        >
+          <div
+            :class="[
+              'flex h-28 items-center justify-center rounded-sm text-xs transition-colors',
+              p.name === '中信兄弟'
+                ? 'bg-navy text-amber-300 font-bold border border-primary/40 shadow-sm'
+                : 'border border-dashed border-border text-muted-foreground'
+            ]"
+          >
+            {{ p.name === '中信兄弟' ? '中信兄弟 Logo 版位（即將上線）' : 'Logo 版位（待提供）' }}
           </div>
           <h3 class="mt-6 text-xl">{{ p.name }}</h3>
-          <p class="mt-2 text-xs uppercase tracking-widest text-primary">
+          <p class="mt-2 text-xs uppercase tracking-widest text-primary font-bold">
             {{ p.note }}
           </p>
           <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -52,11 +66,28 @@
           <p class="mt-3 text-sm text-muted-foreground">{{ i.d }}</p>
         </div>
       </div>
-      <div class="mt-12 rounded-sm border border-border bg-card p-8 text-center">
-        <h3 class="text-2xl">洽談合作</h3>
-        <p class="mt-3 text-sm text-muted-foreground">歡迎透過電話、LINE 官方帳號、Instagram 或 Facebook 粉絲專頁與我們聯繫洽談。</p>
-        <div class="mt-6 flex justify-center">
-          <BookingButton>聯絡我們</BookingButton>
+      <div class="mt-12 rounded-sm border border-border bg-card p-8 sm:p-10 text-center surface-card">
+        <h3 class="text-2xl font-extrabold text-foreground">洽談運動與球隊合作</h3>
+        <p class="mt-3 max-w-xl mx-auto text-sm text-muted-foreground leading-relaxed">
+          歡迎各級球隊、學校校隊、運動防護員或運動員個人與我們聯繫，我們將依單位需求與賽事週期安排專屬支援方案。
+        </p>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a
+            :href="BRAND.line"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-sm bg-[#06C755] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[#05b34c] hover:scale-105 shadow-md shadow-emerald-500/20 cursor-pointer"
+          >
+            <MessageCircle class="h-4 w-4" />
+            <span>LINE 官方帳號洽談</span>
+          </a>
+          <a
+            :href="`tel:${BRAND.phone.replace(/[^0-9]/g, '')}`"
+            class="inline-flex items-center justify-center gap-2 rounded-sm border border-border bg-secondary/60 px-6 py-3 text-sm font-bold text-foreground transition-all hover:border-primary hover:text-primary hover:scale-105 cursor-pointer"
+          >
+            <Phone class="h-4 w-4 text-primary" />
+            <span>電話洽詢 ({{ BRAND.phone }})</span>
+          </a>
         </div>
       </div>
     </Section>
@@ -64,12 +95,12 @@
 </template>
 
 <script setup lang="ts">
+import { MessageCircle, Phone } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import BookingButton from "~/components/ui/BookingButton.vue"
 import PlaceholderMedia from "~/components/ui/PlaceholderMedia.vue"
-import { PARTNERS } from "~/utils/site-data"
+import { BRAND, PARTNERS } from "~/utils/site-data"
 
 const WORK_DIRECTIONS = [
   {
