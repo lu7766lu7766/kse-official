@@ -17,95 +17,43 @@
 <script setup lang="ts">
 import SiteHeader from "~/components/SiteHeader.vue"
 import SiteFooter from "~/components/SiteFooter.vue"
-import { BRAND } from "~/utils/site-data"
+import { buildSiteGraph } from "~/composables/useGeoSchema"
+import { SITE_URL } from "~/utils/site-data"
 
-const siteUrl = "https://www.kse-release.com.tw"
-const defaultTitle = "(開發中)KSE 美式筋膜放鬆教室｜台中南屯運動按摩・動作控制與運動恢復"
+const BRAND_SUFFIX = "KSE 美式筋膜放鬆教室"
+const defaultTitle = "台中運動按摩・南屯美式筋膜放鬆｜KSE 美式筋膜放鬆教室"
 const defaultDesc =
-  "位於台中南屯的專業筋膜放鬆與運動按摩教室。結合靜態與動態動作評估、徒手美式筋膜技術與核心動作控制訓練，協助運動員與久坐族改善活動度、緩解緊繃並預防運動傷害。"
-const ogImageUrl = `${siteUrl}/og-image.jpg`
+  "KSE 美式筋膜放鬆教室位於台中市南屯區大墩七街202號，以評估、筋膜放鬆、動作訓練與肌力強化四步流程，處理肌肉緊繃、活動度受限與運動後恢復。每日 11:00–22:00，線上預約。"
+const ogImageUrl = `${SITE_URL}/og-image.jpg`
 
 useSeoMeta({
   title: defaultTitle,
+  // 各頁 title 已含 KSE 就不重複加品牌尾綴
   titleTemplate: (titleChunk) => {
     if (!titleChunk) return defaultTitle
-    const clean = titleChunk.replace(/^\(開發中\)/, "").trim()
-    const base = clean.includes("KSE") ? clean : `${clean}｜KSE 美式筋膜放鬆教室`
-    return `(開發中)${base}`
+    return titleChunk.includes("KSE") ? titleChunk : `${titleChunk}｜${BRAND_SUFFIX}`
   },
   description: defaultDesc,
-  // Open Graph
-  ogSiteName: "KSE 美式筋膜放鬆教室",
+  ogSiteName: BRAND_SUFFIX,
   ogTitle: defaultTitle,
   ogDescription: defaultDesc,
   ogImage: ogImageUrl,
   ogImageSecureUrl: ogImageUrl,
   ogImageType: "image/jpeg",
-  ogImageWidth: 1600,
-  ogImageHeight: 1008,
-  ogImageAlt: "KSE 美式筋膜放鬆教室 - 專業運動按摩與動作恢復",
-  ogUrl: siteUrl,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageAlt: "KSE 放鬆師在台中南屯教室為客人進行腿後側筋膜放鬆",
   ogLocale: "zh_TW",
   ogType: "website",
-  // Twitter Card
   twitterCard: "summary_large_image",
-  twitterTitle: defaultTitle,
-  twitterDescription: defaultDesc,
-  twitterImage: ogImageUrl,
-  twitterImageAlt: "KSE 美式筋膜放鬆教室 - 專業運動按摩與動作恢復",
-  // Robots
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
 })
-
-const schemaOrg = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      url: siteUrl,
-      name: BRAND.name,
-      description: defaultDesc,
-      inLanguage: "zh-TW",
-    },
-    {
-      "@type": ["LocalBusiness", "SportsActivityLocation", "HealthAndBeautyBusiness"],
-      "@id": `${siteUrl}/#organization`,
-      name: BRAND.name,
-      alternateName: BRAND.full,
-      url: siteUrl,
-      logo: `${siteUrl}/favicon.png`,
-      image: ogImageUrl,
-      telephone: BRAND.phone,
-      description: defaultDesc,
-      slogan: BRAND.slogan,
-      priceRange: "$$",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "大墩七街202號",
-        addressLocality: "台中市",
-        addressRegion: "南屯區",
-        postalCode: "408",
-        addressCountry: "TW",
-      },
-      sameAs: [BRAND.fb, BRAND.ig, BRAND.line],
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          opens: "09:00",
-          closes: "21:00",
-        },
-      ],
-    },
-  ],
-}
 
 useHead({
   script: [
     {
       type: "application/ld+json",
-      innerHTML: JSON.stringify(schemaOrg),
+      innerHTML: JSON.stringify(buildSiteGraph(defaultDesc)),
     },
   ],
 })

@@ -1,27 +1,22 @@
 <template>
-  <div
-    class="flex min-h-screen items-center justify-center bg-background px-4 text-foreground"
-  >
+  <div class="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-navy px-4 text-white">
+    <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
     <div class="max-w-md text-center">
-      <h1 class="text-7xl font-bold text-foreground">
-        {{ error.statusCode || 404 }}
+      <p class="font-display text-8xl font-extrabold italic text-gold">{{ error.statusCode || 404 }}</p>
+      <h1 class="mt-4 text-2xl font-extrabold text-white">
+        {{ is404 ? "找不到這個頁面" : "發生了一點問題" }}
       </h1>
-      <h2 class="mt-4 text-xl font-semibold text-foreground">
-        {{ error.statusCode === 404 ? "Page not found" : "Something went wrong" }}
-      </h2>
-      <p class="mt-2 text-sm text-muted-foreground">
-        {{
-          error.statusCode === 404
-            ? "The page you're looking for doesn't exist or has been moved."
-            : "An unexpected error occurred."
-        }}
+      <p class="mt-3 text-sm text-navy-foreground">
+        {{ is404 ? "頁面可能已移除或網址有誤，可以從以下連結繼續瀏覽。" : "請稍後再試，或直接回到首頁。" }}
       </p>
-      <div class="mt-6 flex flex-wrap justify-center gap-2">
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <button type="button" class="btn-gold cursor-pointer px-6 py-3 text-sm" @click="go('/')">回到首頁</button>
         <button
-          @click="handleError"
-          class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 cursor-pointer"
+          type="button"
+          class="cursor-pointer rounded-[2px] border border-white/30 px-6 py-3 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
+          @click="go('/booking')"
         >
-          Go home
+          線上預約
         </button>
       </div>
     </div>
@@ -31,12 +26,13 @@
 <script setup lang="ts">
 import type { NuxtError } from "#app";
 
-const props = defineProps({
-  error: {
-    type: Object as () => NuxtError,
-    required: true,
-  },
+const props = defineProps<{ error: NuxtError }>();
+const is404 = computed(() => (props.error.statusCode ?? 404) === 404);
+
+useSeoMeta({
+  title: is404.value ? "找不到頁面｜KSE 美式筋膜放鬆教室" : "發生錯誤｜KSE 美式筋膜放鬆教室",
+  robots: "noindex, follow",
 });
 
-const handleError = () => clearError({ redirect: "/" });
+const go = (to: string) => clearError({ redirect: to });
 </script>

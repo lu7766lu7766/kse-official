@@ -1,29 +1,43 @@
 <template>
   <div class="border-b border-border">
-    <button
-      type="button"
-      @click="accordion?.toggleItem(value)"
-      :aria-expanded="isOpen"
-      class="flex w-full items-center justify-between py-4 text-left text-sm font-medium transition-all hover:underline cursor-pointer"
+    <h3 class="m-0 text-base font-bold">
+      <button
+        :id="`${uid}-q`"
+        type="button"
+        @click="accordion?.toggleItem(value)"
+        :aria-expanded="isOpen"
+        :aria-controls="`${uid}-a`"
+        class="flex w-full items-center justify-between gap-6 py-5 text-left text-base font-bold transition-colors hover:text-primary cursor-pointer"
+      >
+        <span>{{ title }}</span>
+        <span
+          :class="
+            cn(
+              'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border transition-all duration-200',
+              isOpen && 'rotate-180 border-primary bg-primary text-primary-foreground'
+            )
+          "
+          aria-hidden="true"
+        >
+          <ChevronDown class="h-4 w-4" />
+        </span>
+      </button>
+    </h3>
+    <!-- 用 v-show 保留答案在 HTML 中，讓搜尋引擎與 AI 可讀取 -->
+    <div
+      v-show="isOpen"
+      :id="`${uid}-a`"
+      role="region"
+      :aria-labelledby="`${uid}-q`"
+      class="pb-6 pr-12 text-[0.9375rem] leading-relaxed text-muted-foreground"
     >
-      <span>{{ title }}</span>
-      <ChevronDown
-        :class="
-          cn(
-            'h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200',
-            isOpen && 'rotate-180'
-          )
-        "
-      />
-    </button>
-    <div v-show="isOpen" class="pb-4 pt-0 text-sm leading-relaxed text-muted-foreground">
       <slot />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { inject, computed, type Ref } from "vue";
+import { inject, computed, useId, type Ref } from "vue";
 import { ChevronDown } from "lucide-vue-next";
 import { cn } from "~/utils/cn";
 
@@ -31,6 +45,8 @@ const props = defineProps<{
   value: string;
   title: string;
 }>();
+
+const uid = useId();
 
 const accordion = inject<{
   activeItems: Ref<string[]>;

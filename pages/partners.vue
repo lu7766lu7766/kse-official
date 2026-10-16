@@ -2,91 +2,90 @@
   <div>
     <PageHero
       eyebrow="Partnership"
-      title="與球隊、學校與運動員一起工作"
-      desc="以下所有合作單位素材、Logo 與說明皆為預留版位，實際內容將於品牌方提供後替換，網站不會預先撰寫未經提供的合作細節。"
+      title="中信兄弟與校園運動合作"
+      desc="KSE 與職業球隊、學校校隊與運動員一起工作，把評估、筋膜放鬆與動作訓練帶進訓練與比賽週期。"
+      :crumbs="[{ label: '運動合作' }]"
     />
 
-    <section class="relative isolate overflow-hidden border-b border-border">
+    <!-- 中信兄弟 -->
+    <section class="relative isolate overflow-hidden bg-navy text-white">
       <img
         src="~/assets/images/baseball.jpg"
-        alt="夜間球場中揮棒的棒球選手，深藍黑色調運動攝影"
+        alt=""
         width="1600"
         height="912"
         loading="lazy"
-        class="absolute inset-0 h-full w-full object-cover opacity-35"
+        class="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
       />
-      <div class="absolute inset-0 cinematic opacity-80" />
-      <div class="container-kse relative py-24 text-center lg:py-32 text-white">
-        <span class="eyebrow text-primary">Media Slot</span>
-        <h2 class="mt-4 text-3xl sm:text-5xl text-white">合作主視覺版位</h2>
-        <p class="mx-auto mt-4 max-w-xl text-sm text-stone-200">合作素材／Logo 預留，後續替換。</p>
+      <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy via-navy/90 to-navy/40" aria-hidden="true" />
+      <div class="container-kse py-20 lg:py-28">
+        <span class="eyebrow text-gold">Official Partner・職業棒球</span>
+        <h2 class="mt-5 font-display text-5xl font-extrabold italic leading-none text-white sm:text-7xl">
+          KSE <span class="text-gold">×</span> 中信兄弟
+        </h2>
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-navy-foreground lg:text-lg">{{ PARTNERS[0]?.desc }}</p>
+        <ul class="mt-10 grid max-w-3xl gap-4 sm:grid-cols-3">
+          <li v-for="item in BROTHERS_SCOPE" :key="item.t" class="border-l-2 border-gold bg-white/5 px-5 py-4">
+            <p class="font-bold text-white">{{ item.t }}</p>
+            <p class="mt-1 text-sm text-navy-foreground">{{ item.d }}</p>
+          </li>
+        </ul>
       </div>
     </section>
 
+    <!-- 校園合作 -->
     <Section>
-      <SectionHeading eyebrow="Partners" title="合作單位版位" />
-      <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        <article
-          v-for="p in PARTNERS"
-          :key="p.name"
-          :class="[
-            'surface-card rounded-sm p-7 transition-all',
-            p.name === '中信兄弟' && 'border-primary/50 ring-1 ring-primary/20 bg-linear-to-b from-card via-card to-secondary/30'
-          ]"
-        >
-          <div
-            :class="[
-              'flex h-28 items-center justify-center rounded-sm text-xs transition-colors',
-              p.name === '中信兄弟'
-                ? 'bg-navy text-amber-300 font-bold border border-primary/40 shadow-sm'
-                : 'border border-dashed border-border text-muted-foreground'
-            ]"
-          >
-            {{ p.name === '中信兄弟' ? '中信兄弟 Logo 版位（即將上線）' : 'Logo 版位（待提供）' }}
-          </div>
-          <h3 class="mt-6 text-xl">{{ p.name }}</h3>
-          <p class="mt-2 text-xs uppercase tracking-widest text-primary font-bold">
-            {{ p.note }}
-          </p>
-          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-            {{ p.desc }}
-          </p>
-          <div class="mt-6">
-            <PlaceholderMedia label="合作照片／影片版位" note="素材待提供後替換" />
+      <SectionHeading eyebrow="School Partners" title="校園運動合作" desc="從成長期就建立正確的動作品質，是降低運動傷害最有效的方式。" />
+      <div class="mt-12 grid gap-8 lg:grid-cols-2">
+        <article v-for="(p, i) in SCHOOL_PARTNERS" :key="p.name" class="surface-card overflow-hidden">
+          <img
+            :src="SCHOOL_IMAGES[i]"
+            :alt="SCHOOL_ALTS[i]"
+            width="1200"
+            height="1600"
+            loading="lazy"
+            class="aspect-[4/3] w-full object-cover object-[50%_25%]"
+          />
+          <div class="p-7">
+            <p class="text-xs font-bold tracking-[0.16em] text-primary">{{ p.type }}</p>
+            <h3 class="mt-2 text-2xl">{{ p.name }}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{{ p.desc }}</p>
           </div>
         </article>
       </div>
     </Section>
 
     <Section tone="ink">
-      <SectionHeading eyebrow="Work With Us" title="球隊／學校／運動員合作" desc="以下為合作方向說明，實際方案將依單位需求討論後確認。" />
+      <SectionHeading eyebrow="Work With Us" title="球隊／學校／運動員合作方式" desc="實際方案依單位需求與賽季週期討論後確認。" />
       <div class="mt-12 grid gap-6 sm:grid-cols-3">
-        <div v-for="i in WORK_DIRECTIONS" :key="i.t" class="surface-card rounded-sm p-7">
-          <h3 class="text-lg">{{ i.t }}</h3>
+        <div v-for="(i, idx) in WORK_DIRECTIONS" :key="i.t" class="surface-card p-7">
+          <span class="font-display text-4xl font-extrabold italic leading-none text-gold">0{{ idx + 1 }}</span>
+          <h3 class="mt-4 text-lg">{{ i.t }}</h3>
           <p class="mt-3 text-sm text-muted-foreground">{{ i.d }}</p>
         </div>
       </div>
-      <div class="mt-12 rounded-sm border border-border bg-card p-8 sm:p-10 text-center surface-card">
-        <h3 class="text-2xl font-extrabold text-foreground">洽談運動與球隊合作</h3>
-        <p class="mt-3 max-w-xl mx-auto text-sm text-muted-foreground leading-relaxed">
+      <div class="relative isolate mt-12 overflow-hidden bg-navy p-8 text-center text-white sm:p-12">
+        <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
+        <h3 class="text-2xl font-extrabold text-white sm:text-3xl">洽談運動與球隊合作</h3>
+        <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-navy-foreground">
           歡迎各級球隊、學校校隊、運動防護員或運動員個人與我們聯繫，我們將依單位需求與賽事週期安排專屬支援方案。
         </p>
-        <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
             :href="BRAND.line"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 rounded-sm bg-[#06C755] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[#05b34c] hover:scale-105 shadow-md shadow-emerald-500/20 cursor-pointer"
+            class="inline-flex items-center justify-center gap-2 rounded-[2px] bg-[#06C755] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#05b34c]"
           >
-            <MessageCircle class="h-4 w-4" />
-            <span>LINE 官方帳號洽談</span>
+            <MessageCircle class="h-4 w-4" aria-hidden="true" />
+            LINE 官方帳號洽談
           </a>
           <a
             :href="`tel:${BRAND.phone.replace(/[^0-9]/g, '')}`"
-            class="inline-flex items-center justify-center gap-2 rounded-sm border border-border bg-secondary/60 px-6 py-3 text-sm font-bold text-foreground transition-all hover:border-primary hover:text-primary hover:scale-105 cursor-pointer"
+            class="inline-flex items-center justify-center gap-2 rounded-[2px] border border-white/30 px-6 py-3 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
           >
-            <Phone class="h-4 w-4 text-primary" />
-            <span>電話洽詢 ({{ BRAND.phone }})</span>
+            <Phone class="h-4 w-4" aria-hidden="true" />
+            電話洽詢 {{ BRAND.phone }}
           </a>
         </div>
       </div>
@@ -99,39 +98,41 @@ import { MessageCircle, Phone } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import PlaceholderMedia from "~/components/ui/PlaceholderMedia.vue"
 import { BRAND, PARTNERS } from "~/utils/site-data"
 
-const WORK_DIRECTIONS = [
-  {
-    t: "球隊合作",
-    d: "隨隊恢復支援、賽季期間的定期筋膜處理與體能維護規劃。",
-  },
-  {
-    t: "學校合作",
-    d: "校隊動作評估、運動傷害預防講座與基礎肌力課程設計。",
-  },
-  {
-    t: "運動員個人",
-    d: "個別化的評估、恢復與訓練規劃，配合比賽週期安排。",
-  },
+import coreImg from "~/assets/images/core.jpg"
+import strengthImg from "~/assets/images/strength.jpg"
+
+const SCHOOL_PARTNERS = PARTNERS.slice(1)
+const SCHOOL_IMAGES = [coreImg, strengthImg]
+const SCHOOL_ALTS = [
+  "KSE 教練在校園體育館指導學生進行伸展與動作控制練習",
+  "KSE 教練在育英國中體育館指導校隊學生進行彈力帶下肢訓練",
 ]
 
-const DESC = "KSE 運動合作專區：提供專業球隊隨隊恢復支援、校隊運動傷害防護講座、台中運動按摩與肌筋膜放鬆防護計畫。歡迎運動團體與選手洽談合作。"
+const BROTHERS_SCOPE = [
+  { t: "動作評估", d: "找出高負荷部位的活動度限制與代償。" },
+  { t: "筋膜放鬆", d: "處理肩、胸椎、髖等專項受限部位。" },
+  { t: "賽後恢復", d: "依賽程安排運動按摩與身體維護。" },
+]
 
-useHead({
-  title: "運動合作｜台中運動按摩與團隊傷害防護合作｜KSE 美式筋膜放鬆教室",
-  meta: [
-    { name: "description", content: DESC },
-    {
-      name: "keywords",
-      content: "台中運動按摩合作,球隊運動恢復,運動傷害防護,校隊筋膜放鬆,棒球運動恢復,賽後放鬆支援",
-    },
-    { property: "og:title", content: "運動合作｜台中運動按摩與團隊傷害防護｜KSE" },
-    { property: "og:description", content: DESC },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://www.kse-release.com.tw/partners" },
-  ],
-  link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/partners" }],
+const WORK_DIRECTIONS = [
+  { t: "球隊合作", d: "隨隊恢復支援、賽季期間的定期筋膜處理與體能維護規劃。" },
+  { t: "學校合作", d: "校隊動作評估、運動傷害預防講座與基礎肌力課程設計。" },
+  { t: "運動員個人", d: "個別化的評估、恢復與訓練規劃，配合比賽週期安排。" },
+]
+
+const { injectBreadcrumbsSchema } = useGeoSchema()
+injectBreadcrumbsSchema([
+  { name: "首頁", item: "/" },
+  { name: "運動合作", item: "/partners" },
+])
+
+usePageSeo({
+  title: "中信兄弟合作｜球隊與校園運動恢復合作｜KSE",
+  description:
+    "KSE 美式筋膜放鬆教室為中信兄弟合作的運動恢復團隊，並與大智國小、育英國中等校園運動團隊合作，提供動作評估、筋膜放鬆、賽後恢復與基礎肌力課程。歡迎球隊洽談。",
+  path: "/partners",
+  image: "/og-image.jpg",
 })
 </script>

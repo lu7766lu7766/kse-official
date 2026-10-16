@@ -1,33 +1,53 @@
 <template>
   <div>
-    <!-- Hero -->
-    <section class="relative isolate overflow-hidden border-b border-border">
-      <img
-        src="~/assets/images/hero.jpg"
-        alt="放鬆師在深色運動恢復空間中為運動員進行大腿後側筋膜放鬆"
-        width="1600"
-        height="1008"
-        class="absolute inset-0 h-full w-full object-cover opacity-45"
-      />
-      <div class="absolute inset-0 bg-linear-to-r from-ink via-ink/85 to-ink/30" />
-      <div class="container-kse relative py-28 lg:py-40">
-        <div class="rise-in max-w-3xl">
-          <span class="eyebrow">Kinetic Sports Enhancement ・ 台中南屯</span>
-          <h1 class="mt-4 text-4xl leading-[1.08] sm:text-6xl lg:text-7xl">
-            KSE
-            <br />
-            美式筋膜放鬆教室
+    <!-- Hero：深藏青首屏 + 實拍直式照片 -->
+    <section class="relative isolate overflow-hidden bg-navy text-white">
+      <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
+      <div class="pointer-events-none absolute -left-40 top-1/3 -z-10 h-[32rem] w-[32rem] rounded-full bg-gold/10 blur-3xl" aria-hidden="true" />
+
+      <div class="container-kse grid items-center gap-12 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:py-24">
+        <div class="rise-in">
+          <span class="eyebrow text-gold">KSE 美式筋膜放鬆教室・台中南屯</span>
+          <h1 class="mt-6 text-4xl font-extrabold leading-[1.12] text-white sm:text-5xl lg:text-[4.25rem]">
+            台中運動按摩<br />
+            <span class="text-gold">美式筋膜放鬆</span>
           </h1>
-          <p class="mt-6 text-xl font-bold leading-snug text-foreground sm:text-2xl">不是單純放鬆，而是重新找回身體的活動能力。</p>
-          <p class="mt-4 text-sm tracking-[0.18em] text-primary sm:text-base">靜態評估 × 動態評估 × 筋膜放鬆 × 動作訓練</p>
-          <div class="mt-10 flex flex-wrap gap-3">
+          <p class="mt-6 text-xl font-bold leading-snug text-white sm:text-2xl">不是單純放鬆，而是重新找回身體的活動能力。</p>
+          <!-- 首段即答：地點 + 服務 + 對象 + 時間，方便搜尋摘要與 AI 引用 -->
+          <p class="mt-5 max-w-xl text-base leading-relaxed text-navy-foreground">
+            KSE 位於台中市南屯區大墩七街202號，以「評估 → 放鬆 → 動作 → 強化」四步流程，為運動員、跑者與久坐上班族處理肌肉緊繃、活動度受限與運動後恢復。{{ BRAND.hours.label }}，線上預約。
+          </p>
+          <div class="mt-9 flex flex-wrap gap-3">
             <BookingButton />
             <NuxtLink
-              to="/kse"
-              class="inline-flex items-center gap-2 rounded-sm border border-border px-7 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
+              to="/services"
+              class="inline-flex items-center gap-2 rounded-[2px] border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
             >
-              了解 KSE <ArrowRight class="h-4 w-4" aria-hidden="true" />
+              看服務項目 <ArrowRight class="h-4 w-4" aria-hidden="true" />
             </NuxtLink>
+          </div>
+
+          <dl class="mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-8 sm:grid-cols-4">
+            <div v-for="f in HERO_FACTS" :key="f.label">
+              <dt class="text-xs tracking-[0.14em] text-navy-foreground">{{ f.label }}</dt>
+              <dd class="mt-1 font-display text-2xl font-bold text-white">{{ f.value }}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div class="absolute -left-3 -top-3 h-full w-full border border-gold/40" aria-hidden="true" />
+          <img
+            src="~/assets/images/hero.jpg"
+            alt="KSE 放鬆師在台中南屯教室為客人進行背部美式筋膜放鬆"
+            width="1200"
+            height="1600"
+            fetchpriority="high"
+            class="relative aspect-[4/3] w-full object-cover object-[50%_25%] shadow-2xl shadow-black/40 sm:aspect-[4/5]"
+          />
+          <div class="absolute -bottom-5 right-5 bg-gold px-5 py-3 text-gold-foreground shadow-xl">
+            <p class="font-display text-sm font-extrabold tracking-[0.16em]">OFFICIAL PARTNER</p>
+            <p class="text-sm font-bold">中信兄弟 運動恢復合作</p>
           </div>
         </div>
       </div>
@@ -37,9 +57,9 @@
     <Section id="process">
       <SectionHeading eyebrow="The KSE Process" title="四步流程：讓改變留在身體裡" desc="每一次課程都遵循相同的邏輯，從評估開始，到訓練結束。" />
       <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <li v-for="step in PROCESS" :key="step.no" class="surface-card rounded-sm p-7">
-          <span class="text-5xl font-black text-primary/30">{{ step.no }}</span>
-          <h3 class="mt-4 text-xl">{{ step.title }}</h3>
+        <li v-for="step in PROCESS" :key="step.no" class="surface-card p-7">
+          <span class="font-display text-6xl font-extrabold italic leading-none text-gold">{{ step.no }}</span>
+          <h3 class="mt-5 text-xl">{{ step.title }}</h3>
           <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
             {{ step.desc }}
           </p>
@@ -49,25 +69,25 @@
 
     <!-- Comparison -->
     <Section tone="ink">
-      <SectionHeading eyebrow="Difference" title="KSE 與一般按摩的差異" desc="我們處理的是動作能力，不是單次的舒服感受。" />
-      <div class="mt-12 overflow-hidden rounded-sm border border-border">
-        <table class="w-full border-collapse text-left text-sm">
-          <caption class="sr-only">
-            KSE 與一般按摩的比較表
-          </caption>
+      <SectionHeading eyebrow="Difference" title="KSE 美式筋膜放鬆和一般按摩差在哪？" />
+      <!-- 結論先行：給 AI 摘要直接引用 -->
+      <p class="mt-5 max-w-3xl text-base leading-relaxed text-foreground">
+        <strong>簡單說：</strong>一般按摩處理「當下的舒服感」，KSE 處理「動作能力」。我們先用靜態與動態評估找出受限來源，再做筋膜放鬆，最後用動作訓練把改變固定下來，並提供居家練習。
+      </p>
+      <div class="mt-10 overflow-x-auto border border-border bg-card">
+        <table class="w-full min-w-[34rem] border-collapse text-left text-sm">
+          <caption class="sr-only">KSE 美式筋膜放鬆與一般按摩的比較表</caption>
           <thead>
-            <tr class="bg-secondary">
+            <tr class="bg-navy text-white">
               <th scope="col" class="px-4 py-4 font-bold sm:px-6">比較項目</th>
-              <th scope="col" class="px-4 py-4 font-bold text-primary sm:px-6">KSE</th>
-              <th scope="col" class="px-4 py-4 font-bold text-muted-foreground sm:px-6">一般按摩</th>
+              <th scope="col" class="px-4 py-4 font-bold text-gold sm:px-6">KSE 美式筋膜放鬆</th>
+              <th scope="col" class="px-4 py-4 font-bold text-navy-foreground sm:px-6">一般按摩</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="row in COMPARISON" :key="row.topic" class="border-t border-border">
-              <th scope="row" class="px-4 py-4 font-semibold sm:px-6">
-                {{ row.topic }}
-              </th>
-              <td class="px-4 py-4 sm:px-6">
+              <th scope="row" class="px-4 py-4 font-semibold sm:px-6">{{ row.topic }}</th>
+              <td class="px-4 py-4 font-medium sm:px-6">
                 <span class="flex items-start gap-2">
                   <Check class="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
                   {{ row.kse }}
@@ -75,7 +95,7 @@
               </td>
               <td class="px-4 py-4 text-muted-foreground sm:px-6">
                 <span class="flex items-start gap-2">
-                  <X class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                  <Minus class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                   {{ row.other }}
                 </span>
               </td>
@@ -88,224 +108,218 @@
     <!-- Services -->
     <Section id="services">
       <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="Services" title="四項核心服務" />
+        <SectionHeading eyebrow="Services" title="四項核心服務" desc="第一次來都會先評估，再依結果組合最適合的方案。" />
         <NuxtLink to="/services" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
           查看服務項目 <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </NuxtLink>
       </div>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2">
-        <article v-for="(service, i) in SERVICES" :key="service.slug" class="surface-card group overflow-hidden rounded-sm">
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <article v-for="(service, i) in SERVICES" :key="service.slug" class="surface-card group flex flex-col overflow-hidden">
           <div class="overflow-hidden">
             <img
               :src="SERVICE_IMAGES[i]"
-              :alt="`${service.title}情境照片`"
+              :alt="SERVICE_ALTS[i]"
               width="1200"
-              height="900"
+              height="1600"
               loading="lazy"
-              class="h-64 w-full object-cover opacity-85 transition-transform duration-500 group-hover:scale-105 sm:h-72 lg:h-80"
+              class="aspect-[4/3] w-full object-cover object-[50%_25%] transition-transform duration-500 group-hover:scale-105"
             />
           </div>
-          <div class="p-7">
+          <div class="flex flex-1 flex-col p-6">
             <component :is="SERVICE_ICONS[i]" class="h-6 w-6 text-primary" aria-hidden="true" />
             <h3 class="mt-4 text-xl">{{ service.title }}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-              {{ service.short }}
-            </p>
-            <NuxtLink :to="`/services#${service.slug}`" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">
-              查看詳情 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{{ service.short }}</p>
+            <p class="mt-4 text-xs font-semibold text-foreground">{{ service.duration }}</p>
+            <NuxtLink :to="`/services#${service.slug}`" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
+              了解{{ service.title }} <ArrowRight class="h-4 w-4" aria-hidden="true" />
             </NuxtLink>
           </div>
         </article>
       </div>
     </Section>
 
-    <!-- Cinematic collaboration -->
-    <section class="relative isolate overflow-hidden border-y border-border">
+    <!-- 中信兄弟合作 -->
+    <section class="relative isolate overflow-hidden bg-navy text-white">
       <img
         src="~/assets/images/baseball.jpg"
-        alt="夜間球場中揮棒的棒球選手，深藍黑色調運動攝影"
+        alt=""
         width="1600"
         height="912"
         loading="lazy"
-        class="absolute inset-0 h-full w-full object-cover opacity-40"
+        class="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
       />
-      <div class="absolute inset-0 cinematic opacity-80" />
-      <div class="container-kse relative py-24 text-center lg:py-36 text-white">
-        <span class="eyebrow text-primary">Collaboration</span>
-        <h2 class="mt-4 text-4xl leading-tight sm:text-6xl text-white">KSE × 中信兄弟</h2>
-        <p class="mx-auto mt-6 max-w-2xl text-sm text-stone-200">合作素材／Logo 預留，後續替換。實際合作內容與說明將於品牌方提供後更新。</p>
-        <div class="mt-8 flex justify-center">
+      <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy via-navy/90 to-navy/50" aria-hidden="true" />
+      <div class="container-kse grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-28">
+        <div>
+          <span class="eyebrow text-gold">Official Partner</span>
+          <h2 class="mt-5 font-display text-5xl font-extrabold italic leading-none text-white sm:text-7xl">
+            KSE <span class="text-gold">×</span> 中信兄弟
+          </h2>
+          <p class="mt-6 max-w-lg text-base leading-relaxed text-navy-foreground">
+            {{ PARTNERS[0]?.desc }}服務職業球隊的評估與恢復流程，同樣帶給台中的每一位運動員與上班族。
+          </p>
           <NuxtLink
             to="/partners"
-            class="inline-flex items-center gap-2 rounded-sm border border-white/25 bg-white/10 backdrop-blur-sm px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-primary hover:border-primary hover:text-primary-foreground hover:scale-105"
+            class="mt-8 inline-flex items-center gap-2 rounded-[2px] border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
           >
             查看運動合作 <ArrowRight class="h-4 w-4" aria-hidden="true" />
           </NuxtLink>
         </div>
+        <ul class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          <li v-for="p in PARTNERS" :key="p.name" class="border-l-2 border-gold bg-white/5 px-6 py-5 backdrop-blur-sm">
+            <p class="text-xs tracking-[0.16em] text-gold">{{ p.type }}</p>
+            <p class="mt-1 text-xl font-extrabold text-white">{{ p.name }}</p>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- Partners -->
-    <Section tone="ink">
-      <SectionHeading eyebrow="Partners" title="合作單位" desc="以下為合作版位示意，素材與說明後續替換。" />
-      <div class="mt-12 grid gap-6 sm:grid-cols-3">
-        <div
-          v-for="p in PARTNERS"
-          :key="p.name"
-          :class="[
-            'surface-card rounded-sm p-7 transition-all',
-            p.name === '中信兄弟' && 'border-primary/50 ring-1 ring-primary/20 bg-linear-to-b from-card via-card to-secondary/30'
-          ]"
-        >
-          <div
-            :class="[
-              'flex h-24 items-center justify-center rounded-sm text-xs transition-colors',
-              p.name === '中信兄弟'
-                ? 'bg-navy text-amber-300 font-bold border border-primary/40 shadow-sm'
-                : 'border border-dashed border-border text-muted-foreground'
-            ]"
-          >
-            {{ p.name === '中信兄弟' ? '中信兄弟 Logo 版位' : 'Logo 版位' }}
-          </div>
-          <h3 class="mt-5 text-lg">{{ p.name }}</h3>
-          <p class="mt-2 text-xs uppercase tracking-widest text-primary font-bold">
-            {{ p.note }}
-          </p>
-          <p class="mt-3 text-sm text-muted-foreground">{{ p.desc }}</p>
-        </div>
-      </div>
-    </Section>
-
     <!-- Audiences -->
     <Section>
-      <SectionHeading eyebrow="Who We Train" title="服務對象" />
+      <SectionHeading eyebrow="Who We Train" title="適合哪些人？" desc="不論是職業運動員或每天久坐的上班族，只要身體卡卡、動作受限，都可以從一次評估開始。" />
       <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <li v-for="a in AUDIENCES" :key="a.title" class="surface-card rounded-sm p-6">
-          <h3 class="text-base font-bold">{{ a.title }}</h3>
-          <p class="mt-2 text-sm text-muted-foreground">{{ a.desc }}</p>
+        <li v-for="(a, i) in AUDIENCES" :key="a.title" class="surface-card flex gap-4 p-6">
+          <span class="font-display text-2xl font-extrabold text-gold">0{{ i + 1 }}</span>
+          <div>
+            <h3 class="text-base font-bold">{{ a.title }}</h3>
+            <p class="mt-1.5 text-sm text-muted-foreground">{{ a.desc }}</p>
+          </div>
         </li>
       </ul>
     </Section>
 
-    <!-- Cases -->
+    <!-- 處理路徑 -->
     <Section tone="ink">
       <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="Case Studies" title="示範案例" desc="以下為示範內容，可於後台編輯，非真實個案。" />
+        <SectionHeading eyebrow="How It Works" title="三種常見的處理路徑" desc="實際內容會依每個人的評估結果調整。" />
         <NuxtLink to="/cases" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
-          查看案例分享 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+          看完整流程 <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </NuxtLink>
       </div>
       <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        <article v-for="c in CASES" :key="c.slug" class="surface-card rounded-sm p-7">
+        <article v-for="c in CASES" :key="c.slug" class="surface-card p-7">
           <span class="eyebrow">{{ c.tag }}</span>
-          <h3 class="mt-3 text-lg leading-snug">{{ c.title }}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-            {{ c.summary }}
-          </p>
+          <h3 class="mt-4 text-lg leading-snug">{{ c.title }}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{{ c.summary }}</p>
         </article>
       </div>
     </Section>
 
     <!-- Manifesto -->
-    <Section tone="cinematic" class="text-center">
-      <p class="text-2xl font-black leading-tight tracking-[0.08em] sm:text-4xl lg:text-6xl">
-        MOVE BETTER.
-        <br />
-        FEEL BETTER.
-        <br />
-        PERFORM BETTER.
+    <Section tone="navy" class="text-center">
+      <p class="font-display text-4xl font-extrabold italic leading-[1.05] tracking-[0.02em] text-white sm:text-6xl lg:text-7xl">
+        MOVE BETTER.<br />
+        FEEL BETTER.<br />
+        <span class="text-gold">PERFORM BETTER.</span>
       </p>
     </Section>
 
     <!-- News -->
     <Section>
       <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="News" title="最新消息" />
+        <SectionHeading eyebrow="Journal" title="運動恢復知識" />
         <NuxtLink to="/news" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
           所有文章 <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </NuxtLink>
       </div>
       <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        <article v-for="post in POSTS.slice(0, 3)" :key="post.slug" class="surface-card overflow-hidden rounded-sm">
-          <img :src="getPostImage(post.image)" :alt="post.alt" width="1200" height="900" loading="lazy" class="h-44 w-full object-cover opacity-80" />
-          <div class="p-6">
-            <p class="text-xs text-muted-foreground">{{ post.date }} ・ {{ post.category }}</p>
-            <h3 class="mt-2 text-lg leading-snug">{{ post.title }}</h3>
-            <p class="mt-2 line-clamp-3 text-sm text-muted-foreground">
-              {{ post.excerpt }}
-            </p>
-            <NuxtLink :to="`/news/${post.slug}`" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
-              閱讀更多 <ArrowRight class="h-4 w-4" aria-hidden="true" />
-            </NuxtLink>
-          </div>
+        <article v-for="post in POSTS.slice(0, 3)" :key="post.slug" class="surface-card group overflow-hidden">
+          <NuxtLink :to="`/news/${post.slug}`" class="block">
+            <div class="overflow-hidden">
+              <img
+                :src="POST_IMAGES[post.image]"
+                :alt="post.alt"
+                width="1200"
+                height="1600"
+                loading="lazy"
+                class="aspect-[16/10] w-full object-cover object-[50%_25%] transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="p-6">
+              <p class="text-xs text-muted-foreground">
+                <time :datetime="post.date">{{ post.date }}</time> ・ <span class="text-primary">{{ post.category }}</span>
+              </p>
+              <h3 class="mt-2 text-lg leading-snug transition-colors group-hover:text-primary">{{ post.title }}</h3>
+              <p class="mt-2 line-clamp-3 text-sm text-muted-foreground">{{ post.excerpt }}</p>
+            </div>
+          </NuxtLink>
         </article>
       </div>
     </Section>
 
     <!-- FAQ -->
     <Section tone="ink">
-      <SectionHeading eyebrow="FAQ" title="常見問題" />
-      <Accordion type="single" collapsible class="mt-10 max-w-3xl">
-        <AccordionItem v-for="f in FAQS.slice(0, 4)" :key="f.q" :value="f.q" :title="f.q">
-          {{ f.a }}
-        </AccordionItem>
-      </Accordion>
-      <div class="mt-8">
-        <NuxtLink to="/faq" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
-          查看完整 FAQ <ArrowRight class="h-4 w-4" aria-hidden="true" />
-        </NuxtLink>
+      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <SectionHeading eyebrow="FAQ" title="常見問題" desc="第一次來之前最常被問的問題。" />
+          <NuxtLink to="/faq" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
+            查看全部 {{ FAQS.length }} 個問題 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+          </NuxtLink>
+        </div>
+        <Accordion type="single" collapsible>
+          <AccordionItem v-for="f in FAQS.slice(0, 5)" :key="f.q" :value="f.q" :title="f.q">
+            {{ f.a }}
+          </AccordionItem>
+        </Accordion>
       </div>
     </Section>
 
     <!-- CTA + Map -->
     <Section id="booking">
-      <div class="grid gap-10 lg:grid-cols-2">
-        <div
-          class="surface-card rounded-sm p-6 sm:p-8 flex flex-col justify-between border border-primary/40 bg-linear-to-br from-primary/10 via-card to-card"
-        >
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="relative isolate flex flex-col justify-between overflow-hidden bg-navy p-8 text-white sm:p-10">
+          <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
           <div>
-            <span class="eyebrow mb-2">Online Reservation</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-foreground">線上預約系統已正式開通</h2>
-            <p class="mt-2 text-xs text-muted-foreground leading-relaxed">
-              採預約制。歡迎前往專屬預約頁面，查看按摩師週排班與可用時段，支援即時線上預約與查詢取消功能。
+            <span class="eyebrow text-gold">Book Online</span>
+            <h2 class="mt-4 text-3xl font-extrabold text-white sm:text-4xl">從一次評估開始</h2>
+            <p class="mt-4 text-sm leading-relaxed text-navy-foreground">
+              線上查看按摩師週排班與可用時段，即時預約，也能查詢或取消預約。請至少提前半小時預約。
             </p>
+            <dl class="mt-8 space-y-3 text-sm">
+              <div class="flex gap-3">
+                <dt class="sr-only">地址</dt>
+                <MapPin class="h-5 w-5 shrink-0 text-gold" aria-hidden="true" />
+                <dd>{{ BRAND.address }}</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt class="sr-only">營業時間</dt>
+                <Clock class="h-5 w-5 shrink-0 text-gold" aria-hidden="true" />
+                <dd>{{ BRAND.hours.label }}（預約制）</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt class="sr-only">電話</dt>
+                <Phone class="h-5 w-5 shrink-0 text-gold" aria-hidden="true" />
+                <dd><a :href="`tel:${BRAND.phone.replace(/-/g, '')}`" class="underline-offset-4 hover:underline">{{ BRAND.phone }}</a></dd>
+              </div>
+            </dl>
           </div>
-          <div class="mt-8 flex flex-wrap items-center gap-3">
-            <NuxtLink
-              to="/booking"
-              class="inline-flex items-center justify-center gap-2 rounded-sm bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:scale-[1.03] shadow-lg shadow-primary/20"
-            >
-              <CalendarCheck class="h-4 w-4" />
+          <div class="mt-10 flex flex-wrap items-center gap-3">
+            <NuxtLink to="/booking" class="btn-gold px-7 py-3.5 text-sm">
+              <CalendarCheck class="h-4 w-4" aria-hidden="true" />
               前往線上預約
             </NuxtLink>
             <NuxtLink
               to="/booking?tab=search"
-              class="inline-flex items-center justify-center gap-2 rounded-sm border border-border bg-card px-5 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
+              class="inline-flex items-center justify-center gap-2 rounded-[2px] border border-white/30 px-5 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
             >
-              <Search class="h-4 w-4" />
+              <Search class="h-4 w-4" aria-hidden="true" />
               查詢 / 取消預約
             </NuxtLink>
           </div>
         </div>
 
-        <div class="overflow-hidden rounded-sm border border-border bg-secondary/40">
+        <div class="flex flex-col overflow-hidden border border-border bg-card">
           <iframe
-            title="KSE 美式筋膜放鬆教室 地圖"
+            title="KSE 美式筋膜放鬆教室 Google 地圖位置"
             src="https://maps.google.com/maps?q=KSE美式筋膜放鬆教室&t=&z=16&ie=UTF8&iwloc=&output=embed"
-            class="aspect-video w-full border-0"
+            class="min-h-[320px] w-full flex-1 border-0"
             loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
             allowfullscreen
           ></iframe>
-          <div class="p-3 bg-card border-t border-border flex items-center justify-between text-xs">
-            <span class="font-medium text-foreground flex items-center gap-1">
-              <MapPin class="h-4 w-4 text-primary shrink-0" /> {{ BRAND.address }}
-            </span>
-            <a
-              :href="BRAND.mapUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-primary font-bold hover:underline"
-            >
+          <div class="flex items-center justify-between gap-4 border-t border-border p-4 text-sm">
+            <span class="font-medium text-foreground">{{ BRAND.address }}</span>
+            <a :href="BRAND.mapUrl" target="_blank" rel="noopener noreferrer" class="shrink-0 font-bold text-primary hover:underline">
               開啟 Google 地圖
             </a>
           </div>
@@ -316,56 +330,41 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, Check, X, Waves, HeartPulse, Activity, Dumbbell, MapPin, CalendarCheck, Search } from "lucide-vue-next"
+import { ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, CalendarCheck, Search, Clock, Phone } from "lucide-vue-next"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import BookingButton from "~/components/ui/BookingButton.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
+import { POST_IMAGES } from "~/utils/post-images"
 
-import heroImg from "~/assets/images/hero.jpg"
+import stretchImg from "~/assets/images/stretch.jpg"
 import massageImg from "~/assets/images/massage.jpg"
 import coreImg from "~/assets/images/core.jpg"
 import strengthImg from "~/assets/images/strength.jpg"
-import assessImg from "~/assets/images/assess.jpg"
-import baseballImg from "~/assets/images/baseball.jpg"
 
 import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES } from "~/utils/site-data"
 
 const SERVICE_ICONS = [Waves, HeartPulse, Activity, Dumbbell]
-const SERVICE_IMAGES = [heroImg, massageImg, coreImg, strengthImg]
+const SERVICE_IMAGES = [stretchImg, massageImg, coreImg, strengthImg]
+const SERVICE_ALTS = [
+  "KSE 放鬆師為客人進行腿後側美式筋膜放鬆",
+  "KSE 放鬆師為運動員進行小腿運動按摩",
+  "KSE 教練在校園體育館指導學生進行核心與伸展動作",
+  "KSE 教練在育英國中指導校隊學生進行彈力帶肌力訓練",
+]
 
-function getPostImage(img: string) {
-  switch (img) {
-    case "baseball":
-      return baseballImg
-    case "assess":
-      return assessImg
-    default:
-      return massageImg
-  }
-}
+const HERO_FACTS = [
+  { label: "單次療程", value: "60 分鐘" },
+  { label: "營業時間", value: `${BRAND.hours.opens}–${BRAND.hours.closes}` },
+  { label: "評估流程", value: "4 步驟" },
+  { label: "位置", value: "台中南屯" },
+]
 
-const DESC =
-  "KSE 美式筋膜放鬆教室位於台中市南屯區大墩七街202號，專為運動員、久坐族與健身愛好者提供專業美式筋膜放鬆、台中運動按摩、南屯肌肉放鬆、靜態與動態姿勢評估及受傷防護訓練，採全線上預約制。"
-
-const { injectLocalBusinessSchema, injectFaqSchema } = useGeoSchema()
-injectLocalBusinessSchema()
-injectFaqSchema()
-
-useHead({
-  title: "KSE 美式筋膜放鬆教室｜台中按摩・南屯筋膜放鬆與運動按摩・線上預約",
-  meta: [
-    { name: "description", content: DESC },
-    {
-      name: "keywords",
-      content: "台中按摩,南屯按摩放鬆,台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,肌肉緊繃舒緩,運動傷害防護,台中南屯按摩,線上預約按摩,大墩七街按摩",
-    },
-    { property: "og:title", content: "KSE 美式筋膜放鬆教室｜台中按摩・南屯筋膜放鬆與運動按摩" },
-    { property: "og:description", content: DESC },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://www.kse-release.com.tw/" },
-  ],
-  link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/" }],
+usePageSeo({
+  title: "台中運動按摩・南屯美式筋膜放鬆｜KSE 美式筋膜放鬆教室",
+  description:
+    "台中南屯運動按摩與美式筋膜放鬆推薦：KSE 位於大墩七街202號，先做動作評估再放鬆與訓練，處理肩頸緊繃、下背痠痛、跑者與球類運動恢復。每日 11:00–22:00，線上預約。",
+  path: "/",
 })
 </script>

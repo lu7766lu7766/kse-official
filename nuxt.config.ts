@@ -24,37 +24,31 @@ export default defineNuxtConfig({
       },
       meta: [
         { charset: "utf-8" },
-        {
-          name: "viewport",
-          content:
-            "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover",
-        },
-        { "http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate" },
-        { "http-equiv": "Pragma", content: "no-cache" },
-        { "http-equiv": "Expires", content: "0" },
-        { name: "keywords", content: "台中按摩, 南屯按摩放鬆, 台中運動按摩, 台中筋膜放鬆, 美式筋膜放鬆, 肌肉緊繃放鬆, 受傷後恢復, 運動傷害防護, 台中南屯按摩, 動作訓練, 線上預約按摩, 大墩七街按摩" },
+        // 官網保留縮放（無障礙）；LIFF 頁面另由 plugins/prevent-zoom.client.ts 鎖定
+        { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+        { name: "theme-color", content: "#0b1b2e" },
         { name: "geo.region", content: "TW-TXG" },
         { name: "geo.placename", content: "台中市南屯區" },
         { name: "geo.position", content: "24.14324;120.64756" },
         { name: "ICBM", content: "24.14324, 120.64756" },
-        { property: "og:site_name", content: "KSE 美式筋膜放鬆教室" },
-        { property: "og:locale", content: "zh_TW" },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary_large_image" },
       ],
       link: [
         { rel: "icon", type: "image/png", href: "/favicon.png" },
-        { rel: "apple-touch-icon", href: "/favicon.png" },
+        { rel: "apple-touch-icon", href: "/logo.png" },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+        // 只載入拉丁字的運動感標題字（數字、英文標語），中文沿用系統字以維持效能
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&display=swap",
+        },
       ],
     },
   },
-  routeRules: {
-    "/**": {
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
+  nitro: {
+    prerender: {
+      // 未被連結爬到的頁面（LIFF 入口）與 server route 產物需明確列出，靜態部署才會有實體檔
+      routes: ["/reserve", "/bind", "/sitemap.xml", "/robots.txt", "/llms.txt"],
     },
   },
 })

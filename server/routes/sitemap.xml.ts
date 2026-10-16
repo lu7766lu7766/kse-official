@@ -1,39 +1,22 @@
-import { POSTS, SITE_URL } from "~/utils/site-data";
+import { POSTS, SITE_URL } from "~/utils/site-data"
+
+// 單一來源：nuxt generate 時 prerender 成 .output/public/sitemap.xml（見 nuxt.config.ts nitro.prerender）
+// 新增文章只要改 utils/site-data.ts 的 POSTS，sitemap 會自動帶上
+const STATIC_PAGES = ["/", "/services", "/kse", "/booking", "/faq", "/partners", "/cases", "/news"]
 
 export default defineEventHandler((event) => {
-  const baseUrl = SITE_URL;
+  const buildDate = new Date().toISOString().split("T")[0]
+  const latestPost = POSTS.map((p) => p.updated ?? p.date).sort().at(-1) ?? buildDate
 
-  const staticPages = [
-    "",
-    "/booking",
-    "/services",
-    "/kse",
-    "/faq",
-    "/cases",
-    "/news",
-    "/partners",
-  ];
+  const urls = [
+    ...STATIC_PAGES.map((path) => ({ loc: `${SITE_URL}${path}`, lastmod: path === "/news" ? latestPost : buildDate })),
+    ...POSTS.map((post) => ({ loc: `${SITE_URL}/news/${post.slug}`, lastmod: post.updated ?? post.date })),
+  ]
 
-  const articlePages = POSTS.map((post) => `/news/${post.slug}`);
-
-  const allPages = [...staticPages, ...articlePages];
-
-  const currentDate = new Date().toISOString().split("T")[0];
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+  setHeader(event, "Content-Type", "application/xml; charset=utf-8")
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allPages
-  .map(
-    (page) => `  <url>
-    <loc>${baseUrl}${page}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>${page.startsWith("/news/") ? "monthly" : "weekly"}</changefreq>
-    <priority>${page === "" ? "1.0" : page === "/booking" ? "0.9" : page.startsWith("/news/") ? "0.7" : "0.8"}</priority>
-  </url>`
-  )
-  .join("\n")}
-</urlset>`;
-
-  setHeader(event, "Content-Type", "application/xml; charset=utf-8");
-  return xml;
-});
+${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n  </url>`).join("\n")}
+</urlset>
+`
+})

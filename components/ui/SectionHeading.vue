@@ -1,13 +1,13 @@
 <template>
-  <div :class="cn('max-w-3xl', center && 'mx-auto text-center')">
-    <span v-if="eyebrow" class="eyebrow">{{ eyebrow }}</span>
+  <div :class="cn('max-w-3xl', center && 'mx-auto text-center [&_.eyebrow]:justify-center')">
+    <span v-if="eyebrow" :class="cn('eyebrow', dark && 'text-gold')">{{ eyebrow }}</span>
     <component
       :is="Tag"
-      class="mt-3 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]"
+      :class="cn('mt-4 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]', dark && 'text-white')"
     >
       {{ title }}
     </component>
-    <p v-if="desc" class="mt-4 text-base leading-relaxed text-muted-foreground">
+    <p v-if="desc" :class="cn('mt-4 text-base leading-relaxed', dark ? 'text-navy-foreground' : 'text-muted-foreground')">
       {{ desc }}
     </p>
   </div>
@@ -24,10 +24,12 @@ const props = withDefaults(
     desc?: string;
     level?: 2 | 3;
     center?: boolean;
+    dark?: boolean;
   }>(),
   {
     level: 2,
     center: false,
+    dark: false,
   }
 );
 

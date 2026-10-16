@@ -55,3 +55,5 @@ coverage
 .tmp
 
 .openpost
+# Playwright MCP 截圖
+.playwright-mcp/

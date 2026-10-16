@@ -1,21 +1,18 @@
 <template>
-  <header
-    class="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-md"
-  >
-    <div
-      class="container-kse flex h-[74px] items-center justify-between gap-4 lg:h-[92px]"
-    >
-      <NuxtLink
-        to="/"
-        class="flex items-center gap-3"
-        aria-label="KSE 美式筋膜放鬆教室"
-        @click="open = false"
-      >
+  <header class="sticky top-0 z-50 border-b border-border/70 bg-background/90 backdrop-blur-md">
+    <div class="container-kse flex h-[68px] items-center justify-between gap-4 lg:h-[84px]">
+      <NuxtLink to="/" class="flex items-center gap-3" @click="open = false">
         <img
           src="~/assets/images/kse-logo-circle.png"
-          alt="KSE 美式筋膜放鬆教室"
-          class="h-[58px] w-[58px] shrink-0 object-contain lg:h-[72px] lg:w-[72px]"
+          alt=""
+          width="64"
+          height="64"
+          class="h-12 w-12 shrink-0 object-contain lg:h-16 lg:w-16"
         />
+        <span class="leading-tight">
+          <span class="block text-[0.9375rem] font-extrabold tracking-tight text-foreground">KSE 美式筋膜放鬆教室</span>
+          <span class="block text-[0.6875rem] font-semibold tracking-[0.12em] text-muted-foreground">台中南屯・運動按摩與恢復</span>
+        </span>
       </NuxtLink>
 
       <nav aria-label="主要導覽" class="hidden items-center gap-1 lg:flex">
@@ -23,39 +20,32 @@
           v-for="item in navItems"
           :key="item.to"
           :to="item.to"
-          class="rounded-sm px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          active-class="text-foreground"
+          class="nav-link relative px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          active-class="is-active text-foreground"
           :exact="item.to === '/'"
         >
           {{ item.label }}
         </NuxtLink>
-        <NuxtLink
-          to="/booking"
-          class="ml-3 inline-flex items-center rounded-sm bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform hover:scale-[1.03] shadow-md shadow-primary/20"
-        >
-          線上預約
-        </NuxtLink>
+        <NuxtLink to="/booking" class="btn-gold ml-4 px-5 py-2.5 text-sm">線上預約</NuxtLink>
       </nav>
 
-      <button
-        type="button"
-        class="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-border text-foreground lg:hidden"
-        :aria-expanded="open"
-        aria-controls="mobile-nav"
-        :aria-label="open ? '關閉選單' : '開啟選單'"
-        @click="open = !open"
-      >
-        <X v-if="open" class="h-5 w-5" />
-        <Menu v-else class="h-5 w-5" />
-      </button>
+      <div class="flex items-center gap-2 lg:hidden">
+        <NuxtLink to="/booking" class="btn-gold px-4 py-2 text-xs" @click="open = false">預約</NuxtLink>
+        <button
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-[2px] border border-border text-foreground"
+          :aria-expanded="open"
+          aria-controls="mobile-nav"
+          :aria-label="open ? '關閉選單' : '開啟選單'"
+          @click="open = !open"
+        >
+          <X v-if="open" class="h-5 w-5" />
+          <Menu v-else class="h-5 w-5" />
+        </button>
+      </div>
     </div>
 
-    <nav
-      v-if="open"
-      id="mobile-nav"
-      aria-label="行動裝置導覽"
-      class="rise-in border-t border-border bg-background lg:hidden"
-    >
+    <nav v-if="open" id="mobile-nav" aria-label="行動裝置導覽" class="rise-in border-t border-border bg-background lg:hidden">
       <ul class="container-kse flex flex-col py-2">
         <li v-for="item in NAV" :key="item.to">
           <NuxtLink
@@ -68,6 +58,10 @@
             {{ item.label }}
           </NuxtLink>
         </li>
+        <li class="py-4 text-sm text-muted-foreground">
+          <a :href="`tel:${BRAND.phone.replace(/-/g, '')}`" class="font-bold text-foreground">{{ BRAND.phone }}</a>
+          ・{{ BRAND.hours.label }}
+        </li>
       </ul>
     </nav>
   </header>
@@ -76,8 +70,26 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { Menu, X } from "lucide-vue-next";
-import { NAV } from "~/utils/site-data";
+import { BRAND, NAV } from "~/utils/site-data";
 
 const open = ref(false);
 const navItems = computed(() => NAV.filter((item) => item.to !== "/booking"));
 </script>
+
+<style scoped>
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.25rem;
+  height: 2px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+</style>

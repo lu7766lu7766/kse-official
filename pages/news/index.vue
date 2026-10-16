@@ -1,22 +1,23 @@
 <template>
   <div>
     <PageHero
-      eyebrow="News & Journal"
-      title="最新消息"
-      desc="活動公告、合作消息與運動恢復知識。以下文章為示範內容（CMS-ready），可於後台編輯。"
+      eyebrow="Journal"
+      title="運動恢復知識專欄"
+      desc="筋膜放鬆、運動按摩、核心穩定與肌力訓練的實用知識，以及 KSE 的活動與合作消息。"
+      :crumbs="[{ label: '最新消息' }]"
     />
 
     <Section>
       <div class="flex flex-wrap gap-2" role="group" aria-label="文章分類篩選">
         <button
-          v-for="cat in ['全部', ...CATEGORIES]"
+          v-for="cat in ['全部', ...usedCategories]"
           :key="cat"
           type="button"
           @click="active = cat"
           :aria-pressed="active === cat"
           :class="
             cn(
-              'rounded-sm border px-4 py-2 text-sm font-semibold transition-colors cursor-pointer',
+              'rounded-[2px] border px-4 py-2 text-sm font-semibold transition-colors cursor-pointer',
               active === cat
                 ? 'border-primary bg-primary text-primary-foreground'
                 : 'border-border text-muted-foreground hover:text-foreground'
@@ -31,19 +32,21 @@
         <article
           v-for="post in posts"
           :key="post.slug"
-          class="surface-card overflow-hidden rounded-sm"
+          class="surface-card group overflow-hidden"
         >
-          <img
-            :src="POST_IMAGES[post.image]"
-            :alt="post.alt"
-            width="1200"
-            height="900"
-            loading="lazy"
-            class="h-48 w-full object-cover opacity-80"
-          />
+          <div class="overflow-hidden">
+            <img
+              :src="POST_IMAGES[post.image]"
+              :alt="post.alt"
+              width="1200"
+              height="1600"
+              loading="lazy"
+              class="aspect-[16/10] w-full object-cover object-[50%_25%] transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
           <div class="p-6">
             <p class="text-xs text-muted-foreground">
-              <time :dateTime="post.date">{{ post.date }}</time> ・
+              <time :datetime="post.date">{{ post.date }}</time> ・
               <span class="text-primary">{{ post.category }}</span>
             </p>
             <h2 class="mt-2 text-lg leading-snug">{{ post.title }}</h2>
@@ -54,7 +57,7 @@
               :to="`/news/${post.slug}`"
               class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary"
             >
-              閱讀更多 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+              閱讀全文 <ArrowRight class="h-4 w-4" aria-hidden="true" />
             </NuxtLink>
           </div>
         </article>
@@ -76,6 +79,8 @@ import { POST_IMAGES } from "~/utils/post-images";
 import { CATEGORIES, POSTS } from "~/utils/site-data";
 
 const active = ref<string>("全部");
+// 只顯示有文章的分類，避免點到空分類
+const usedCategories = CATEGORIES.filter((c) => POSTS.some((p) => p.category === c));
 
 const posts = computed(() =>
   active.value === "全部"
@@ -89,22 +94,10 @@ injectBreadcrumbsSchema([
   { name: "最新消息", item: "/news" },
 ])
 
-const DESC =
-  "KSE 美式筋膜放鬆教室最新消息：位於台中市南屯區大墩七街202號。提供活動公告、運動團隊合作、台中按摩與運動恢復知識、筋膜放鬆、動作訓練與肌力體能專業文章。";
-
-useHead({
-  title: "最新消息｜台中按摩・南屯筋膜放鬆與運動恢復專欄｜KSE",
-  meta: [
-    { name: "description", content: DESC },
-    {
-      name: "keywords",
-      content: "台中按摩,南屯按摩,台中運動按摩,台中筋膜放鬆,美式筋膜放鬆,運動恢復專欄,運動傷害防護,肌力體能文章",
-    },
-    { property: "og:title", content: "最新消息｜台中按摩・南屯筋膜放鬆與運動恢復專欄｜KSE" },
-    { property: "og:description", content: DESC },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://www.kse-release.com.tw/news" },
-  ],
-  link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/news" }],
+usePageSeo({
+  title: "運動恢復知識專欄：筋膜放鬆・運動按摩・核心訓練｜KSE",
+  description:
+    "KSE 台中南屯運動恢復專欄：賽後 48 小時恢復怎麼安排、美式筋膜放鬆原理、久坐族肩頸下背與核心穩定、青少年肌力訓練原則，由第一線放鬆師整理。",
+  path: "/news",
 });
 </script>

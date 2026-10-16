@@ -66,3 +66,26 @@
 | D5 | `推薦` 內容 | A. 先做挑選指南 / B. 等真實案例才寫 | 選 A，真實 `Review` schema 等 GBP 評論後再加 | `pages/cases.vue:6-11`、`pages/faq.vue:104` |
 | D6 | 各頁 title 清單 | 要我先列新 title/description 表？ | 要，先定稿才改 | `pages/index.vue:357` 等 7 頁 |
 | D7 | 改版交付 | A. 先出 token 清單 / B. 直接改 | 選 A，確認色階/字體/圓角後再動工 | `assets/css/styles.css:49-105` |
+
+## 6. 執行紀錄（2026-10-16）
+
+決策：D2 營業時間 = 每日 11:00–22:00；D1 中信兄弟 = 全權授權公開；D3/D4/D5/D7 依建議（A）執行。
+
+已完成：
+- [x] 移除 `(開發中)`，各頁 title / description 改為唯一（`composables/usePageSeo.ts` 統一輸出 canonical、OG、Twitter）
+- [x] sitemap / robots / llms.txt 單一來源：`server/routes/*.ts` 由 `nitro.prerender.routes` 產出靜態檔，刪除 `public/sitemap.xml`、`public/robots.txt`
+- [x] robots 加 AI 爬蟲白名單，`/reserve`、`/bind` disallow；`/reserve` noindex + canonical 指回 `/booking`
+- [x] nginx：`try_files ... =404` + `error_page 404 /404.html`；HTML 改 `no-cache`；`error.vue` 中文化 + noindex；不存在的文章 throw 404
+- [x] NAP 統一（`BRAND.hours` 單一來源），全站只剩一份 LocalBusiness schema（`buildSiteGraph`），其餘以 `@id` 參照
+- [x] Article schema 補 image 絕對路徑、dateModified、author/publisher；文章加「重點摘要」與 H2 段落
+- [x] FAQ 擴充為 15 題，答案先行；首頁不再重複注入 FAQPage
+- [x] 移除所有「示範／版位／預留」對外文案；2 篇純佔位文章下架，4 篇知識文擴寫
+- [x] 圖片：原檔 3–4MB iPhone 照 → 1600px mozjpeg（約 150KB），並移除 EXIF GPS；OG 圖改 1200×630；alt 改為照片實際內容
+- [x] 縮放鎖定只限 LIFF 情境（`/reserve`、`/bind`、LINE 內建瀏覽器），官網恢復可縮放
+- [x] 改版選項 C：深藏青首屏 + 燕麥白內容區、亮金 CTA、2px 硬角卡片＋左側金線、Barlow Condensed 數字字體、色彩對比全數過 WCAG AA
+
+待辦（需業主提供）：
+- [ ] 中信兄弟：Logo 檔、合作照片、官方連結（可再加 `sameAs` / 合作新聞稿）
+- [ ] Google 商家（GBP）營業時間同步為 11:00–22:00，累積真實評論後再加 `AggregateRating`
+- [ ] 真實個案（經同意）取代「常見處理路徑」；放鬆師個人介紹與證照（E-E-A-T）
+- [ ] 價格資訊（目前 schema 僅 `priceRange: $$`）

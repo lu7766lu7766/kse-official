@@ -1,26 +1,27 @@
 <template>
   <div>
     <PageHero
-      eyebrow="Case Studies"
+      eyebrow="How It Works"
       title="從評估到訓練，流程長什麼樣子"
-      desc="以下皆為示範案例，用以說明 KSE 的處理流程，內容為 CMS-ready 可編輯版位，並非真實個案，也未使用任何真實人物資料。"
+      desc="運動員、久坐上班族與青少年運動員三種常見的處理路徑。每個人的實際內容都會依評估結果調整。"
+      :crumbs="[{ label: '案例分享' }]"
     />
 
     <Section>
-      <div class="rounded-sm border border-dashed border-border bg-secondary/40 p-5 text-sm text-muted-foreground">
-        注意：本頁三則案例為示範內容（Demo Content），可於內容管理後台自由編輯或替換為經當事人同意的真實案例。
-      </div>
+      <p class="max-w-3xl text-sm text-muted-foreground">
+        以下為常見處理路徑說明，不代表個別個案結果。
+      </p>
 
-      <div class="mt-12 space-y-8">
-        <article v-for="c in CASES" :key="c.slug" :id="c.slug" class="surface-card rounded-sm p-8 lg:p-10">
-          <span class="eyebrow">{{ c.tag }}・示範案例</span>
+      <div class="mt-10 space-y-8">
+        <article v-for="c in CASES" :key="c.slug" :id="c.slug" class="surface-card p-8 lg:p-10">
+          <span class="eyebrow">{{ c.tag }}</span>
           <h2 class="mt-3 text-2xl sm:text-3xl">{{ c.title }}</h2>
           <p class="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
             {{ c.summary }}
           </p>
           <ol class="mt-8 grid gap-6 lg:grid-cols-3">
-            <li v-for="(s, i) in c.steps" :key="s.label" class="rounded-sm border border-border bg-background p-6">
-              <span class="text-3xl font-black text-primary/30">0{{ i + 1 }}</span>
+            <li v-for="(s, i) in c.steps" :key="s.label" class="border-t-2 border-gold bg-background p-6">
+              <span class="font-display text-4xl font-extrabold italic leading-none text-gold">0{{ i + 1 }}</span>
               <h3 class="mt-3 text-lg">{{ s.label }}</h3>
               <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {{ s.text }}
@@ -31,8 +32,8 @@
       </div>
     </Section>
 
-    <Section tone="ink">
-      <SectionHeading center eyebrow="Your Turn" title="你的流程，從一次評估開始" />
+    <Section tone="navy">
+      <SectionHeading dark center eyebrow="Your Turn" title="你的流程，從一次評估開始" />
       <div class="mt-8 flex justify-center">
         <BookingButton />
       </div>
@@ -53,21 +54,10 @@ injectBreadcrumbsSchema([
   { name: "案例分享", item: "/cases" },
 ])
 
-const DESC = "了解 KSE 如何協助運動員、久坐族與青少年：從靜態與動態檢測評估、美式筋膜放鬆、台中按摩放鬆保養、肌肉緊繃舒緩到動作控制訓練的真實恢復流程示範。"
-
-useHead({
-  title: "案例分享｜台中按摩・南屯筋膜放鬆與動作處理流程｜KSE",
-  meta: [
-    { name: "description", content: DESC },
-    {
-      name: "keywords",
-      content: "台中按摩,南屯按摩,台中運動放鬆,受傷恢復案例,台中筋膜放鬆,美式筋膜放鬆,運動傷害防護,動作控制訓練,久坐肌肉舒緩",
-    },
-    { property: "og:title", content: "案例分享｜台中按摩・南屯筋膜放鬆與動作處理流程｜KSE" },
-    { property: "og:description", content: DESC },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://www.kse-release.com.tw/cases" },
-  ],
-  link: [{ rel: "canonical", href: "https://www.kse-release.com.tw/cases" }],
+usePageSeo({
+  title: "處理流程：運動員、久坐族、青少年怎麼做筋膜放鬆與訓練｜KSE",
+  description:
+    "KSE 台中南屯的三種常見處理路徑：投擲類運動員的動態評估與胸椎旋轉、久坐上班族的肩頸下背與核心穩定、青少年運動員的動作控制與漸進肌力訓練。",
+  path: "/cases",
 })
 </script>
