@@ -29,7 +29,7 @@
               width="1200"
               height="1600"
               loading="lazy"
-              class="relative aspect-[4/3] w-full object-cover object-[50%_25%]"
+              :class="cn('relative aspect-[4/3] w-full object-cover', POSITIONS[service.slug] || 'object-[50%_25%]')"
             />
           </div>
           <div>
@@ -73,7 +73,7 @@ import { cn } from "~/utils/cn"
 import { SERVICES } from "~/utils/site-data"
 
 import stretchImg from "~/assets/images/stretch.jpg"
-import massageImg from "~/assets/images/massage.jpg"
+import massageImg from "~/assets/images/sports-massage.jpg"
 import coreImg from "~/assets/images/core.jpg"
 import strengthImg from "~/assets/images/strength.jpg"
 
@@ -86,9 +86,16 @@ const IMAGES: Record<string, string> = {
 
 const ALTS: Record<string, string> = {
   fascia: "KSE 放鬆師在台中南屯教室為客人進行腿後側美式筋膜放鬆",
-  "sports-massage": "KSE 放鬆師為運動員進行小腿與腿後側運動按摩",
+  "sports-massage": "KSE 放鬆師為客人進行臀腿下肢運動按摩",
   core: "KSE 教練在校園體育館指導學生進行核心穩定與伸展動作",
   strength: "KSE 教練在育英國中指導校隊學生進行彈力帶下肢肌力訓練",
+}
+
+const POSITIONS: Record<string, string> = {
+  fascia: "object-[50%_25%]",
+  "sports-massage": "object-center",
+  core: "object-[50%_25%]",
+  strength: "object-[50%_25%]",
 }
 
 const { injectServicesSchema, injectBreadcrumbsSchema } = useGeoSchema()
