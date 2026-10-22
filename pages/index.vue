@@ -82,8 +82,57 @@
       </ol>
     </Section>
 
+    <!-- Team -->
+    <Section id="team" tone="ink">
+      <SectionHeading
+        eyebrow="Our Team"
+        title="團隊介紹"
+        desc="放鬆師與體能訓練師共同合作，從放鬆、動作調整到肌力訓練，依你的需求與手勁喜好安排最適合的人選。"
+      />
+      <ul class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li
+          v-for="member in TEAM"
+          :key="member.slug"
+          class="surface-card group flex flex-col overflow-hidden"
+        >
+          <div class="overflow-hidden">
+            <img
+              :src="TEAM_IMAGES[member.slug]"
+              :alt="`KSE ${member.role} ${member.name}`"
+              width="720"
+              height="1082"
+              loading="lazy"
+              class="aspect-[4/5] w-full object-cover object-[50%_20%] transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <p class="text-xs font-bold tracking-[0.16em] text-primary">{{ member.role }}</p>
+            <h3 class="mt-1 font-display text-3xl font-extrabold">{{ member.name }}</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li
+                v-for="(tag, i) in member.tags"
+                :key="tag"
+                :class="[
+                  'rounded-[2px] px-2.5 py-1 text-xs font-bold',
+                  i === 0 ? 'bg-gold text-gold-foreground' : 'border border-border text-foreground',
+                ]"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+            <ul class="mt-5 space-y-2 text-sm leading-relaxed text-muted-foreground">
+              <li v-for="point in member.points" :key="point" class="flex items-start gap-2">
+                <Check class="mt-1 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden="true" />
+                {{ point }}
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </Section>
+
     <!-- Comparison -->
-    <Section tone="ink">
+    <Section>
       <SectionHeading eyebrow="Difference" title="KSE 美式筋膜放鬆和一般按摩差在哪？" />
       <!-- 結論先行：給 AI 摘要直接引用 -->
       <p class="mt-5 max-w-3xl text-base leading-relaxed text-foreground">
@@ -121,7 +170,7 @@
     </Section>
 
     <!-- Services -->
-    <Section id="services">
+    <Section id="services" tone="ink">
       <div class="flex flex-wrap items-end justify-between gap-6">
         <SectionHeading eyebrow="Services" title="四項核心服務" desc="第一次來都會先評估，再依結果組合最適合的方案。" />
         <NuxtLink to="/services" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
@@ -346,8 +395,23 @@ import coreImg from "~/assets/images/core.jpg"
 import strengthImg from "~/assets/images/strength.jpg"
 import movementImg from "~/assets/images/movement.jpg"
 import releaseImg from "~/assets/images/release.jpg"
+import teamKdImg from "~/assets/images/team-kd.jpg"
+import teamEasonImg from "~/assets/images/team-eason.jpg"
+import teamJoeyImg from "~/assets/images/team-joey.jpg"
+import teamLinImg from "~/assets/images/team-lin.jpg"
+import teamRexImg from "~/assets/images/team-rex.jpg"
+import teamBirdyImg from "~/assets/images/team-birdy.jpg"
 
-import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES } from "~/utils/site-data"
+import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
+
+const TEAM_IMAGES: Record<string, string> = {
+  kd: teamKdImg,
+  eason: teamEasonImg,
+  joey: teamJoeyImg,
+  lin: teamLinImg,
+  rex: teamRexImg,
+  birdy: teamBirdyImg,
+}
 
 const PROCESS_IMAGES: Record<string, string> = {
   "01": movementImg,
