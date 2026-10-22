@@ -54,7 +54,6 @@
             <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
             <p class="text-xl font-extrabold text-white">想知道自己的狀況？從一次評估開始。</p>
             <p class="mt-2 text-sm text-navy-foreground">{{ BRAND.address }}・{{ BRAND.hours.label }}</p>
-            <BookingButton class="mt-6" />
           </div>
         </div>
       </Section>
@@ -80,7 +79,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Section from "~/components/ui/Section.vue";
-import BookingButton from "~/components/ui/BookingButton.vue";
 import { ORG_ID, WEBSITE_ID } from "~/composables/useGeoSchema";
 import { POST_IMAGES } from "~/utils/post-images";
 import { BRAND, POSTS, SITE_URL } from "~/utils/site-data";

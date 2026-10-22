@@ -11,13 +11,6 @@
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
         <button type="button" class="btn-gold cursor-pointer px-6 py-3 text-sm" @click="go('/')">回到首頁</button>
-        <button
-          type="button"
-          class="cursor-pointer rounded-[2px] border border-white/30 px-6 py-3 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
-          @click="go('/booking')"
-        >
-          線上預約
-        </button>
       </div>
     </div>
   </div>

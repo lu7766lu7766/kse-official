@@ -59,12 +59,6 @@
               查看按摩師週排班與可用時段，支援即時預約與查詢取消。請至少提前半小時預約。
             </p>
           </div>
-          <div class="mt-8">
-            <NuxtLink to="/booking" class="btn-gold px-6 py-3 text-sm">
-              <CalendarCheck class="h-4 w-4" aria-hidden="true" />
-              前往線上預約
-            </NuxtLink>
-          </div>
         </div>
         <div class="flex flex-col overflow-hidden border border-border bg-card">
           <iframe
@@ -90,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { Phone, MessageCircle, Instagram, Facebook, MapPin, CalendarCheck } from "lucide-vue-next"
+import { Phone, MessageCircle, Instagram, Facebook, MapPin } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"

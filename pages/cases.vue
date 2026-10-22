@@ -33,10 +33,7 @@
     </Section>
 
     <Section tone="navy">
-      <SectionHeading dark center eyebrow="Your Turn" title="你的流程，從一次評估開始" />
-      <div class="mt-8 flex justify-center">
-        <BookingButton />
-      </div>
+      <SectionHeading dark center eyebrow="Your Turn" title="你的流程，從一次評估開始" desc="每個人的身體狀況不同，透過專業評估找出最適合你的處理與訓練路徑。" />
     </Section>
   </div>
 </template>
@@ -45,7 +42,6 @@
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import BookingButton from "~/components/ui/BookingButton.vue"
 import { CASES } from "~/utils/site-data"
 
 const { injectBreadcrumbsSchema } = useGeoSchema()

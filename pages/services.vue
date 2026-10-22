@@ -53,7 +53,6 @@
                 <dd class="mt-1 font-semibold">{{ service.audience }}</dd>
               </div>
             </dl>
-            <BookingButton class="mt-8">預約{{ service.title }}</BookingButton>
           </div>
         </article>
       </div>
@@ -61,9 +60,6 @@
 
     <Section tone="navy">
       <SectionHeading dark center eyebrow="Not Sure?" title="不確定該從哪一項開始？" desc="第一次來訪都會先進行完整評估，我們會依結果建議最適合的方案。" />
-      <div class="mt-8 flex justify-center">
-        <BookingButton />
-      </div>
     </Section>
   </div>
 </template>
@@ -73,7 +69,6 @@ import { Check } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import BookingButton from "~/components/ui/BookingButton.vue"
 import { cn } from "~/utils/cn"
 import { SERVICES } from "~/utils/site-data"
 

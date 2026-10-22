@@ -18,7 +18,6 @@
             KSE 位於台中市南屯區大墩七街202號，以「評估 → 放鬆 → 動作 → 強化」四步流程，為運動員、跑者與久坐上班族處理肌肉緊繃、活動度受限與運動後恢復。{{ BRAND.hours.label }}，線上預約。
           </p>
           <div class="mt-9 flex flex-wrap gap-3">
-            <BookingButton />
             <NuxtLink
               to="/services"
               class="inline-flex items-center gap-2 rounded-[2px] border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
@@ -293,19 +292,7 @@
               </div>
             </dl>
           </div>
-          <div class="mt-10 flex flex-wrap items-center gap-3">
-            <NuxtLink to="/booking" class="btn-gold px-7 py-3.5 text-sm">
-              <CalendarCheck class="h-4 w-4" aria-hidden="true" />
-              前往線上預約
-            </NuxtLink>
-            <NuxtLink
-              to="/booking?tab=search"
-              class="inline-flex items-center justify-center gap-2 rounded-[2px] border border-white/30 px-5 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
-            >
-              <Search class="h-4 w-4" aria-hidden="true" />
-              查詢 / 取消預約
-            </NuxtLink>
-          </div>
+
         </div>
 
         <div class="flex flex-col overflow-hidden border border-border bg-card">
@@ -330,10 +317,9 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, CalendarCheck, Search, Clock, Phone } from "lucide-vue-next"
+import { ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, Clock, Phone } from "lucide-vue-next"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
-import BookingButton from "~/components/ui/BookingButton.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
 import { POST_IMAGES } from "~/utils/post-images"
