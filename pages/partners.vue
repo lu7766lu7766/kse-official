@@ -41,10 +41,10 @@
           <img
             :src="SCHOOL_IMAGES[i]"
             :alt="SCHOOL_ALTS[i]"
-            width="1200"
-            height="1600"
+            width="1024"
+            height="768"
             loading="lazy"
-            class="aspect-[4/3] w-full object-cover object-[50%_25%]"
+            class="aspect-[4/3] w-full object-cover"
           />
           <div class="p-7">
             <p class="text-xs font-bold tracking-[0.16em] text-primary">{{ p.type }}</p>
@@ -100,14 +100,14 @@ import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { BRAND, PARTNERS } from "~/utils/site-data"
 
-import coreImg from "~/assets/images/core.jpg"
-import strengthImg from "~/assets/images/strength.jpg"
+import partnerDazhiImg from "~/assets/images/partner-dazhi.jpg"
+import partnerYuyingImg from "~/assets/images/partner-yuying.jpg"
 
 const SCHOOL_PARTNERS = PARTNERS.slice(1)
-const SCHOOL_IMAGES = [coreImg, strengthImg]
+const SCHOOL_IMAGES = [partnerDazhiImg, partnerYuyingImg]
 const SCHOOL_ALTS = [
-  "KSE 教練在校園體育館指導學生進行伸展與動作控制練習",
-  "KSE 教練在育英國中體育館指導校隊學生進行彈力帶下肢訓練",
+  "大智國小女童籃球隊榮獲臺中市國小學生籃球聯賽冠軍，與 KSE 美式筋膜放鬆教室合影",
+  "育英國中籃球隊與 KSE 美式筋膜放鬆教室團隊於體育館合影",
 ]
 
 const BROTHERS_SCOPE = [
