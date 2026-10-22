@@ -37,10 +37,10 @@
         <div class="relative mx-auto w-full max-w-md lg:max-w-none">
           <div class="absolute -left-3 -top-3 h-full w-full border border-gold/40" aria-hidden="true" />
           <img
-            src="~/assets/images/hero.jpg"
-            alt="KSE 放鬆師在台中南屯教室為客人進行背部美式筋膜放鬆"
-            width="1200"
-            height="1600"
+            src="~/assets/images/hero-team.jpg"
+            alt="KSE 美式筋膜放鬆專業團隊"
+            width="821"
+            height="1024"
             fetchpriority="high"
             class="relative aspect-[4/3] w-full object-cover object-[50%_25%] shadow-2xl shadow-black/40 sm:aspect-[4/5]"
           />
