@@ -56,12 +56,28 @@
     <Section id="process">
       <SectionHeading eyebrow="The KSE Process" title="四步流程：讓改變留在身體裡" desc="每一次課程都遵循相同的邏輯，從評估開始，到訓練結束。" />
       <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <li v-for="step in PROCESS" :key="step.no" class="surface-card p-7">
-          <span class="font-display text-6xl font-extrabold italic leading-none text-gold">{{ step.no }}</span>
-          <h3 class="mt-5 text-xl">{{ step.title }}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-            {{ step.desc }}
-          </p>
+        <li
+          v-for="step in PROCESS"
+          :key="step.no"
+          class="surface-card group flex flex-col overflow-hidden"
+        >
+          <div v-if="PROCESS_IMAGES[step.no]" class="overflow-hidden">
+            <img
+              :src="PROCESS_IMAGES[step.no]"
+              :alt="PROCESS_ALTS[step.no]"
+              width="681"
+              height="1024"
+              loading="lazy"
+              :class="['aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105', PROCESS_POSITIONS[step.no]]"
+            />
+          </div>
+          <div class="flex flex-1 flex-col p-7">
+            <span class="font-display text-6xl font-extrabold italic leading-none text-gold">{{ step.no }}</span>
+            <h3 class="mt-5 text-xl">{{ step.title }}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+              {{ step.desc }}
+            </p>
+          </div>
         </li>
       </ol>
     </Section>
@@ -328,8 +344,23 @@ import stretchImg from "~/assets/images/stretch.jpg"
 import massageImg from "~/assets/images/massage.jpg"
 import coreImg from "~/assets/images/core.jpg"
 import strengthImg from "~/assets/images/strength.jpg"
+import movementImg from "~/assets/images/movement.jpg"
+import releaseImg from "~/assets/images/release.jpg"
 
 import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES } from "~/utils/site-data"
+
+const PROCESS_IMAGES: Record<string, string> = {
+  "01": movementImg,
+  "02": releaseImg,
+}
+const PROCESS_POSITIONS: Record<string, string> = {
+  "01": "object-[50%_35%]",
+  "02": "object-[50%_45%]",
+}
+const PROCESS_ALTS: Record<string, string> = {
+  "01": "KSE 放鬆師在台中南屯教室進行動態動作評估與活動度篩檢",
+  "02": "KSE 放鬆師在台中南屯教室為客人進行肩頸與上背美式筋膜放鬆",
+}
 
 const SERVICE_ICONS = [Waves, HeartPulse, Activity, Dumbbell]
 const SERVICE_IMAGES = [stretchImg, massageImg, coreImg, strengthImg]
