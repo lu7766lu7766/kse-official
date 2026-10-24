@@ -289,23 +289,6 @@
       </ul>
     </Section>
 
-    <!-- 處理路徑 -->
-    <Section tone="ink">
-      <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="How It Works" title="三種常見的處理路徑" desc="實際內容會依每個人的評估結果調整。" />
-        <NuxtLink to="/cases" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
-          看完整流程 <ArrowRight class="h-4 w-4" aria-hidden="true" />
-        </NuxtLink>
-      </div>
-      <div class="mt-12 grid gap-6 lg:grid-cols-3">
-        <article v-for="c in CASES" :key="c.slug" class="surface-card p-7">
-          <span class="eyebrow">{{ c.tag }}</span>
-          <h3 class="mt-4 text-lg leading-snug">{{ c.title }}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{{ c.summary }}</p>
-        </article>
-      </div>
-    </Section>
-
     <!-- Manifesto -->
     <Section tone="navy" class="text-center">
       <p class="font-display text-4xl font-extrabold italic leading-[1.05] tracking-[0.02em] text-white sm:text-6xl lg:text-7xl">
