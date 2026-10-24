@@ -1,57 +1,81 @@
 <template>
   <div>
-    <!-- Hero：深藏青首屏 + 實拍直式照片 -->
-    <section class="relative isolate overflow-hidden bg-navy text-white">
-      <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
-      <div class="pointer-events-none absolute -left-40 top-1/3 -z-10 h-[32rem] w-[32rem] rounded-full bg-gold/10 blur-3xl" aria-hidden="true" />
+    <!-- Hero：全版輪播照片 + 底部文案；sticky 固定在後，下方內容捲上來蓋過 -->
+    <section
+      class="sticky top-0 z-0 -mt-[68px] flex min-h-[100svh] flex-col justify-end overflow-hidden bg-navy pt-[68px] text-white lg:-mt-[84px] lg:pt-[84px]"
+    >
+      <div class="absolute inset-0" aria-hidden="true">
+        <img
+          v-for="(slide, i) in HERO_SLIDES"
+          :key="slide.src"
+          :src="slide.src"
+          alt=""
+          :width="slide.width"
+          :height="slide.height"
+          :loading="i === 0 ? 'eager' : 'lazy'"
+          :fetchpriority="i === 0 ? 'high' : 'auto'"
+          :class="[
+            'absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms] ease-in-out',
+            slide.position,
+            i === activeSlide ? 'opacity-100' : 'opacity-0',
+          ]"
+        />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" aria-hidden="true" />
+      <div class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/85 via-black/45 to-transparent" aria-hidden="true" />
 
-      <div class="container-kse grid items-center gap-12 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:py-24">
-        <div class="rise-in">
-          <span class="eyebrow text-gold">KSE 美式筋膜放鬆教室・台中南屯</span>
-          <h1 class="mt-6 text-4xl font-extrabold leading-[1.12] text-white sm:text-5xl lg:text-[4.25rem]">
-            台中運動按摩<br />
-            <span class="text-gold">美式筋膜放鬆</span>
-          </h1>
-          <p class="mt-6 text-xl font-bold leading-snug text-white sm:text-2xl">不是單純放鬆，而是重新找回身體的活動能力。</p>
-          <!-- 首段即答：地點 + 服務 + 對象 + 時間，方便搜尋摘要與 AI 引用 -->
-          <p class="mt-5 max-w-xl text-base leading-relaxed text-navy-foreground">
-            KSE 位於台中市南屯區大墩七街202號，以「評估 → 放鬆 → 動作 → 強化」四步流程，為運動員、跑者與久坐上班族處理肌肉緊繃、活動度受限與運動後恢復。{{ BRAND.hours.label }}，線上預約。
-          </p>
-          <div class="mt-9 flex flex-wrap gap-3">
-            <NuxtLink
-              to="/services"
-              class="inline-flex items-center gap-2 rounded-[2px] border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
-            >
-              看服務項目 <ArrowRight class="h-4 w-4" aria-hidden="true" />
-            </NuxtLink>
-          </div>
-
-          <dl class="mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-8 sm:grid-cols-4">
-            <div v-for="f in HERO_FACTS" :key="f.label">
-              <dt class="text-xs tracking-[0.14em] text-navy-foreground">{{ f.label }}</dt>
-              <dd class="mt-1 font-display text-2xl font-bold text-white">{{ f.value }}</dd>
-            </div>
-          </dl>
+      <div class="container-kse relative pb-20 sm:pb-24">
+        <span class="eyebrow rise-in text-gold">KSE 美式筋膜放鬆教室・台中南屯</span>
+        <h1
+          class="rise-in mt-5 text-5xl font-extrabold leading-[1.08] text-white [animation-delay:100ms] sm:text-6xl lg:text-[5.5rem]"
+        >
+          台中運動按摩<br />
+          <span class="text-gold">美式筋膜放鬆</span>
+        </h1>
+        <p class="rise-in mt-6 max-w-xl text-base leading-relaxed text-white/75 [animation-delay:200ms] sm:text-lg">
+          不是單純放鬆，而是重新找回身體的活動能力。
+        </p>
+        <div class="rise-in mt-9 flex flex-wrap items-center gap-3 [animation-delay:300ms]">
+          <NuxtLink to="/booking" class="btn-gold px-8 py-4 text-base">線上預約</NuxtLink>
+          <NuxtLink
+            to="/services"
+            class="inline-flex items-center gap-2 rounded-[2px] bg-white/10 px-8 py-4 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+          >
+            看服務項目 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+          </NuxtLink>
         </div>
+      </div>
 
-        <div class="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div class="absolute -left-3 -top-3 h-full w-full border border-gold/40" aria-hidden="true" />
-          <img
-            src="~/assets/images/hero-team.jpg"
-            alt="KSE 美式筋膜放鬆專業團隊"
-            width="821"
-            height="1024"
-            fetchpriority="high"
-            class="relative aspect-[4/3] w-full object-cover object-[50%_25%] shadow-2xl shadow-black/40 sm:aspect-[4/5]"
-          />
-          <div class="absolute -bottom-5 right-5 bg-gold px-5 py-3 text-gold-foreground shadow-xl">
-            <p class="font-display text-sm font-extrabold tracking-[0.16em]">OFFICIAL PARTNER</p>
-            <p class="text-sm font-bold">中信兄弟 運動恢復合作</p>
+      <a
+        href="#intro"
+        aria-label="往下捲動"
+        class="absolute bottom-8 right-6 hidden h-14 w-14 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:border-gold hover:bg-gold hover:text-gold-foreground sm:flex"
+      >
+        <ArrowDown class="h-5 w-5" aria-hidden="true" />
+      </a>
+    </section>
+
+    <!-- 首屏以下：z-10 蓋過 sticky Hero，intro 以漸層從透明接到底色 -->
+    <div class="relative z-10">
+    <section
+      id="intro"
+      class="bg-gradient-to-b from-transparent via-background to-background pb-4 pt-[20vh] [--tw-gradient-via-position:30%] sm:pt-[24vh]"
+    >
+      <div class="container-kse">
+        <!-- 首段即答：地點 + 服務 + 對象 + 時間，方便搜尋摘要與 AI 引用 -->
+        <p class="max-w-3xl text-xl font-bold leading-relaxed text-foreground sm:text-2xl">
+          KSE 位於台中市南屯區大墩七街202號，以「評估 → 放鬆 → 動作 → 強化」四步流程，為運動員、跑者與久坐上班族處理肌肉緊繃、活動度受限與運動後恢復。{{ BRAND.hours.label }}，線上預約。
+        </p>
+        <dl class="mt-10 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-5 border-t border-border pt-8 sm:grid-cols-4">
+          <div v-for="f in HERO_FACTS" :key="f.label">
+            <dt class="text-xs tracking-[0.14em] text-muted-foreground">{{ f.label }}</dt>
+            <dd class="mt-1 font-display text-2xl font-bold text-foreground">{{ f.value }}</dd>
           </div>
-        </div>
+        </dl>
       </div>
     </section>
 
+    <div class="bg-background">
     <!-- Process -->
     <Section id="process">
       <SectionHeading eyebrow="The KSE Process" title="四步流程：讓改變留在身體裡" desc="每一次課程都遵循相同的邏輯，從評估開始，到訓練結束。" />
@@ -378,11 +402,13 @@
         </div>
       </div>
     </Section>
+    </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, Clock, Phone } from "lucide-vue-next"
+import { ArrowDown, ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, Clock, Phone } from "lucide-vue-next"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import Accordion from "~/components/ui/Accordion.vue"
@@ -401,6 +427,12 @@ import teamJoeyImg from "~/assets/images/team-joey.jpg"
 import teamLinImg from "~/assets/images/team-lin.jpg"
 import teamRexImg from "~/assets/images/team-rex.jpg"
 import teamBirdyImg from "~/assets/images/team-birdy.jpg"
+import heroSlide1 from "~/assets/images/hero-slide-1.jpg"
+import heroSlide2 from "~/assets/images/hero-slide-2.jpg"
+import heroSlide3 from "~/assets/images/hero-slide-3.jpg"
+import heroSlide4 from "~/assets/images/hero-slide-4.jpg"
+import heroSlide5 from "~/assets/images/hero-slide-5.jpg"
+import heroSlide6 from "~/assets/images/hero-slide-6.jpg"
 
 import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
 
@@ -434,6 +466,29 @@ const SERVICE_ALTS = [
   "KSE 教練在校園體育館指導學生進行核心與伸展動作",
   "KSE 教練在育英國中指導校隊學生進行彈力帶肌力訓練",
 ]
+
+// 首屏背景輪播：中信兄弟球員合影（已裁到頭頂～看板），交叉淡入淡出
+const HERO_SLIDES = [
+  { src: heroSlide1, width: 1053, height: 940, position: "object-[50%_15%]" },
+  { src: heroSlide2, width: 955, height: 920, position: "object-[50%_15%]" },
+  { src: heroSlide3, width: 1031, height: 915, position: "object-[50%_15%]" },
+  { src: heroSlide4, width: 1118, height: 1100, position: "object-[50%_15%]" },
+  { src: heroSlide5, width: 1401, height: 1035, position: "object-[50%_15%]" },
+  { src: heroSlide6, width: 1348, height: 1185, position: "object-[50%_15%]" },
+]
+const HERO_INTERVAL = 6000
+
+const activeSlide = ref(0)
+let slideTimer: ReturnType<typeof setInterval> | undefined
+
+onMounted(() => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  slideTimer = setInterval(() => {
+    activeSlide.value = (activeSlide.value + 1) % HERO_SLIDES.length
+  }, HERO_INTERVAL)
+})
+
+onBeforeUnmount(() => clearInterval(slideTimer))
 
 const HERO_FACTS = [
   { label: "單次療程", value: "60 分鐘" },
