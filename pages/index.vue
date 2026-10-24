@@ -24,18 +24,31 @@
       <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" aria-hidden="true" />
       <div class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/85 via-black/45 to-transparent" aria-hidden="true" />
 
-      <div class="container-kse relative pb-20 sm:pb-24">
-        <span class="eyebrow rise-in text-gold">KSE 美式筋膜放鬆教室・台中南屯</span>
-        <h1
-          class="rise-in mt-5 text-5xl font-extrabold leading-[1.08] text-white [animation-delay:100ms] sm:text-6xl lg:text-[5.5rem]"
-        >
-          台中運動按摩<br />
-          <span class="text-gold">美式筋膜放鬆</span>
-        </h1>
-        <p class="rise-in mt-6 max-w-xl text-base leading-relaxed text-white/75 [animation-delay:200ms] sm:text-lg">
-          不是單純放鬆，而是重新找回身體的活動能力。
-        </p>
-        <div class="rise-in mt-9 flex flex-wrap items-center gap-3 [animation-delay:300ms]">
+      <!-- 照片人臉多在上方，文案整組壓在下緣；桌機改左右兩欄降低高度，避免擋臉 -->
+      <div
+        class="container-kse relative grid gap-8 pb-16 sm:pb-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16"
+      >
+        <div>
+          <span class="eyebrow rise-in text-gold">KSE 美式筋膜放鬆教室・台中南屯</span>
+          <h1
+            class="rise-in mt-4 text-4xl font-extrabold leading-[1.12] text-white [animation-delay:100ms] sm:text-5xl lg:text-6xl"
+          >
+            台中運動按摩<br />
+            <span class="text-gold">美式筋膜放鬆</span>
+          </h1>
+        </div>
+        <!-- 品牌主張：白、米相間逐行，金色左線收束；原副標降為補充說明 -->
+        <div class="rise-in max-w-md border-l-2 border-gold pl-5 [animation-delay:200ms] sm:pl-6 lg:mb-1">
+          <p class="text-lg font-medium leading-[1.7] tracking-[0.06em] sm:text-xl">
+            <span class="block text-white">我們不只照顧選手</span>
+            <span class="block text-[#e6d3b3]">更把職業級的照顧</span>
+            <span class="block text-white">帶給每一個你</span>
+          </p>
+          <p class="mt-3 text-sm leading-relaxed text-white/65">
+            不是單純放鬆，而是重新找回身體的活動能力。
+          </p>
+        </div>
+        <div class="rise-in flex flex-wrap items-center gap-3 [animation-delay:300ms] lg:col-span-2">
           <NuxtLink to="/booking" class="btn-gold px-8 py-4 text-base">線上預約</NuxtLink>
           <NuxtLink
             to="/services"
