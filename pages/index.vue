@@ -516,7 +516,7 @@ onMounted(() => {
 onBeforeUnmount(() => clearInterval(slideTimer))
 
 const HERO_FACTS = [
-  { label: "單次療程", value: "60 分鐘" },
+  { label: "單次服務", value: "60 分鐘" },
   { label: "營業時間", value: `${BRAND.hours.opens}–${BRAND.hours.closes}` },
   { label: "評估流程", value: "3 步驟" },
   { label: "位置", value: "台中南屯" },

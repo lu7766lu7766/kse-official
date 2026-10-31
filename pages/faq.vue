@@ -109,7 +109,7 @@ injectBreadcrumbsSchema([
 usePageSeo({
   title: `台中筋膜放鬆、運動按摩常見問題 ${FAQS.length} 問｜KSE`,
   description:
-    "美式筋膜放鬆會痛嗎？和推拿、SPA 有何不同？拉傷後多久能按摩？KSE 台中南屯整理營業時間、療程時間、預約方式等常見問題，一次解答。",
+    "美式筋膜放鬆會痛嗎？和推拿、SPA 有何不同？拉傷後多久能做運動按摩？KSE 台中南屯整理體驗服務時間、交通停車、運動前後安排等常見問題，一次解答。",
   path: "/faq",
 })
 </script>
