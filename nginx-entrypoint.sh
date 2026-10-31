@@ -12,6 +12,17 @@ server {
   listen 80;
   root /usr/share/nginx/html;
 
+  # 前面有 Railway 的 HTTPS proxy：轉址只送相對路徑，避免 Location 變成 http:// 或帶 :80
+  absolute_redirect off;
+
+  # llms.txt / robots.txt / sitemap.xml 含中文，明確宣告 UTF-8 以免被誤判編碼
+  charset utf-8;
+  charset_types text/plain text/xml application/xml text/css application/javascript application/json;
+
+  # 結尾斜線一律 301 到無斜線版本（首頁除外），避免 /services 與 /services/ 成為重複網址
+  # 正規式排除開頭多重斜線，避免 //evil.com/ 被轉成 //evil.com（open redirect）
+  rewrite ^/+([^/].*?)/+\$ /\$1 permanent;
+
   # 帶有 Hash 的 Nuxt 靜態打包資源 (JS/CSS/圖片)
   location /_nuxt/ {
     expires 1y;

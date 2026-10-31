@@ -31,6 +31,8 @@ export function usePageSeo(seo: PageSeo) {
     ogUrl: url,
     ogType: seo.type ?? "website",
     ogImage: image,
+    // layout 有設預設 secure_url，自訂分享圖時要一併覆寫，否則 FB / LINE 可能抓到預設圖
+    ogImageSecureUrl: image,
     ogImageAlt: imageAlt,
     ogImageWidth: seo.imageWidth ?? 1200,
     ogImageHeight: seo.imageHeight ?? 630,

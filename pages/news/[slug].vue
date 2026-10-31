@@ -20,7 +20,11 @@
             <template v-if="post.updated && post.updated !== post.date">
               ・ 更新 <time :datetime="post.updated">{{ post.updated }}</time>
             </template>
-            ・ {{ BRAND.name }}
+            ・
+            <NuxtLink v-if="author" :to="`/#${teamAnchor(author.slug)}`" class="hover:text-white">
+              作者：{{ author.name }}（{{ author.role }}）
+            </NuxtLink>
+            <template v-else>{{ BRAND.name }}</template>
           </p>
         </div>
         <div class="h-1 w-full bg-linear-to-r from-gold via-gold/40 to-transparent" aria-hidden="true" />
@@ -79,9 +83,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Section from "~/components/ui/Section.vue";
-import { ORG_ID, WEBSITE_ID } from "~/composables/useGeoSchema";
+import { ORG_ID, personRef, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
 import { POST_IMAGES } from "~/utils/post-images";
-import { BRAND, POSTS, SITE_URL } from "~/utils/site-data";
+import { BRAND, POSTS, SITE_URL, TEAM } from "~/utils/site-data";
 
 const route = useRoute();
 const slug = computed(() => route.params.slug as string);
@@ -95,6 +99,8 @@ if (!post.value) {
 const related = computed(() => POSTS.filter((p) => p.slug !== slug.value).slice(0, 3));
 
 const p = post.value!;
+// 有指定作者就用具名的 Person（E-E-A-T），否則以商家為作者
+const author = p.author ? TEAM.find((m) => m.slug === p.author) : undefined;
 const path = `/news/${p.slug}`;
 const url = `${SITE_URL}${path}`;
 const postImage = POST_IMAGES[p.image] ?? "/og-image.jpg";
@@ -142,7 +148,7 @@ useHead({
         inLanguage: "zh-TW",
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         isPartOf: { "@id": WEBSITE_ID },
-        author: { "@id": ORG_ID },
+        author: author ? personRef(author) : { "@id": ORG_ID },
         publisher: { "@id": ORG_ID },
       }),
     },

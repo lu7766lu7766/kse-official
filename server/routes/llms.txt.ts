@@ -1,4 +1,4 @@
-import { BRAND, FAQS, PARTNERS, POSTS, SERVICES, SITE_URL } from "~/utils/site-data"
+import { BRAND, FAQS, PARTNERS, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data"
 
 // llms.txt：給 AI 答案引擎的精簡事實摘要（https://llmstxt.org），內容全部取自 site-data，與頁面同步
 export default defineEventHandler((event) => {
@@ -20,7 +20,11 @@ export default defineEventHandler((event) => {
 
 ## 服務項目
 
-${SERVICES.map((s) => `- [${s.title}](${SITE_URL}/services#${s.slug})：${s.short}${s.duration}。適合：${s.audience}。`).join("\n")}
+${SERVICES.map((s) => `- [${s.title}](${SITE_URL}${servicePath(s.slug)})：${s.short}${s.duration}。適合：${s.audience}。`).join("\n")}
+
+## 團隊
+
+${TEAM.map((m) => `- ${m.name}（${m.role}）：專長 ${m.expertise.join("、")}。${m.points.join("；")}。`).join("\n")}
 
 ## 合作單位
 

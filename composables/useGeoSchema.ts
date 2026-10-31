@@ -1,10 +1,17 @@
-import { BRAND, FAQS, SERVICES, SITE_URL } from "~/utils/site-data"
+import { BRAND, FAQS, SERVICES, servicePath, SITE_URL, type TeamMember } from "~/utils/site-data"
 import heroImg from "~/assets/images/hero.jpg"
 import massageImg from "~/assets/images/massage.jpg"
 import stretchImg from "~/assets/images/stretch.jpg"
 
 export const ORG_ID = `${SITE_URL}/#organization`
 export const WEBSITE_ID = `${SITE_URL}/#website`
+
+/** Service 實體 @id（全站共用，避免各處拼法不一致；網址 servicePath 定義在 site-data） */
+export const serviceId = (slug: string) => `${SITE_URL}${servicePath(slug)}#service`
+
+/** 團隊成員的 Person 實體 @id 與首頁團隊區錨點 */
+export const personId = (slug: string) => `${SITE_URL}/#person-${slug}`
+export const teamAnchor = (slug: string) => `team-${slug}`
 
 const abs = (p: string) => (p.startsWith("http") ? p : `${SITE_URL}${p}`)
 
@@ -63,7 +70,7 @@ export function buildSiteGraph(description: string) {
             closes: BRAND.hours.closes,
           },
         ],
-        sameAs: [BRAND.fb, BRAND.ig, BRAND.line],
+        sameAs: [BRAND.fb, BRAND.ig, BRAND.line, ...BRAND.sameAsExtra],
         areaServed: [
           { "@type": "City", name: "台中市" },
           { "@type": "AdministrativeArea", name: "南屯區" },
@@ -82,7 +89,7 @@ export function buildSiteGraph(description: string) {
         ],
         makesOffer: SERVICES.map((s) => ({
           "@type": "Offer",
-          itemOffered: { "@type": "Service", "@id": `${SITE_URL}/services#${s.slug}`, name: s.title },
+          itemOffered: { "@type": "Service", "@id": serviceId(s.slug), name: s.title, url: abs(servicePath(s.slug)) },
         })),
         potentialAction: {
           "@type": "ReserveAction",
@@ -96,6 +103,42 @@ export function buildSiteGraph(description: string) {
         },
       },
     ],
+  }
+}
+
+/** 團隊成員的完整 Person 實體（只在顯示團隊介紹的首頁輸出） */
+export function buildPerson(member: TeamMember, image?: string) {
+  return {
+    "@type": "Person",
+    "@id": personId(member.slug),
+    name: member.name,
+    jobTitle: member.role,
+    description: member.points.join("；"),
+    url: `${SITE_URL}/#${teamAnchor(member.slug)}`,
+    ...(image ? { image: abs(image) } : {}),
+    knowsAbout: member.expertise,
+    ...(member.credentials?.length
+      ? {
+          hasCredential: member.credentials.map((name) => ({
+            "@type": "EducationalOccupationalCredential",
+            name,
+            credentialCategory: "certification",
+          })),
+        }
+      : {}),
+    worksFor: { "@id": ORG_ID },
+  }
+}
+
+/** 文章等其他頁引用成員時只輸出該頁看得到的欄位，完整資料由首頁同一個 @id 的 Person 提供 */
+export function personRef(member: TeamMember) {
+  return {
+    "@type": "Person",
+    "@id": personId(member.slug),
+    name: member.name,
+    jobTitle: member.role,
+    url: `${SITE_URL}/#${teamAnchor(member.slug)}`,
+    worksFor: { "@id": ORG_ID },
   }
 }
 
@@ -116,6 +159,7 @@ export function useGeoSchema() {
     })
   }
 
+  /** 服務列表頁：只列出各服務頁，完整 Service 內容定義在各自的服務頁 */
   const injectServicesSchema = () => {
     useHead({
       script: [
@@ -126,18 +170,55 @@ export function useGeoSchema() {
           itemListElement: SERVICES.map((service, index) => ({
             "@type": "ListItem",
             position: index + 1,
+            url: abs(servicePath(service.slug)),
             item: {
               "@type": "Service",
-              "@id": `${SITE_URL}/services#${service.slug}`,
+              "@id": serviceId(service.slug),
               name: service.title,
-              serviceType: service.title,
-              description: `${service.short}${service.detail}`,
-              url: `${SITE_URL}/services#${service.slug}`,
-              provider: { "@id": ORG_ID },
-              areaServed: { "@type": "City", name: "台中市" },
-              audience: { "@type": "Audience", audienceType: service.audience },
+              url: abs(servicePath(service.slug)),
             },
           })),
+        }),
+      ],
+    })
+  }
+
+  /** 單一服務頁的完整 Service 實體 */
+  const injectServiceSchema = (service: (typeof SERVICES)[number], image?: string) => {
+    useHead({
+      script: [
+        jsonLd({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "@id": serviceId(service.slug),
+          name: service.title,
+          serviceType: service.title,
+          description: `${service.short}${service.detail}`,
+          url: abs(servicePath(service.slug)),
+          ...(image ? { image: abs(image) } : {}),
+          provider: { "@id": ORG_ID },
+          areaServed: { "@type": "City", name: "台中市" },
+          audience: { "@type": "Audience", audienceType: service.audience },
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: `${service.title}服務內容`,
+            itemListElement: service.points.map((point) => ({
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: point },
+            })),
+          },
+        }),
+      ],
+    })
+  }
+
+  /** 團隊成員 Person 實體（只在實際顯示團隊的頁面注入，images 以 slug 對應照片） */
+  const injectTeamSchema = (team: TeamMember[], images: Record<string, string> = {}) => {
+    useHead({
+      script: [
+        jsonLd({
+          "@context": "https://schema.org",
+          "@graph": team.map((member) => buildPerson(member, images[member.slug])),
         }),
       ],
     })
@@ -163,6 +244,8 @@ export function useGeoSchema() {
   return {
     injectFaqSchema,
     injectServicesSchema,
+    injectServiceSchema,
+    injectTeamSchema,
     injectBreadcrumbsSchema,
   }
 }

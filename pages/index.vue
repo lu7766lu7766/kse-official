@@ -185,7 +185,8 @@
         <li
           v-for="member in TEAM"
           :key="member.slug"
-          class="surface-card group flex flex-col overflow-hidden"
+          :id="teamAnchor(member.slug)"
+          class="surface-card group flex scroll-mt-28 flex-col overflow-hidden"
         >
           <div class="overflow-hidden">
             <img
@@ -273,8 +274,8 @@
         <article v-for="(service, i) in SERVICES" :key="service.slug" class="surface-card group flex flex-col overflow-hidden">
           <div class="overflow-hidden">
             <img
-              :src="SERVICE_IMAGES[i]"
-              :alt="SERVICE_ALTS[i]"
+              :src="HOME_SERVICE_IMAGES[i]"
+              :alt="HOME_SERVICE_ALTS[i]"
               width="1200"
               height="1600"
               loading="lazy"
@@ -286,7 +287,7 @@
             <h3 class="mt-4 text-xl">{{ service.title }}</h3>
             <p class="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{{ service.short }}</p>
             <p class="mt-4 text-xs font-semibold text-foreground">{{ service.duration }}</p>
-            <NuxtLink :to="`/services#${service.slug}`" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
+            <NuxtLink :to="servicePath(service.slug)" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
               了解{{ service.title }} <ArrowRight class="h-4 w-4" aria-hidden="true" />
             </NuxtLink>
           </div>
@@ -453,7 +454,8 @@ import partnerLogoBrothers from "~/assets/images/partner-logo-brothers.png"
 import partnerLogoDazhi from "~/assets/images/partner-logo-dazhi.jpg"
 import partnerLogoYuying from "~/assets/images/partner-logo-yuying.png"
 
-import { AUDIENCES, BRAND, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
+import { teamAnchor } from "~/composables/useGeoSchema"
+import { AUDIENCES, BRAND, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, servicePath, TEAM } from "~/utils/site-data"
 
 const TEAM_IMAGES: Record<string, string> = {
   kd: teamKdImg,
@@ -484,8 +486,9 @@ const PROCESS_ALTS: Record<string, string> = {
 }
 
 const SERVICE_ICONS = [Waves, HeartPulse, Activity, Dumbbell]
-const SERVICE_IMAGES = [stretchImg, massageImg, coreImg, strengthImg]
-const SERVICE_ALTS = [
+// 首頁服務卡片用的照片（與服務頁的 utils/service-images.ts 刻意不同，取景較適合小卡）
+const HOME_SERVICE_IMAGES = [stretchImg, massageImg, coreImg, strengthImg]
+const HOME_SERVICE_ALTS = [
   "KSE 放鬆師為客人進行腿後側美式筋膜放鬆",
   "KSE 放鬆師為運動員進行小腿運動按摩",
   "KSE 教練在校園體育館指導學生進行核心與伸展動作",
@@ -521,6 +524,10 @@ const HERO_FACTS = [
   { label: "評估流程", value: "3 步驟" },
   { label: "位置", value: "台中南屯" },
 ]
+
+// 團隊只在首頁顯示，Person schema 也只在這裡注入（結構化資料需對應頁面上看得到的內容）
+const { injectTeamSchema } = useGeoSchema()
+injectTeamSchema(TEAM, TEAM_IMAGES)
 
 usePageSeo({
   title: "台中運動按摩・南屯美式筋膜放鬆｜KSE 美式筋膜放鬆教室",
