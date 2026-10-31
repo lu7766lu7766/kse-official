@@ -76,9 +76,19 @@
     >
       <div class="container-kse">
         <!-- 首段即答：地點 + 服務 + 對象 + 時間，方便搜尋摘要與 AI 引用 -->
-        <p class="max-w-3xl text-xl font-bold leading-relaxed text-foreground sm:text-2xl">
-          KSE 位於台中市南屯區大墩七街202號，以「評估 → 放鬆 → 動作 → 強化」四步流程，為運動員、跑者與久坐上班族處理肌肉緊繃、活動度受限與運動後恢復。{{ BRAND.hours.label }}，線上預約。
+        <h2 class="text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">一對一 60 分鐘運動按摩</h2>
+        <p class="mt-4 max-w-3xl text-lg font-bold leading-relaxed text-foreground sm:text-xl">
+          動作評估・徒手放鬆・筋膜刀放鬆・動作調整
         </p>
+        <a
+          :href="BRAND.line"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-8 inline-flex items-center gap-2 rounded-[2px] bg-[#06C755] px-7 py-3.5 text-base font-bold text-white transition-colors hover:bg-[#05b34c]"
+        >
+          <MessageCircle class="h-5 w-5" aria-hidden="true" />
+          加入官方 LINE 詢問
+        </a>
         <dl class="mt-10 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-5 border-t border-border pt-8 sm:grid-cols-4">
           <div v-for="f in HERO_FACTS" :key="f.label">
             <dt class="text-xs tracking-[0.14em] text-muted-foreground">{{ f.label }}</dt>
@@ -91,10 +101,10 @@
     <div class="bg-background">
     <!-- Process -->
     <Section id="process">
-      <SectionHeading eyebrow="The KSE Process" title="四步流程：讓改變留在身體裡" desc="每一次課程都遵循相同的邏輯，從評估開始，到訓練結束。" />
-      <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <SectionHeading eyebrow="The KSE Process" title="三道流程：讓改變留在身體裡" desc="每一次課程都遵循相同的邏輯，從動作評估開始，到動作調整衛教結束。" />
+      <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
-          v-for="step in PROCESS"
+          v-for="step in HOME_PROCESS"
           :key="step.no"
           class="surface-card group flex flex-col overflow-hidden"
         >
@@ -124,7 +134,7 @@
       <SectionHeading
         eyebrow="Our Team"
         title="團隊介紹"
-        desc="放鬆師與體能訓練師共同合作，從放鬆、動作調整到肌力訓練，依你的需求與手勁喜好安排最適合的人選。"
+        desc="美式筋膜放鬆師與肌力體能教練共同合作，從放鬆、動作調整到肌力訓練，依你的需求與手勁喜好安排最適合的人選。"
       />
       <ul class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
@@ -404,7 +414,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowDown, ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, Clock, Phone } from "lucide-vue-next"
+import { ArrowDown, ArrowRight, Check, Minus, Waves, HeartPulse, Activity, Dumbbell, MapPin, Clock, Phone, MessageCircle } from "lucide-vue-next"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import Accordion from "~/components/ui/Accordion.vue"
@@ -430,7 +440,26 @@ import heroSlide4 from "~/assets/images/hero-slide-4.jpg"
 import heroSlide5 from "~/assets/images/hero-slide-5.jpg"
 import heroSlide6 from "~/assets/images/hero-slide-6.jpg"
 
-import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
+import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, SERVICES, TEAM } from "~/utils/site-data"
+
+// 首頁專用三道流程；KSE專業頁仍沿用 site-data 的 PROCESS 四步驟
+const HOME_PROCESS = [
+  {
+    no: "01",
+    title: "動作評估",
+    desc: "靜態姿勢排列與動態動作篩檢，找出限制活動度與代償的真正來源，而不是只處理痠痛的地方。",
+  },
+  {
+    no: "02",
+    title: "徒手筋膜放鬆",
+    desc: "以美式徒手筋膜技術處理緊繃的筋膜層與軟組織，恢復組織滑動性與關節可動範圍。",
+  },
+  {
+    no: "03",
+    title: "運動衛教",
+    desc: "分享與個人需求相關的身體知識、日常活動建議及簡單的自主練習方向，幫助你更了解自己的身體，建立適合自己的運動與放鬆習慣。",
+  },
+]
 
 const TEAM_IMAGES: Record<string, string> = {
   kd: teamKdImg,
@@ -489,7 +518,7 @@ onBeforeUnmount(() => clearInterval(slideTimer))
 const HERO_FACTS = [
   { label: "單次療程", value: "60 分鐘" },
   { label: "營業時間", value: `${BRAND.hours.opens}–${BRAND.hours.closes}` },
-  { label: "評估流程", value: "4 步驟" },
+  { label: "評估流程", value: "3 步驟" },
   { label: "位置", value: "台中南屯" },
 ]
 
