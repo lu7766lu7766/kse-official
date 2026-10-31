@@ -9,7 +9,7 @@
       <NuxtLink to="/" class="flex items-center gap-3" @click="open = false">
         <img
           src="~/assets/images/kse-logo-circle.png"
-          alt=""
+          alt="KSE 美式筋膜放鬆教室 Logo"
           width="64"
           height="64"
           class="h-12 w-12 shrink-0 object-contain lg:h-16 lg:w-16"

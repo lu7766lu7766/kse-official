@@ -4,12 +4,12 @@
     <section
       class="sticky top-0 z-0 -mt-[68px] flex min-h-[100svh] flex-col justify-end overflow-hidden bg-navy pt-[68px] text-white lg:-mt-[84px] lg:pt-[84px]"
     >
-      <div class="absolute inset-0" aria-hidden="true">
+      <div class="absolute inset-0">
         <img
           v-for="(slide, i) in HERO_SLIDES"
           :key="slide.src"
           :src="slide.src"
-          alt=""
+          :alt="slide.alt"
           :width="slide.width"
           :height="slide.height"
           :loading="i === 0 ? 'eager' : 'lazy'"
@@ -133,7 +133,7 @@
     <section class="relative isolate overflow-hidden bg-navy text-white">
       <img
         src="~/assets/images/baseball.jpg"
-        alt=""
+        alt="KSE 美式筋膜放鬆教室與職業棒球運動恢復合作形象照"
         width="1600"
         height="912"
         loading="lazy"
@@ -498,12 +498,12 @@ const HOME_SERVICE_ALTS = [
 
 // 首屏背景輪播：中信兄弟球員合影（已裁到頭頂～看板），交叉淡入淡出
 const HERO_SLIDES = [
-  { src: heroSlide1, width: 1053, height: 940, position: "object-[50%_15%]" },
-  { src: heroSlide2, width: 955, height: 920, position: "object-[50%_15%]" },
-  { src: heroSlide3, width: 1031, height: 915, position: "object-[50%_15%]" },
-  { src: heroSlide4, width: 1118, height: 1100, position: "object-[50%_15%]" },
-  { src: heroSlide5, width: 1401, height: 1035, position: "object-[50%_15%]" },
-  { src: heroSlide6, width: 1348, height: 1185, position: "object-[50%_15%]" },
+  { src: heroSlide1, width: 1053, height: 940, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（一）" },
+  { src: heroSlide2, width: 955, height: 920, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（二）" },
+  { src: heroSlide3, width: 1031, height: 915, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（三）" },
+  { src: heroSlide4, width: 1118, height: 1100, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（四）" },
+  { src: heroSlide5, width: 1401, height: 1035, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（五）" },
+  { src: heroSlide6, width: 1348, height: 1185, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（六）" },
 ]
 const HERO_INTERVAL = 6000
 
