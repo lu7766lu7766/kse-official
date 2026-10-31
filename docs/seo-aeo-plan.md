@@ -102,11 +102,42 @@
 
 ### 上線檢查與外部設定
 
-- [ ] **Railway production 的 `kse-official` 服務設 `CRAWLER_ALLOW=true`**（2026-10-31 檢查：變數存在但值不是 `true`，正式站仍回 `x-robots-tag: noindex, nofollow`，全站不會被收錄）。這是 container 啟動時讀取的變數，改完需重新部署；dev 環境維持不設
+- [ ] **步驟 1：Railway production 的 `kse-official` 服務設 `CRAWLER_ALLOW=true`**（2026-10-31 檢查：變數存在但值不是 `true`，正式站仍回 `x-robots-tag: noindex, nofollow`，全站不會被收錄）。這是 container 啟動時讀取的變數，改完需重新部署；dev 環境維持不設
+  - 做法：Railway → 專案 `kse-system` → 左上切到 **production** 環境 → 服務 `kse-official` → Variables → `CRAWLER_ALLOW` 改為 `true`（全小寫、不加引號）→ 套用後會自動重新部署
   - 驗證：`curl -sI https://www.kse-release.com.tw/ | grep -i x-robots` 應無輸出
-- [ ] 生效後於 Google Search Console 與 Bing Webmaster Tools（ChatGPT 搜尋 / Copilot 依賴 Bing 索引）提交 `sitemap.xml`，並對 4 個服務頁要求建立索引
-- [ ] `kse-release.com.tw`（無 www）目前 https → `http://www` → `https://www` 兩跳。Railway 只綁了 `www` 自訂網域，這段轉址在**網域商的 DNS／網址轉址設定**，改成直接 301 到 `https://www.kse-release.com.tw/`
-- [ ] Google 商家：營業時間 11:00–22:00、服務項目與價格、每週動態、邀請評論並回覆；提供商家分享網址（含 cid）以加入 `sameAs` / `hasMap`
+- [ ] **步驟 2：Google Search Console 與 Bing Webmaster Tools 提交 sitemap**（須在步驟 1 生效後做，否則會被判為「已排除：noindex」）
+  - Google Search Console（https://search.google.com/search-console）
+    1. 「新增資源」→ 選左邊「網域」→ 輸入 `kse-release.com.tw`（網域資源會一併涵蓋 www／無 www、http／https）
+    2. 複製畫面上的 `google-site-verification=…` TXT 記錄 → 到 GoDaddy「我的產品 → 網域 → kse-release.com.tw → DNS → DNS 記錄 → 新增」：類型 `TXT`、名稱 `@`、值貼上、TTL 預設 → 儲存 → 回 GSC 按「驗證」（DNS 生效可能需幾分鐘到數小時，失敗就稍後再按）
+    3. 左側「索引 → Sitemap」→ 輸入 `https://www.kse-release.com.tw/sitemap.xml` → 提交，狀態應顯示「成功」與 15 個網址
+    4. 上方搜尋列逐一貼上新頁面網址檢查 →「要求建立索引」：`/services/fascia`、`/services/sports-massage`、`/services/core`、`/services/strength`、`/`（每日有配額，一次做幾頁即可）
+    5. 之後每週看「索引 → 網頁」與「成效」；若有「已排除」先看原因
+  - Bing Webmaster Tools（https://www.bing.com/webmasters；ChatGPT 搜尋／Copilot 依賴 Bing 索引）
+    1. 用 Microsoft 帳號登入 → 選「從 Google Search Console 匯入」→ 授權同一個 Google 帳號 → 勾選網站匯入（會一併帶入已驗證狀態與 sitemap，免再驗證）
+    2. 左側「Sitemap」確認 `https://www.kse-release.com.tw/sitemap.xml` 已在清單，沒有就按「提交 Sitemap」手動加入
+    3. 左側「URL 提交」貼上 4 個服務頁網址提交
+- [ ] **步驟 3：修正無 www 網域的兩段轉址**（GoDaddy）
+  - 現況：DNS 在 GoDaddy（NS `ns41/ns42.domaincontrol.com`），`kse-release.com.tw` 的 A 記錄指向 GoDaddy 轉址服務，目標被設成 `http://www.kse-release.com.tw`，所以 https 會先轉到 http 再由 Railway 轉回 https，多一跳。Railway 只綁 `www`，不用動
+  - 做法：GoDaddy「我的產品 → 網域 → kse-release.com.tw → DNS → 轉址（Forwarding）」→「網域」那一列按編輯：
+    1. 轉址到：通訊協定選 `https://`，網址填 `www.kse-release.com.tw`
+    2. 轉址類型：永久（301）
+    3. 轉址設定：僅轉址（不要選「遮罩／Forward with masking」，遮罩會用 iframe 包住網站，對 SEO 不利）
+    4. 儲存（生效通常數分鐘，最長可能 48 小時）
+  - 驗證：`curl -sI https://kse-release.com.tw/ -X GET | grep -i location` 應直接是 `https://www.kse-release.com.tw/`；`curl -sI http://kse-release.com.tw/ | grep -i location` 也一樣
+  - 不要動 `www` 的 CNAME（指向 Railway）
+- [ ] **步驟 4：Google 商家檔案（GBP）**
+  - 進入方式：用管理者帳號登入 Google → 搜尋「KSE美式筋膜放鬆教室」或開 https://business.google.com → 在商家面板點「編輯個人檔案」
+  - 商家名稱 ⚠️：目前是「KSE美式筋膜放鬆教室/運動按摩/徒手按摩/筋膜刀放鬆」，違反 Google 規範（名稱不得加關鍵字，需與招牌一致），被檢舉可能被強制改名或停權。改回「KSE美式筋膜放鬆教室」；改名可能需要重新審核數天
+  - 類別：主要類別選最貼近的運動按摩類（如「運動按摩師」，以清單實際名稱為準），次要類別加「按摩師」等相關項目；關鍵字放在類別、服務與說明，不放名稱
+  - 營業時間：每日 11:00–22:00（與 `BRAND.hours` 一致）；國定假日另設「特殊營業時間」
+  - 地址與地圖釘：大墩七街202號；地圖釘目前 24.1438506, 120.6494393，網站座標已同步，之後若移動地圖釘要同步改 `BRAND.geo`
+  - 聯絡資訊：電話 0901-403990；網站填 `https://www.kse-release.com.tw/?utm_source=google&utm_medium=organic&utm_campaign=gbp`（GA4 可分辨商家流量）；預約連結填 `https://www.kse-release.com.tw/booking`
+  - 服務：「編輯服務」逐一新增美式筋膜放鬆、運動按摩、核心穩定修復方案、肌力與體能訓練、筋膜刀放鬆，每項填價格與 1–2 句說明（與網站 `SERVICES` 一致）
+  - 商家說明（750 字內）：第一句寫清楚「台中南屯的美式筋膜放鬆與運動按摩教室」，再寫三道流程、適合族群、中信兄弟合作；不放網址與促銷字
+  - 相片：店外招牌與入口（方便找路）、店內環境、放鬆師工作照、團隊照，至少 10 張，之後每月補幾張
+  - 動態（新增更新）：每週 1 則，內容可用網站新文章、合作消息、優惠；附相片與「預約」按鈕
+  - 評論：在 GBP 首頁「要求評論」複製評論連結 → 放進 LINE 官方帳號的服務後訊息與店內 QR Code；請客人自然寫出做了什麼服務、哪裡改善；每則評論都要回覆（含負評）。不可給優惠換評論，也不要在網站自行標註 `AggregateRating`
+  - 商家 CID：`355524801281724783`（`https://maps.google.com/?cid=355524801281724783`），已用於網站地圖連結、schema `hasMap` 與 `sameAs`
 - [ ] 每月用 ChatGPT / Perplexity / Gemini / Google AI Mode 實測「台中南屯運動按摩推薦」「台中筋膜放鬆」等問句，並在 GA4 追蹤 `chatgpt.com`、`perplexity.ai`、`gemini.google.com` 的推薦流量
 
 ### 待業主提供

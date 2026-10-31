@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite"
+import { BRAND } from "./utils/site-data"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -29,8 +30,8 @@ export default defineNuxtConfig({
         { name: "theme-color", content: "#0b1b2e" },
         { name: "geo.region", content: "TW-TXG" },
         { name: "geo.placename", content: "台中市南屯區" },
-        { name: "geo.position", content: "24.14324;120.64756" },
-        { name: "ICBM", content: "24.14324, 120.64756" },
+        { name: "geo.position", content: `${BRAND.geo.latitude};${BRAND.geo.longitude}` },
+        { name: "ICBM", content: `${BRAND.geo.latitude}, ${BRAND.geo.longitude}` },
       ],
       link: [
         { rel: "icon", type: "image/png", href: "/favicon.png" },

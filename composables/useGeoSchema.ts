@@ -70,7 +70,7 @@ export function buildSiteGraph(description: string) {
             closes: BRAND.hours.closes,
           },
         ],
-        sameAs: [BRAND.fb, BRAND.ig, BRAND.line, ...BRAND.sameAsExtra],
+        sameAs: [BRAND.mapUrl, BRAND.fb, BRAND.ig, BRAND.line, ...BRAND.sameAsExtra],
         areaServed: [
           { "@type": "City", name: "台中市" },
           { "@type": "AdministrativeArea", name: "南屯區" },

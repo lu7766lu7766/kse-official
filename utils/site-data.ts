@@ -22,13 +22,16 @@ export const BRAND = {
     "https://www.facebook.com/p/Kse%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4-61562337030014/",
   ],
   area: "台中市南屯區大墩七街202號",
+  // 座標與 Google 商家地圖釘一致（修改時兩邊同步）
   geo: {
-    latitude: 24.14324,
-    longitude: 120.64756,
+    latitude: 24.1438506,
+    longitude: 120.6494393,
   },
   priceRange: "$$",
   mapQuery: "KSE美式筋膜放鬆教室",
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=KSE%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4",
+  // Google 商家 CID（Maps 網址 data 參數 0x…:0x4ef13ec513d116f 的第二段轉十進位）
+  gbpCid: "355524801281724783",
+  mapUrl: "https://maps.google.com/?cid=355524801281724783",
 }
 
 
@@ -437,7 +440,7 @@ export const CONTACT_CHANNELS = [
   {
     label: "地址",
     value: "台中市南屯區大墩七街202號",
-    href: "https://www.google.com/maps/search/?api=1&query=KSE%E7%BE%8E%E5%BC%8F%E7%AD%8B%E8%86%9C%E6%94%BE%E9%AC%86%E6%95%99%E5%AE%A4",
+    href: "https://maps.google.com/?cid=355524801281724783",
   },
   { label: "LINE", value: "LINE 官方帳號", href: "https://lin.ee/z9MrmKK" },
   { label: "Instagram", value: "@kse_release_studio", href: "https://www.instagram.com/kse_release_studio" },
