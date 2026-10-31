@@ -333,10 +333,11 @@
               <img
                 :src="POST_IMAGES[post.image]"
                 :alt="post.alt"
-                width="1200"
-                height="1600"
+                :width="postImageSize(post.image)[0]"
+                :height="postImageSize(post.image)[1]"
                 loading="lazy"
-                class="aspect-[16/10] w-full object-cover object-[50%_25%] transition-transform duration-500 group-hover:scale-105"
+                :style="{ objectPosition: post.imagePosition ?? '50% 25%' }"
+                class="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
             <div class="p-6">
@@ -430,7 +431,7 @@ import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
-import { POST_IMAGES } from "~/utils/post-images"
+import { POST_IMAGES, postImageSize } from "~/utils/post-images"
 
 import stretchImg from "~/assets/images/stretch.jpg"
 import massageImg from "~/assets/images/massage.jpg"

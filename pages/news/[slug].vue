@@ -41,18 +41,46 @@
           <img
             :src="POST_IMAGES[post.image]"
             :alt="post.alt"
-            width="1200"
-            height="1600"
+            :width="coverSize[0]"
+            :height="coverSize[1]"
             fetchpriority="high"
-            class="mt-10 aspect-[16/10] w-full object-cover object-[50%_25%]"
+            class="mx-auto mt-10 h-auto max-h-[70vh] w-auto max-w-full"
           />
 
           <div class="mt-10 space-y-5 text-[1.0625rem] leading-[1.9] text-foreground/85">
             <template v-for="(block, i) in post.body" :key="i">
-              <h2 v-if="typeof block !== 'string'" class="!mt-12 text-2xl text-foreground">{{ block.h2 }}</h2>
-              <p v-else>{{ block }}</p>
+              <p v-if="typeof block === 'string'">{{ block }}</p>
+              <h2 v-else-if="'h2' in block" class="!mt-12 text-2xl text-foreground">{{ block.h2 }}</h2>
+              <ul v-else class="list-disc space-y-2 pl-6 marker:text-primary">
+                <li v-for="item in block.ul" :key="item">{{ item }}</li>
+              </ul>
             </template>
           </div>
+
+          <!-- 相簿：原貼文的其他圖片 -->
+          <section v-if="post.gallery?.length" class="mt-14" aria-label="文章相簿">
+            <h2 class="text-2xl text-foreground">相片</h2>
+            <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+              <li v-for="g in post.gallery" :key="g.key">
+                <img
+                  :src="POST_IMAGES[g.key]"
+                  :alt="g.alt"
+                  :width="postImageSize(g.key)[0]"
+                  :height="postImageSize(g.key)[1]"
+                  loading="lazy"
+                  class="h-auto w-full bg-ink"
+                />
+              </li>
+            </ul>
+          </section>
+
+          <p v-if="post.sources?.length" class="mt-10 text-sm text-muted-foreground">
+            本文整理自 KSE 官方 Instagram 貼文：
+            <template v-for="(src, i) in post.sources" :key="src">
+              <a :href="src" target="_blank" rel="noopener noreferrer" class="text-primary underline-offset-4 hover:underline">原文{{ post.sources.length > 1 ? i + 1 : "" }}</a>
+              <span v-if="i < post.sources.length - 1">、</span>
+            </template>
+          </p>
 
           <div class="relative isolate mt-14 overflow-hidden bg-navy p-8 text-white">
             <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
@@ -84,7 +112,7 @@
 import { computed } from "vue";
 import Section from "~/components/ui/Section.vue";
 import { ORG_ID, personRef, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
-import { POST_IMAGES } from "~/utils/post-images";
+import { POST_IMAGES, postImageSize } from "~/utils/post-images";
 import { BRAND, POSTS, SITE_URL, TEAM } from "~/utils/site-data";
 
 const route = useRoute();
@@ -96,7 +124,12 @@ if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: "找不到這篇文章", fatal: true });
 }
 
-const related = computed(() => POSTS.filter((p) => p.slug !== slug.value).slice(0, 3));
+// 延伸閱讀：同分類優先，不足再補最新文章
+const related = computed(() => {
+  const others = POSTS.filter((p) => p.slug !== slug.value);
+  const same = others.filter((p) => p.category === post.value?.category);
+  return [...same, ...others.filter((p) => !same.includes(p))].slice(0, 3);
+});
 
 const p = post.value!;
 // 有指定作者就用具名的 Person（E-E-A-T），否則以商家為作者
@@ -104,6 +137,7 @@ const author = p.author ? TEAM.find((m) => m.slug === p.author) : undefined;
 const path = `/news/${p.slug}`;
 const url = `${SITE_URL}${path}`;
 const postImage = POST_IMAGES[p.image] ?? "/og-image.jpg";
+const coverSize = postImageSize(p.image);
 const imageUrl = absoluteUrl(postImage);
 
 usePageSeo({
@@ -113,8 +147,8 @@ usePageSeo({
   type: "article",
   image: postImage,
   imageAlt: p.alt,
-  imageWidth: 1200,
-  imageHeight: 1600,
+  imageWidth: coverSize[0],
+  imageHeight: coverSize[1],
 });
 
 useSeoMeta({
@@ -141,7 +175,7 @@ useHead({
         headline: p.title,
         description: p.excerpt,
         abstract: p.summary,
-        image: [imageUrl],
+        image: [imageUrl, ...(p.gallery ?? []).map((g) => absoluteUrl(POST_IMAGES[g.key] ?? ""))],
         datePublished: p.date,
         dateModified: p.updated ?? p.date,
         articleSection: p.category,

@@ -38,10 +38,11 @@
             <img
               :src="POST_IMAGES[post.image]"
               :alt="post.alt"
-              width="1200"
-              height="1600"
+              :width="postImageSize(post.image)[0]"
+              :height="postImageSize(post.image)[1]"
               loading="lazy"
-              class="aspect-[16/10] w-full object-cover object-[50%_25%] transition-transform duration-500 group-hover:scale-105"
+              :style="{ objectPosition: post.imagePosition ?? '50% 25%' }"
+              class="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
           <div class="p-6">
@@ -75,7 +76,7 @@ import { ArrowRight } from "lucide-vue-next";
 import PageHero from "~/components/ui/PageHero.vue";
 import Section from "~/components/ui/Section.vue";
 import { cn } from "~/utils/cn";
-import { POST_IMAGES } from "~/utils/post-images";
+import { POST_IMAGES, postImageSize } from "~/utils/post-images";
 import { CATEGORIES, POSTS } from "~/utils/site-data";
 
 const active = ref<string>("全部");

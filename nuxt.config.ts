@@ -49,6 +49,11 @@ export default defineNuxtConfig({
   routeRules: {
     // 案例分享頁已移除，舊網址導回首頁
     "/cases": { redirect: { to: "/", statusCode: 301 } },
+    // 原本 4 篇自撰文章已改以 IG／FB 貼文整理的文章為主，舊網址導向內容最接近的新文章
+    "/news/recovery-after-game": { redirect: { to: "/news/post-workout-recovery", statusCode: 301 } },
+    "/news/fascia-basics": { redirect: { to: "/news/muscle-vs-fascia", statusCode: 301 } },
+    "/news/core-stability-desk": { redirect: { to: "/news/pelvic-tilt-causes", statusCode: 301 } },
+    "/news/youth-strength": { redirect: { to: "/news/yuying-basketball-training", statusCode: 301 } },
   },
   nitro: {
     prerender: {

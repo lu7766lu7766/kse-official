@@ -1,3 +1,5 @@
+import { IG_POSTS } from "./posts-ig"
+
 export const SITE_URL = "https://www.kse-release.com.tw"
 
 export const BRAND = {
@@ -97,7 +99,7 @@ export const SERVICES = [
       "KSE 台中南屯美式筋膜放鬆：先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限筋膜層，處理後即時複評。適合肩頸緊繃、下背痠痛、深蹲與舉手活動度不足者，單次約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
     faqs: ["difference", "iastm", "pain", "duration"],
-    posts: ["fascia-basics", "core-stability-desk"],
+    posts: ["muscle-vs-fascia", "kinetic-chain-fascia-tension", "soreness-series-faq"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
     updated: "2026-10-31",
     title: "美式筋膜放鬆",
@@ -120,7 +122,7 @@ export const SERVICES = [
       "KSE 台中南屯運動按摩：依訓練與比賽週期安排賽前啟動、賽後恢復與週間維護，針對棒球、籃球、羽球、跑步等專項高負荷部位調整處理深度，單次約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
     faqs: ["timing", "injury", "pain"],
-    posts: ["recovery-after-game", "fascia-basics"],
+    posts: ["post-workout-recovery", "does-painful-massage-work-better", "sports-massage-for-everyone"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
     updated: "2026-10-31",
     title: "運動按摩",
@@ -143,7 +145,7 @@ export const SERVICES = [
       "KSE 核心穩定修復方案：為久坐上班族與肩頸、下背反覆不適者設計，從呼吸與肋廓位置開始重建深層核心，再整合髖與胸椎活動度，帶回日常坐姿與動作。台中南屯，單堂約 50 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
     faqs: ["difference", "duration"],
-    posts: ["core-stability-desk"],
+    posts: ["pelvic-tilt-causes", "text-neck-weight"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
     updated: "2026-10-31",
     title: "核心穩定修復方案",
@@ -161,7 +163,7 @@ export const SERVICES = [
       "KSE 台中南屯肌力與體能訓練：依評估結果設計個人化課表，涵蓋基礎肌力、爆發力、加減速與專項體能，適合運動員、青少年運動員與傷後回場者，單堂約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
     faqs: ["injury", "timing"],
-    posts: ["youth-strength", "recovery-after-game"],
+    posts: ["single-leg-balance-training", "knee-discomfort-lower-limb-stability", "yuying-basketball-training"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
     updated: "2026-10-31",
     title: "肌力與體能訓練",
@@ -285,7 +287,8 @@ export const PARTNERS = [
 
 export const CATEGORIES = ["KSE活動", "合作消息", "運動恢復", "筋膜放鬆", "動作訓練", "肌力與體能"] as const
 
-export type PostBlock = string | { h2: string }
+/** 文章內文區塊：段落、H2 小標、條列清單 */
+export type PostBlock = string | { h2: string } | { ul: string[] }
 
 export type Post = {
   slug: string
@@ -296,106 +299,22 @@ export type Post = {
   excerpt: string
   /** 文章開頭的重點摘要（約 60–90 字），讓搜尋引擎與 AI 直接引用 */
   summary: string
-  image: "hero" | "baseball" | "assess" | "core" | "strength" | "massage" | "stretch"
+  /** 封面圖 key（見 utils/post-images.ts：內建圖或 assets/images/news/ 的檔名） */
+  image: string
   alt: string
+  /** 列表卡片裁成橫幅時的對焦位置（CSS object-position），預設 "50% 25%" */
+  imagePosition?: string
+  /** 文末相簿（key 同 image） */
+  gallery?: { key: string; alt: string }[]
+  /** 改寫自社群貼文時，原文網址 */
+  sources?: string[]
   /** 作者（TEAM 的 slug）；有填才會顯示署名並輸出 Person 作者，未填則以商家為作者 */
   author?: string
   body: PostBlock[]
 }
 
-export const POSTS: Post[] = [
-  {
-    slug: "recovery-after-game",
-    title: "賽後 48 小時怎麼恢復？運動按摩與筋膜放鬆的時間安排",
-    date: "2026-06-30",
-    updated: "2026-10-31",
-    category: "運動恢復",
-    author: "lin",
-    excerpt: "比賽或高強度訓練後，運動按摩與筋膜放鬆該在什麼時候做、做多重？依 0–24 與 24–48 小時拆解賽後恢復重點。",
-    summary:
-      "賽後 24 小時內以輕度運動按摩降低疲勞為主，避免深壓；24–48 小時可安排較完整的筋膜放鬆與活動度處理，並在下次訓練前完成動作複評。",
-    image: "massage",
-    alt: "KSE 放鬆師在台中南屯教室為運動員進行小腿與腿後側運動按摩",
-    body: [
-      { h2: "為什麼賽後恢復要分時段？" },
-      "高強度比賽後，肌肉會出現微小損傷與發炎反應，神經系統也處於疲勞狀態。這時候「按得越重越好」反而可能增加不適，所以 KSE 會依賽後經過的時間調整處理方式與強度。",
-      { h2: "賽後 0–24 小時：降低疲勞、不追求深壓" },
-      "以輕度運動按摩、低強度活動與呼吸放鬆為主，目的是讓身體從比賽的高張力狀態降下來。這個階段不建議做強力的深層筋膜處理。",
-      { h2: "賽後 24–48 小時：處理累積張力與活動度" },
-      "延遲性痠痛通常在這個時段最明顯。可以安排較完整的美式筋膜放鬆，處理高負荷部位（例如投手的肩後側與胸椎、跑者的小腿與髂脛束）累積的張力，並搭配主動動作恢復關節活動度。",
-      { h2: "回到訓練前：用動作複評確認狀態" },
-      "恢復的重點不是當下舒不舒服，而是下一次訓練前能不能正確發力。KSE 會在處理後重測原本受限的動作，確認改變確實發生，再給出居家延續練習。",
-      "若有明顯紅腫熱痛、無法承重或疑似拉傷，請先就醫評估，狀況穩定後再安排放鬆與恢復處理。",
-    ],
-  },
-  {
-    slug: "fascia-basics",
-    title: "什麼是美式筋膜放鬆？肌肉緊繃與動作受限的處理原理",
-    date: "2026-06-12",
-    updated: "2026-10-31",
-    category: "筋膜放鬆",
-    author: "kd",
-    excerpt: "美式筋膜放鬆和一般按摩差在哪？從筋膜滑動性、張力鏈與代償模式，說明 KSE 為什麼先評估、再放鬆、最後用動作整合。",
-    summary:
-      "美式筋膜放鬆是以評估結果為依據，用徒手技術恢復筋膜層之間的滑動性，並搭配主動動作讓關節走完應有的活動範圍；重點在改善動作能力，而不只是當下的放鬆感。",
-    image: "stretch",
-    alt: "KSE 放鬆師在台中南屯教室為客人進行腿後側筋膜放鬆與伸展",
-    body: [
-      { h2: "筋膜是什麼？" },
-      "筋膜是包覆並連結全身肌肉、骨骼與器官的結締組織網絡。當某一段筋膜的滑動性下降，鄰近關節就會出現活動度不足，身體便以其他部位代償，久而久之形成肌肉緊繃、痠痛或反覆的小傷。",
-      { h2: "美式筋膜放鬆和一般按摩差在哪？" },
-      "一般按摩多以客人指定的痠痛部位與主觀舒適感為主；美式筋膜放鬆則先做靜態與動態評估，找出真正受限的位置，再沿著張力鏈處理，並搭配主動動作（Active Release 概念）讓神經系統同步接受新的活動範圍。",
-      { h2: "KSE 的處理順序" },
-      "動作評估 → 徒手筋膜放鬆 → 運動衛教。先找出受限來源，再處理筋膜與軟組織，最後分享日常活動建議與自主練習方向，把新的活動度「存」進身體，變成實際可用的能力。",
-      { h2: "筋膜放鬆會很痛嗎？" },
-      "不會以「痛」作為效果指標。處理強度會依評估結果、當天狀態與訓練週期調整，過程中可隨時溝通。",
-    ],
-  },
-  {
-    slug: "core-stability-desk",
-    title: "久坐族肩頸緊繃、下背不適？核心穩定從呼吸開始",
-    date: "2026-05-26",
-    updated: "2026-10-31",
-    category: "動作訓練",
-    author: "eason",
-    excerpt: "久坐上班族的肩頸與下背問題，常與呼吸模式和深層核心無力有關。說明為什麼核心穩定訓練要從呼吸重建開始。",
-    summary:
-      "久坐容易讓呼吸變淺、肋廓外開，深層核心難以參與，導致肩頸與下背代償。先處理肩頸與髖部的筋膜受限，再重建呼吸與深層核心，是久坐族最有效率的起點。",
-    image: "hero",
-    alt: "KSE 放鬆師為久坐上班族處理背部筋膜張力",
-    body: [
-      { h2: "為什麼久坐會肩頸緊、下背痠？" },
-      "長時間坐姿讓髖屈肌群縮短、胸椎活動度下降，呼吸也容易變成以肩頸用力的淺呼吸。深層核心（橫膈、腹橫肌、骨盆底）參與變少，下背與頸肩就被迫長時間撐住身體。",
-      { h2: "第一步：放鬆受限部位" },
-      "先以筋膜放鬆處理頸肩、胸小肌與髖屈肌群的受限，讓肋廓與骨盆回到比較好的相對位置。",
-      { h2: "第二步：呼吸與深層核心重建" },
-      "從仰躺呼吸練習開始，讓肋廓能往下、往側邊擴張，再進入死蟲式、鳥狗式等控制練習，學會在呼吸時維持軀幹穩定。",
-      { h2: "第三步：帶回日常" },
-      "最後把練習整合到辦公室日常：坐姿調整、起身與搬物的動作策略，以及工作間的 3 分鐘活動度練習。KSE 的「核心穩定修復方案」即依此流程設計。",
-    ],
-  },
-  {
-    slug: "youth-strength",
-    title: "青少年運動員可以做肌力訓練嗎？成長期的訓練原則",
-    date: "2026-05-08",
-    updated: "2026-10-31",
-    category: "肌力與體能",
-    author: "birdy",
-    excerpt: "青少年運動員可以做肌力訓練，但要先建立動作品質與落地控制，再漸進加入負荷，並與學校球隊的訓練週期整合。",
-    summary:
-      "可以。青少年肌力訓練應以動作品質與長期發展為優先：先建立深蹲、單腳、推拉與落地控制等基本動作，再從自身體重漸進到外部負荷，並與球隊訓練量整合以避免過度負荷。",
-    image: "strength",
-    alt: "KSE 教練在育英國中體育館指導校隊學生進行彈力帶下肢訓練",
-    body: [
-      { h2: "成長期做肌力訓練會不會長不高？" },
-      "在專業指導、動作正確且負荷漸進的前提下，肌力訓練是青少年運動員降低受傷風險、提升運動表現的重要基礎。真正需要注意的是動作品質與總訓練量，而不是「能不能練」。",
-      { h2: "先練動作，再練重量" },
-      "基本動作篩檢包含深蹲、弓箭步、推拉、單腳站立與落地緩衝。動作控制穩定後，才從自身體重進入彈力帶、啞鈴等外部負荷。",
-      { h2: "和學校球隊訓練怎麼整合？" },
-      "學生運動員往往同時有校隊練習與比賽，額外的肌力訓練需要配合賽季週期安排，避免累積過度負荷。KSE 與大智國小、育英國中等校園運動團隊合作時，也以此原則規劃課程。",
-    ],
-  },
-]
+/** 全部文章，依發布日由新到舊（內容整理自 KSE 官方 IG／FB 貼文，見 utils/posts-ig.ts） */
+export const POSTS: Post[] = [...IG_POSTS].sort((a, b) => b.date.localeCompare(a.date))
 
 export const FAQS = [
   {
