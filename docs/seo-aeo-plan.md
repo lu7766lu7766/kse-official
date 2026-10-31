@@ -89,3 +89,40 @@
 - [ ] Google 商家（GBP）營業時間同步為 11:00–22:00，累積真實評論後再加 `AggregateRating`
 - [ ] 真實個案（經同意）取代「常見處理路徑」；放鬆師個人介紹與證照（E-E-A-T）
 - [ ] 價格資訊（目前 schema 僅 `priceRange: $$`）
+
+## 7. 執行紀錄（2026-10-31）
+
+已完成（commit `036fcb1`，Gemini 4 兩輪審查通過）：
+- [x] 服務拆成獨立頁 `/services/{fascia,sports-massage,core,strength}`（`pages/services/[slug].vue`）：各自 title / description / canonical / 分享圖、完整 `Service` schema、麵包屑、相關 FAQ（展開顯示，FAQPage schema 只留 `/faq`）、延伸文章、其他服務內連；`/services` 改為列表 + `ItemList`，舊 `/services#slug` 錨點保留
+- [x] 首頁團隊區輸出 `Person` schema（`knowsAbout`、`hasCredential` 只列正式證照、`worksFor`），卡片加 `#team-{slug}` 錨點；文章 `author` 欄位 → 頁面署名 + `personRef()`（只輸出頁面可見欄位，以同一 `@id` 指回首頁完整 Person）
+- [x] sitemap `lastmod` 改用內容實際修改日，不再用 build 日期
+- [x] 商家 `sameAs` 加入 IG 地點頁與 FB 公開網址；llms.txt 加「團隊」段落、服務連結改新網址
+- [x] 自訂分享圖時一併覆寫 `og:image:secure_url`（原本 FB / LINE 可能抓到預設圖）
+- [x] nginx：結尾斜線 301 到無斜線（正規式防 `//evil.com/` open redirect）、txt/xml 宣告 `charset=utf-8`、`absolute_redirect off`（Railway HTTPS proxy 後方只送相對轉址）
+
+### 上線檢查與外部設定
+
+- [ ] **Railway production 的 `kse-official` 服務設 `CRAWLER_ALLOW=true`**（2026-10-31 檢查：變數存在但值不是 `true`，正式站仍回 `x-robots-tag: noindex, nofollow`，全站不會被收錄）。這是 container 啟動時讀取的變數，改完需重新部署；dev 環境維持不設
+  - 驗證：`curl -sI https://www.kse-release.com.tw/ | grep -i x-robots` 應無輸出
+- [ ] 生效後於 Google Search Console 與 Bing Webmaster Tools（ChatGPT 搜尋 / Copilot 依賴 Bing 索引）提交 `sitemap.xml`，並對 4 個服務頁要求建立索引
+- [ ] `kse-release.com.tw`（無 www）目前 https → `http://www` → `https://www` 兩跳。Railway 只綁了 `www` 自訂網域，這段轉址在**網域商的 DNS／網址轉址設定**，改成直接 301 到 `https://www.kse-release.com.tw/`
+- [ ] Google 商家：營業時間 11:00–22:00、服務項目與價格、每週動態、邀請評論並回覆；提供商家分享網址（含 cid）以加入 `sameAs` / `hasMap`
+- [ ] 每月用 ChatGPT / Perplexity / Gemini / Google AI Mode 實測「台中南屯運動按摩推薦」「台中筋膜放鬆」等問句，並在 GA4 追蹤 `chatgpt.com`、`perplexity.ai`、`gemini.google.com` 的推薦流量
+
+### 待業主提供
+
+- [ ] 各服務價格（單次／套票）→ 補進 `SERVICES` 與 `Offer` schema（目前全站沒有價格，是內容最大缺口）
+- [ ] Birdy 學歷：「臺灣運動體育大學 競技運動學系碩士班」是畢業或在學？校名是否為「國立臺灣體育運動大學」？畢業可加 `alumniOf`
+- [ ] Lin 是否仍持有護理師執照？有則列入 `credentials`
+- [ ] 確認 4 篇文章的 `author` 為實際執筆或審稿人
+- [ ] 服務頁補充：不適合做的情況（禁忌症）、各服務專屬 FAQ
+- 註：不要自行在網站加 `AggregateRating`／`Review` schema。Google 不會為商家自己標註的評論顯示星等，評論請累積在 Google 商家（取代上方第 6 節的同名待辦）
+
+### 日後維護規則（`utils/site-data.ts`）
+
+- 改頁面文案 → 更新 `PAGE_UPDATED` 對應日期；服務頁改 `SERVICES[].updated`，文章改 `POSTS[].updated`（sitemap 不會自動用 build 日期）
+- 新增文章 → 填 `author`（`TEAM` 的 slug），才有署名與具名作者 schema
+- 新增服務 → `SERVICES` 填 `seoTitle`、`seoDescription`、`faqs`（`FAQS` 的 id）、`posts`、`updated`，並在 `utils/service-images.ts` 加照片、alt、裁切位置；頁面、sitemap、schema、llms.txt 會自動產生
+- 新增成員／證照 → `TEAM.credentials` 只放正式證照，研習與經歷放 `points`
+- 改營業時間 → `BRAND.hours` 與 Google 商家同步
+- 審查用 agy 時，headless 無法執行指令：先把 diff 與建置產物寫成檔案再請它讀（見 Claude 記憶 `agy-review-headless`）
