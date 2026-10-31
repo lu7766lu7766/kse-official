@@ -2,7 +2,7 @@ import { POSTS, SITE_URL } from "~/utils/site-data"
 
 // 單一來源：nuxt generate 時 prerender 成 .output/public/sitemap.xml（見 nuxt.config.ts nitro.prerender）
 // 新增文章只要改 utils/site-data.ts 的 POSTS，sitemap 會自動帶上
-const STATIC_PAGES = ["/", "/services", "/kse", "/booking", "/faq", "/partners", "/cases", "/news"]
+const STATIC_PAGES = ["/", "/services", "/kse", "/booking", "/faq", "/partners", "/news"]
 
 export default defineEventHandler((event) => {
   const buildDate = new Date().toISOString().split("T")[0]

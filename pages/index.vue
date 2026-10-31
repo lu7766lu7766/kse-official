@@ -129,6 +129,51 @@
       </ol>
     </Section>
 
+    <!-- 中信兄弟合作 -->
+    <section class="relative isolate overflow-hidden bg-navy text-white">
+      <img
+        src="~/assets/images/baseball.jpg"
+        alt=""
+        width="1600"
+        height="912"
+        loading="lazy"
+        class="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
+      />
+      <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy via-navy/90 to-navy/50" aria-hidden="true" />
+      <div class="container-kse grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-28">
+        <div>
+          <span class="eyebrow text-gold">Official Partner</span>
+          <h2 class="mt-5 font-display text-5xl font-extrabold italic leading-none text-white sm:text-7xl">
+            KSE <span class="text-gold">×</span> 中信兄弟
+          </h2>
+          <p class="mt-6 max-w-lg text-base leading-relaxed text-navy-foreground">
+            {{ PARTNERS[0]?.desc }}服務職業球隊的評估與恢復流程，同樣帶給台中的每一位運動員與上班族。
+          </p>
+          <NuxtLink
+            to="/partners"
+            class="mt-8 inline-flex items-center gap-2 rounded-[2px] border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
+          >
+            查看官方合作夥伴 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+          </NuxtLink>
+        </div>
+        <!-- 合作隊徽：去背 PNG 直接壓在深色底；大智國小隊徽含黃色底圖，以圓角方塊呈現 -->
+        <ul class="grid grid-cols-3 gap-4 sm:gap-6">
+          <li v-for="p in PARTNERS" :key="p.name" class="flex flex-col items-center text-center">
+            <div class="flex h-24 w-full items-center justify-center sm:h-36 lg:h-40">
+              <img
+                :src="PARTNER_LOGOS[p.name]"
+                :alt="`${p.name}隊徽`"
+                loading="lazy"
+                :class="['max-h-full max-w-full object-contain', p.name === '大智國小' && 'rounded-md']"
+              />
+            </div>
+            <p class="mt-4 text-[11px] tracking-[0.16em] text-gold sm:text-xs">{{ p.type }}</p>
+            <p class="mt-1 text-sm font-extrabold text-white sm:text-base">{{ p.name }}</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <!-- Team -->
     <Section id="team" tone="ink">
       <SectionHeading
@@ -248,51 +293,6 @@
         </article>
       </div>
     </Section>
-
-    <!-- 中信兄弟合作 -->
-    <section class="relative isolate overflow-hidden bg-navy text-white">
-      <img
-        src="~/assets/images/baseball.jpg"
-        alt=""
-        width="1600"
-        height="912"
-        loading="lazy"
-        class="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
-      />
-      <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy via-navy/90 to-navy/50" aria-hidden="true" />
-      <div class="container-kse grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-28">
-        <div>
-          <span class="eyebrow text-gold">Official Partner</span>
-          <h2 class="mt-5 font-display text-5xl font-extrabold italic leading-none text-white sm:text-7xl">
-            KSE <span class="text-gold">×</span> 中信兄弟
-          </h2>
-          <p class="mt-6 max-w-lg text-base leading-relaxed text-navy-foreground">
-            {{ PARTNERS[0]?.desc }}服務職業球隊的評估與恢復流程，同樣帶給台中的每一位運動員與上班族。
-          </p>
-          <NuxtLink
-            to="/partners"
-            class="mt-8 inline-flex items-center gap-2 rounded-[2px] border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-colors hover:border-gold hover:text-gold"
-          >
-            查看運動合作 <ArrowRight class="h-4 w-4" aria-hidden="true" />
-          </NuxtLink>
-        </div>
-        <!-- 合作隊徽：去背 PNG 直接壓在深色底；大智國小隊徽含黃色底圖，以圓角方塊呈現 -->
-        <ul class="grid grid-cols-3 gap-4 sm:gap-6">
-          <li v-for="p in PARTNERS" :key="p.name" class="flex flex-col items-center text-center">
-            <div class="flex h-24 w-full items-center justify-center sm:h-36 lg:h-40">
-              <img
-                :src="PARTNER_LOGOS[p.name]"
-                :alt="`${p.name}隊徽`"
-                loading="lazy"
-                :class="['max-h-full max-w-full object-contain', p.name === '大智國小' && 'rounded-md']"
-              />
-            </div>
-            <p class="mt-4 text-[11px] tracking-[0.16em] text-gold sm:text-xs">{{ p.type }}</p>
-            <p class="mt-1 text-sm font-extrabold text-white sm:text-base">{{ p.name }}</p>
-          </li>
-        </ul>
-      </div>
-    </section>
 
     <!-- Audiences -->
     <Section>
@@ -453,7 +453,7 @@ import partnerLogoBrothers from "~/assets/images/partner-logo-brothers.png"
 import partnerLogoDazhi from "~/assets/images/partner-logo-dazhi.jpg"
 import partnerLogoYuying from "~/assets/images/partner-logo-yuying.png"
 
-import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
+import { AUDIENCES, BRAND, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
 
 const TEAM_IMAGES: Record<string, string> = {
   kd: teamKdImg,

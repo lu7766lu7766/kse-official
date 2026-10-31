@@ -45,6 +45,10 @@ export default defineNuxtConfig({
       ],
     },
   },
+  routeRules: {
+    // 案例分享頁已移除，舊網址導回首頁
+    "/cases": { redirect: { to: "/", statusCode: 301 } },
+  },
   nitro: {
     prerender: {
       // 未被連結爬到的頁面（LIFF 入口）與 server route 產物需明確列出，靜態部署才會有實體檔

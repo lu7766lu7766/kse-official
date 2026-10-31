@@ -39,7 +39,7 @@ ${POSTS.map((p) => `- [${p.title}](${SITE_URL}/news/${p.slug})：${p.summary}`).
 - [首頁](${SITE_URL}/)
 - [服務項目](${SITE_URL}/services)
 - [關於 KSE](${SITE_URL}/kse)
-- [運動合作](${SITE_URL}/partners)
+- [官方合作夥伴](${SITE_URL}/partners)
 - [常見問題](${SITE_URL}/faq)
 `
 })

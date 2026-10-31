@@ -1,10 +1,10 @@
 <template>
   <div>
     <PageHero
-      eyebrow="Sports Partners"
+      eyebrow="Official Partners"
       title="球隊與校園運動恢復合作"
       desc="KSE 與職業球隊、學校校隊與運動員深度合作，以動態評估為起點，結合美式筋膜放鬆與專項運動按摩，支援賽季中的身體維護與賽後恢復。"
-      :crumbs="[{ label: '運動合作' }]"
+      :crumbs="[{ label: '官方合作夥伴' }]"
     >
       <nav aria-label="合作單位快速導覽" class="mt-8 flex flex-wrap gap-2">
         <a
@@ -216,7 +216,7 @@ const WORK_DIRECTIONS = [
 const { injectBreadcrumbsSchema } = useGeoSchema()
 injectBreadcrumbsSchema([
   { name: "首頁", item: "/" },
-  { name: "運動合作", item: "/partners" },
+  { name: "官方合作夥伴", item: "/partners" },
 ])
 
 usePageSeo({
