@@ -59,6 +59,7 @@
               查看按摩師週排班與可用時段，支援即時預約與查詢取消。請至少提前 3 小時預約。
             </p>
           </div>
+          <BookingButton class="mt-8 self-start">線上預約</BookingButton>
         </div>
         <div class="flex flex-col overflow-hidden border border-border bg-card">
           <iframe
@@ -88,6 +89,7 @@ import { Phone, MessageCircle, Instagram, Facebook, AtSign, MapPin } from "lucid
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
+import BookingButton from "~/components/ui/BookingButton.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
 import { BRAND, FAQS } from "~/utils/site-data"

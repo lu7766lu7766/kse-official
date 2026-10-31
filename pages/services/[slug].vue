@@ -5,11 +5,7 @@
       :title="`台中南屯${service.title}`"
       :desc="service.short"
       :crumbs="[{ label: '服務項目', to: '/services' }, { label: service.title }]"
-    >
-      <div class="mt-8">
-        <BookingButton>預約{{ service.title }}</BookingButton>
-      </div>
-    </PageHero>
+    />
 
     <!-- 適合誰＋服務內容：答案先行，給搜尋摘要與 AI 引用 -->
     <Section>
