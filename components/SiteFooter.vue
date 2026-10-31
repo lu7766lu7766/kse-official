@@ -42,6 +42,7 @@
             <a :href="BRAND.line" target="_blank" rel="noopener noreferrer" class="hover:text-white">LINE 官方帳號</a>
             <a :href="BRAND.ig" target="_blank" rel="noopener noreferrer" class="hover:text-white">Instagram</a>
             <a :href="BRAND.fb" target="_blank" rel="noopener noreferrer" class="hover:text-white">Facebook</a>
+            <a :href="BRAND.threads" target="_blank" rel="noopener noreferrer" class="hover:text-white">Threads</a>
           </p>
         </address>
       </div>

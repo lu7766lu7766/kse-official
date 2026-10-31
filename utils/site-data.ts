@@ -18,6 +18,7 @@ export const BRAND = {
   line: "https://lin.ee/z9MrmKK",
   fb: "https://www.facebook.com/profile.php?id=61562337030014",
   ig: "https://www.instagram.com/kse_release_studio",
+  threads: "https://www.threads.com/@kse_release_studio",
   /** 只放進 schema sameAs 的其他官方頁面（IG 地點頁、FB 公開網址），頁面上的連結仍用 ig / fb */
   sameAsExtra: [
     "https://www.instagram.com/explore/locations/366327843228449/kse/",
@@ -364,4 +365,5 @@ export const CONTACT_CHANNELS = [
   { label: "LINE", value: "LINE 官方帳號", href: "https://lin.ee/z9MrmKK" },
   { label: "Instagram", value: "@kse_release_studio", href: "https://www.instagram.com/kse_release_studio" },
   { label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: "https://www.facebook.com/profile.php?id=61562337030014" },
+  { label: "Threads", value: "@kse_release_studio", href: "https://www.threads.com/@kse_release_studio" },
 ]

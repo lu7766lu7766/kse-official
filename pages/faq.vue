@@ -34,7 +34,7 @@
 
     <Section id="booking" tone="ink">
       <SectionHeading eyebrow="Booking" title="預約與聯絡方式" :desc="`${BRAND.hours.label}，採預約制。可線上預約，或透過以下管道與我們聯繫。`" />
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
         <a
           v-for="c in CHANNELS"
           :key="c.label"
@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { Phone, MessageCircle, Instagram, Facebook, MapPin } from "lucide-vue-next"
+import { Phone, MessageCircle, Instagram, Facebook, AtSign, MapPin } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
@@ -97,6 +97,7 @@ const CHANNELS = [
   { icon: MessageCircle, label: "LINE", value: "LINE 官方帳號", href: BRAND.line },
   { icon: Instagram, label: "Instagram", value: "@kse_release_studio", href: BRAND.ig },
   { icon: Facebook, label: "Facebook", value: "KSE 美式筋膜放鬆教室", href: BRAND.fb },
+  { icon: AtSign, label: "Threads", value: "@kse_release_studio", href: BRAND.threads },
 ]
 
 const { injectFaqSchema, injectBreadcrumbsSchema } = useGeoSchema()

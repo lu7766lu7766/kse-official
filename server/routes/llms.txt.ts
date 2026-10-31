@@ -16,6 +16,7 @@ export default defineEventHandler((event) => {
 - LINE：${BRAND.line}
 - Instagram：${BRAND.ig}
 - Facebook：${BRAND.fb}
+- Threads：${BRAND.threads}
 - 服務區域：台中市南屯區、西屯區、西區及台中市全區
 
 ## 服務項目
