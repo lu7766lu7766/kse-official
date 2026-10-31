@@ -276,10 +276,19 @@
             查看運動合作 <ArrowRight class="h-4 w-4" aria-hidden="true" />
           </NuxtLink>
         </div>
-        <ul class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          <li v-for="p in PARTNERS" :key="p.name" class="border-l-2 border-gold bg-white/5 px-6 py-5 backdrop-blur-sm">
-            <p class="text-xs tracking-[0.16em] text-gold">{{ p.type }}</p>
-            <p class="mt-1 text-xl font-extrabold text-white">{{ p.name }}</p>
+        <!-- 合作隊徽：去背 PNG 直接壓在深色底；大智國小隊徽含黃色底圖，以圓角方塊呈現 -->
+        <ul class="grid grid-cols-3 gap-4 sm:gap-6">
+          <li v-for="p in PARTNERS" :key="p.name" class="flex flex-col items-center text-center">
+            <div class="flex h-24 w-full items-center justify-center sm:h-36 lg:h-40">
+              <img
+                :src="PARTNER_LOGOS[p.name]"
+                :alt="`${p.name}隊徽`"
+                loading="lazy"
+                :class="['max-h-full max-w-full object-contain', p.name === '大智國小' && 'rounded-md']"
+              />
+            </div>
+            <p class="mt-4 text-[11px] tracking-[0.16em] text-gold sm:text-xs">{{ p.type }}</p>
+            <p class="mt-1 text-sm font-extrabold text-white sm:text-base">{{ p.name }}</p>
           </li>
         </ul>
       </div>
@@ -347,7 +356,7 @@
         <div>
           <SectionHeading eyebrow="FAQ" title="常見問題" desc="第一次來之前最常被問的問題。" />
           <NuxtLink to="/faq" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
-            查看全部 {{ FAQS.length }} 個問題 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+            查看全部問題 <ArrowRight class="h-4 w-4" aria-hidden="true" />
           </NuxtLink>
         </div>
         <Accordion type="single" collapsible>
@@ -440,6 +449,9 @@ import heroSlide3 from "~/assets/images/hero-slide-3.jpg"
 import heroSlide4 from "~/assets/images/hero-slide-4.jpg"
 import heroSlide5 from "~/assets/images/hero-slide-5.jpg"
 import heroSlide6 from "~/assets/images/hero-slide-6.jpg"
+import partnerLogoBrothers from "~/assets/images/partner-logo-brothers.png"
+import partnerLogoDazhi from "~/assets/images/partner-logo-dazhi.jpg"
+import partnerLogoYuying from "~/assets/images/partner-logo-yuying.png"
 
 import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
 
@@ -450,6 +462,12 @@ const TEAM_IMAGES: Record<string, string> = {
   lin: teamLinImg,
   rex: teamRexImg,
   birdy: teamBirdyImg,
+}
+
+const PARTNER_LOGOS: Record<string, string> = {
+  中信兄弟: partnerLogoBrothers,
+  大智國小: partnerLogoDazhi,
+  育英國中: partnerLogoYuying,
 }
 
 const PROCESS_IMAGES: Record<string, string> = {
