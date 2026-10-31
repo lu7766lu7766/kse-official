@@ -23,7 +23,7 @@ import { SITE_URL } from "~/utils/site-data"
 const BRAND_SUFFIX = "KSE 美式筋膜放鬆教室"
 const defaultTitle = "台中運動按摩・南屯美式筋膜放鬆｜KSE 美式筋膜放鬆教室"
 const defaultDesc =
-  "KSE 美式筋膜放鬆教室位於台中市南屯區大墩七街202號，以評估、筋膜放鬆、動作訓練與肌力強化四步流程，處理肌肉緊繃、活動度受限與運動後恢復。每日 11:00–22:00，線上預約。"
+  "KSE 美式筋膜放鬆教室位於台中市南屯區大墩七街202號，以動作評估、徒手筋膜放鬆與運動衛教三道流程，處理肌肉緊繃、活動度受限與運動後恢復。每日 11:00–22:00，線上預約。"
 const ogImageUrl = `${SITE_URL}/og-image.jpg`
 
 useSeoMeta({

@@ -105,7 +105,7 @@
           <div>
             <span class="eyebrow text-[10px] mb-1">Step 03</span>
             <h4 class="text-sm font-bold text-foreground">選擇按摩師與時段</h4>
-            <p class="mt-1 text-muted-foreground">瀏覽週曆各時段，點選合適的 1 小時服務區間（需提前半小時以上）。</p>
+            <p class="mt-1 text-muted-foreground">瀏覽週曆各時段，點選合適的 1 小時服務區間（需提前 3 小時以上）。</p>
           </div>
         </div>
 
@@ -148,7 +148,7 @@
             服務須知與收費
           </h3>
           <p class="text-xs text-muted-foreground leading-relaxed">
-            採預約制，請至少提前半小時以上預約。每次預約服務時間為 1 小時（含身體動作評估、徒手放鬆與動作優化建議）。
+            採預約制，請至少提前 3 小時以上預約。每次預約服務時間為 1 小時（含身體動作評估、徒手放鬆與動作優化建議）。
           </p>
         </div>
 

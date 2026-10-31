@@ -5,7 +5,7 @@ export default defineEventHandler((event) => {
   setHeader(event, "Content-Type", "text/plain; charset=utf-8")
   return `# ${BRAND.name}
 
-> ${BRAND.name}（Kinetic Sports Enhancement）是位於台中市南屯區的運動恢復工作室，以「評估 → 筋膜放鬆 → 動作 → 強化」四步流程，提供美式筋膜放鬆、運動按摩、核心穩定修復與肌力體能訓練。
+> ${BRAND.name}（Kinetic Sports Enhancement）是位於台中市南屯區的運動恢復工作室，以「動作評估 → 徒手筋膜放鬆 → 運動衛教」三道流程，提供美式筋膜放鬆、運動按摩、核心穩定修復與肌力體能訓練。
 
 ## 基本資訊
 

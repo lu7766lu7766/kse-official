@@ -13,9 +13,6 @@
             loading="lazy"
           />
         </div>
-        <p class="mt-5 max-w-sm text-sm leading-relaxed">
-          台中南屯的美式筋膜放鬆與運動按摩教室。以評估為起點，用筋膜放鬆打開限制，再用動作與訓練把改變留下來。
-        </p>
         <p class="mt-6 font-display text-lg font-bold tracking-[0.12em] text-gold">{{ BRAND.slogan }}</p>
       </div>
 

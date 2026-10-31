@@ -80,10 +80,13 @@ export function parseDateString(str: string): Date {
   return new Date(str)
 }
 
+// 預約至少需提前 3 小時
+export const MIN_ADVANCE_MINUTES = 180
+
 /**
  * 判斷特定起始時間是否已過期（需至少提前 minAdvanceMinutes 分鐘）
  */
-export function isSlotPast(startAtStr: string, minAdvanceMinutes: number = 30): boolean {
+export function isSlotPast(startAtStr: string, minAdvanceMinutes: number = MIN_ADVANCE_MINUTES): boolean {
   if (!startAtStr) return true
   const slotTime = parseDateString(startAtStr).getTime()
   const minValidTime = Date.now() + minAdvanceMinutes * 60 * 1000
@@ -173,8 +176,8 @@ export function sliceToHourlySlots(
         const endHour = padZero(nextHour.getHours())
         const endMin = padZero(nextHour.getMinutes())
 
-        // 至少需提前 30 分鐘預約，小於 30 分鐘或過去時段視為無法預約
-        const minAdvanceMs = 30 * 60 * 1000
+        // 至少需提前 3 小時預約，不足 3 小時或過去時段視為無法預約
+        const minAdvanceMs = MIN_ADVANCE_MINUTES * 60 * 1000
         const isPast = current.getTime() < nowTime + minAdvanceMs
 
         if (!slotsByDate[dateStr]) {

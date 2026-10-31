@@ -42,7 +42,7 @@
             <span class="mx-1">•</span>
             <span>服務時間：1 小時</span>
             <span class="mx-1">•</span>
-            <span class="text-primary font-medium">需至少提前半小時以上</span>
+            <span class="text-primary font-medium">需至少提前 3 小時以上</span>
           </div>
         </div>
       </div>

@@ -56,7 +56,7 @@
             <span class="eyebrow text-gold">Book Online</span>
             <h3 class="mt-4 text-2xl font-extrabold text-white">線上預約，即時查看空檔</h3>
             <p class="mt-3 text-sm leading-relaxed text-navy-foreground">
-              查看按摩師週排班與可用時段，支援即時預約與查詢取消。請至少提前半小時預約。
+              查看按摩師週排班與可用時段，支援即時預約與查詢取消。請至少提前 3 小時預約。
             </p>
           </div>
         </div>

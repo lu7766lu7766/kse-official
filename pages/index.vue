@@ -104,7 +104,7 @@
       <SectionHeading eyebrow="The KSE Process" title="三道流程：讓改變留在身體裡" desc="每一次課程都遵循相同的邏輯，從動作評估開始，到動作調整衛教結束。" />
       <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <li
-          v-for="step in HOME_PROCESS"
+          v-for="step in PROCESS"
           :key="step.no"
           class="surface-card group flex flex-col overflow-hidden"
         >
@@ -183,7 +183,7 @@
       <SectionHeading eyebrow="Difference" title="KSE 美式筋膜放鬆和一般按摩差在哪？" />
       <!-- 結論先行：給 AI 摘要直接引用 -->
       <p class="mt-5 max-w-3xl text-base leading-relaxed text-foreground">
-        <strong>簡單說：</strong>一般按摩處理「當下的舒服感」，KSE 處理「動作能力」。我們先用靜態與動態評估找出受限來源，再做筋膜放鬆，最後用動作訓練把改變固定下來，並提供居家練習。
+        <strong>簡單說：</strong>一般按摩處理「當下的舒服感」，KSE 處理「動作能力」。我們先用靜態與動態評估找出受限來源，再做徒手筋膜放鬆，最後透過運動衛教提供日常活動建議與居家練習，把改變留下來。
       </p>
       <div class="mt-10 overflow-x-auto border border-border bg-card">
         <table class="w-full min-w-[34rem] border-collapse text-left text-sm">
@@ -311,7 +311,7 @@
     <!-- News -->
     <Section>
       <div class="flex flex-wrap items-end justify-between gap-6">
-        <SectionHeading eyebrow="Journal" title="運動恢復知識" />
+        <SectionHeading eyebrow="Blog" title="最新文章" />
         <NuxtLink to="/news" class="inline-flex items-center gap-2 text-sm font-bold text-primary">
           所有文章 <ArrowRight class="h-4 w-4" aria-hidden="true" />
         </NuxtLink>
@@ -366,8 +366,9 @@
           <div>
             <span class="eyebrow text-gold">Book Online</span>
             <h2 class="mt-4 text-3xl font-extrabold text-white sm:text-4xl">從一次評估開始</h2>
-            <p class="mt-4 text-sm leading-relaxed text-navy-foreground">
-              線上查看按摩師週排班與可用時段，即時預約，也能查詢或取消預約。請至少提前半小時預約。
+            <p class="mt-4 text-base font-bold text-white">如何預約？需要提前多久？</p>
+            <p class="mt-2 text-sm leading-relaxed text-navy-foreground">
+              可直接在官網線上預約頁選擇按摩師與時段，請至少提前 3 小時預約。
             </p>
             <dl class="mt-8 space-y-3 text-sm">
               <div class="flex gap-3">
@@ -440,26 +441,7 @@ import heroSlide4 from "~/assets/images/hero-slide-4.jpg"
 import heroSlide5 from "~/assets/images/hero-slide-5.jpg"
 import heroSlide6 from "~/assets/images/hero-slide-6.jpg"
 
-import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, SERVICES, TEAM } from "~/utils/site-data"
-
-// 首頁專用三道流程；KSE專業頁仍沿用 site-data 的 PROCESS 四步驟
-const HOME_PROCESS = [
-  {
-    no: "01",
-    title: "動作評估",
-    desc: "靜態姿勢排列與動態動作篩檢，找出限制活動度與代償的真正來源，而不是只處理痠痛的地方。",
-  },
-  {
-    no: "02",
-    title: "徒手筋膜放鬆",
-    desc: "以美式徒手筋膜技術處理緊繃的筋膜層與軟組織，恢復組織滑動性與關節可動範圍。",
-  },
-  {
-    no: "03",
-    title: "運動衛教",
-    desc: "分享與個人需求相關的身體知識、日常活動建議及簡單的自主練習方向，幫助你更了解自己的身體，建立適合自己的運動與放鬆習慣。",
-  },
-]
+import { AUDIENCES, BRAND, CASES, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, TEAM } from "~/utils/site-data"
 
 const TEAM_IMAGES: Record<string, string> = {
   kd: teamKdImg,

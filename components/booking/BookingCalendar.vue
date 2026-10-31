@@ -259,7 +259,7 @@ function getGroupedSlotsForDay(dateString: string): GroupedTimeSlot[] {
   const map = new Map<string, GroupedTimeSlot>()
 
   for (const slot of slots) {
-    const isPast = isSlotPast(slot.start_at, 30)
+    const isPast = isSlotPast(slot.start_at)
 
     if (!map.has(slot.time_display)) {
       map.set(slot.time_display, {
