@@ -86,6 +86,13 @@
             <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
             <p class="text-xl font-extrabold text-white">想知道自己的狀況？從一次評估開始。</p>
             <p class="mt-2 text-sm text-navy-foreground">{{ BRAND.address }}・{{ BRAND.hours.label }}</p>
+            <NuxtLink
+              v-if="relatedService"
+              :to="servicePath(relatedService.slug)"
+              class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-gold underline-offset-4 hover:underline"
+            >
+              了解台中南屯{{ relatedService.title }} <ArrowRight class="h-4 w-4" aria-hidden="true" />
+            </NuxtLink>
           </div>
         </div>
       </Section>
@@ -110,10 +117,11 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { ArrowRight } from "lucide-vue-next";
 import Section from "~/components/ui/Section.vue";
-import { ORG_ID, personRef, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
+import { ORG_ID, personRef, serviceId, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
 import { POST_IMAGES, postImageSize } from "~/utils/post-images";
-import { BRAND, POSTS, SITE_URL, TEAM } from "~/utils/site-data";
+import { BRAND, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data";
 
 const route = useRoute();
 const slug = computed(() => route.params.slug as string);
@@ -132,6 +140,18 @@ const related = computed(() => {
 });
 
 const p = post.value!;
+
+// 文末導向相關服務頁（關鍵字錨點內連）：服務頁有列為延伸閱讀的優先，否則依分類對應
+const CATEGORY_SERVICE: Record<string, string> = {
+  運動恢復: "sports-massage",
+  筋膜放鬆: "fascia",
+  動作訓練: "core",
+  肌力與體能: "strength",
+  合作消息: "sports-massage",
+  KSE活動: "fascia",
+};
+const relatedService =
+  SERVICES.find((s) => s.posts.includes(p.slug)) ?? SERVICES.find((s) => s.slug === CATEGORY_SERVICE[p.category]);
 // 有指定作者就用具名的 Person（E-E-A-T），否則以商家為作者
 const author = p.author ? TEAM.find((m) => m.slug === p.author) : undefined;
 const path = `/news/${p.slug}`;
@@ -179,6 +199,7 @@ useHead({
         datePublished: p.date,
         dateModified: p.updated ?? p.date,
         articleSection: p.category,
+        ...(relatedService ? { about: { "@id": serviceId(relatedService.slug) } } : {}),
         inLanguage: "zh-TW",
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         isPartOf: { "@id": WEBSITE_ID },

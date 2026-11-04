@@ -157,3 +157,33 @@
 - 新增成員／證照 → `TEAM.credentials` 只放正式證照，研習與經歷放 `points`
 - 改營業時間 → `BRAND.hours` 與 Google 商家同步
 - 審查用 agy 時，headless 無法執行指令：先把 diff 與建置產物寫成檔案再請它讀（見 Claude 記憶 `agy-review-headless`）
+
+## 8. 關鍵字優化：運動／按摩／運動按摩／放鬆（2026-11-04）
+
+### 關鍵字 → 主落地頁（避免自家頁面互搶）
+
+| 關鍵字群 | 主頁 | 輔助頁 | 典型搜尋／AI 問句 |
+|---|---|---|---|
+| 運動按摩 | `/services/sports-massage` | `/`、`/faq`、文章 `sports-massage-for-everyone`、`post-workout-recovery` | 台中運動按摩、南屯運動按摩、運動按摩是什麼、運動按摩多久一次 |
+| 按摩 | `/` | `/faq`、文章 `does-painful-massage-work-better` | 台中按摩推薦、南屯按摩、按摩會痛嗎、按摩後會痠嗎 |
+| 放鬆 | `/services/fascia` | `/`、`/faq`（`relax`、`after`） | 台中筋膜放鬆、肌肉放鬆、運動後放鬆、肩頸放鬆 |
+| 運動 | `/services/sports-massage`（運動恢復） | `/kse`、`/services/strength`、「運動恢復」分類文章 | 運動後恢復、運動傷害預防、運動前後按摩 |
+
+### 已完成
+
+- [x] `SERVICES` 新增 `definition`（一句話定義：是什麼＋目的＋地點＋時間，供 AI 整句引用）、`aliases`（同義搜尋詞 → Service `alternateName`）、`scenarios`（運動按摩「什麼時候適合做」四情境）
+- [x] 服務頁首段改為「○○是什麼？」H2 + 定義句，再接「適合誰」；運動按摩頁加情境清單；Service schema 加 `alternateName`、`description` 改用定義句、`areaServed` 與商家一致
+- [x] FAQ 新增 6 題（運動按摩是什麼／沒運動也能做嗎／只想放鬆紓壓／運動按摩 vs 筋膜放鬆／按摩後會痠嗎可以運動嗎／多久做一次），答案皆取自既有文章與服務內容，不新增未經確認的事實；各服務頁的相關 FAQ 同步擴充
+- [x] 首頁補「首段即答」段落（地址＋運動按摩＋筋膜放鬆＋對象＋時間），並以關鍵字錨點連到兩個服務頁；比較表標題改為「運動按摩、筋膜放鬆和一般按摩差在哪」
+- [x] 文章頁文末依「服務頁延伸閱讀 → 分類」對應相關服務，加「了解台中南屯○○」內連；Article schema 加 `about` 指向該 Service
+- [x] 商家 schema：`knowsAbout` 補運動後放鬆、肌肉放鬆、筋膜刀放鬆；加 `keywords`；`alternateName` 補 `KSE Release Studio`（文章已使用的正式英文名）
+- [x] llms.txt：開頭摘要改為「運動按摩與筋膜放鬆工作室」，新增「名詞定義」與「依需求找頁面」兩段
+- [x] title／description：運動按摩頁加入「運動後放鬆恢復」；FAQ、文章列表、全站預設 description 改為現有內容（文章列表原本仍寫已下架文章的主題）
+
+### 後續建議（需業主配合）
+
+- [ ] Google 商家「服務」名稱與網站一致：運動按摩、美式筋膜放鬆（說明可直接用 `definition`），主要類別用運動按摩類
+- [ ] 請客人在評論中自然寫出做了什麼（例：「運動按摩」「筋膜放鬆」「肩頸放鬆」），這是「台中按摩推薦」類問句在地圖包與 AI 回答中最有力的訊號
+- [ ] 價格公開後補進 `SERVICES` 與 `Offer`（「運動按摩 價格」是高意圖查詢）
+- [ ] 內容缺口：可再寫「運動後怎麼放鬆？自己做 vs 找人按摩」、「跑步／重訓後按摩部位指南」兩篇，分類放「運動恢復」即會自動連到運動按摩頁
+- [ ] 每月實測 ChatGPT／Perplexity／Gemini：「台中運動按摩推薦」「南屯按摩」「運動按摩是什麼」，記錄是否被引用與引用哪一頁

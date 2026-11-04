@@ -80,6 +80,9 @@
         <p class="mt-4 max-w-3xl text-lg font-bold leading-relaxed text-foreground sm:text-xl">
           動作評估・徒手放鬆・筋膜刀放鬆・動作調整
         </p>
+        <p class="mt-5 max-w-3xl text-base leading-relaxed text-muted-foreground">
+          KSE 美式筋膜放鬆教室是位於{{ BRAND.address }}的運動按摩與筋膜放鬆工作室。每次一對一約 60 分鐘，先做動作評估，再以徒手按摩、筋膜刀與<NuxtLink :to="servicePath('sports-massage')" class="font-semibold text-primary underline-offset-4 hover:underline">運動按摩</NuxtLink>處理緊繃部位，最後提供回家可做的運動與放鬆建議。不論是運動後放鬆恢復、賽前賽後保養，或久坐造成的肩頸緊繃與下背痠痛，都可以從一次<NuxtLink :to="servicePath('fascia')" class="font-semibold text-primary underline-offset-4 hover:underline">美式筋膜放鬆</NuxtLink>評估開始。
+        </p>
         <a
           :href="BRAND.line"
           target="_blank"
@@ -226,18 +229,18 @@
 
     <!-- Comparison -->
     <Section>
-      <SectionHeading eyebrow="Difference" title="KSE 美式筋膜放鬆和一般按摩差在哪？" />
+      <SectionHeading eyebrow="Difference" title="KSE 運動按摩、筋膜放鬆和一般按摩差在哪？" />
       <!-- 結論先行：給 AI 摘要直接引用 -->
       <p class="mt-5 max-w-3xl text-base leading-relaxed text-foreground">
-        <strong>簡單說：</strong>一般按摩處理「當下的舒服感」，KSE 處理「動作能力」。我們先用靜態與動態評估找出受限來源，再做徒手筋膜放鬆，最後透過運動衛教提供日常活動建議與居家練習，把改變留下來。
+        <strong>簡單說：</strong>一般按摩處理「當下的舒服感」，KSE 處理「動作能力」。我們先用靜態與動態評估找出受限來源，再做徒手筋膜放鬆與運動按摩，最後透過運動衛教提供日常活動建議與居家練習，把改變留下來。
       </p>
       <div class="mt-10 overflow-x-auto border border-border bg-card">
         <table class="w-full min-w-[34rem] border-collapse text-left text-sm">
-          <caption class="sr-only">KSE 美式筋膜放鬆與一般按摩的比較表</caption>
+          <caption class="sr-only">KSE 運動按摩與美式筋膜放鬆、一般按摩的比較表</caption>
           <thead>
             <tr class="bg-navy text-white">
               <th scope="col" class="px-4 py-4 font-bold sm:px-6">比較項目</th>
-              <th scope="col" class="px-4 py-4 font-bold text-gold sm:px-6">KSE 美式筋膜放鬆</th>
+              <th scope="col" class="px-4 py-4 font-bold text-gold sm:px-6">KSE 運動按摩・筋膜放鬆</th>
               <th scope="col" class="px-4 py-4 font-bold text-navy-foreground sm:px-6">一般按摩</th>
             </tr>
           </thead>
@@ -533,7 +536,7 @@ injectTeamSchema(TEAM, TEAM_IMAGES)
 usePageSeo({
   title: "台中運動按摩・南屯美式筋膜放鬆｜KSE 美式筋膜放鬆教室",
   description:
-    "台中南屯運動按摩與美式筋膜放鬆推薦：KSE 位於大墩七街202號，先做動作評估再放鬆與訓練，處理肩頸緊繃、下背痠痛、跑者與球類運動恢復。每日 11:00–22:00，線上預約。",
+    "台中南屯運動按摩與美式筋膜放鬆：KSE 位於大墩七街202號，一對一 60 分鐘，先做動作評估再按摩放鬆，處理運動後恢復、肩頸緊繃與下背痠痛，運動員與上班族都適合。每日 11:00–22:00，線上預約。",
   path: "/",
 })
 </script>

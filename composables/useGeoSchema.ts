@@ -15,6 +15,14 @@ export const teamAnchor = (slug: string) => `team-${slug}`
 
 const abs = (p: string) => (p.startsWith("http") ? p : `${SITE_URL}${p}`)
 
+/** 服務區域（商家與各 Service 共用） */
+const AREA_SERVED = [
+  { "@type": "City", name: "台中市" },
+  { "@type": "AdministrativeArea", name: "南屯區" },
+  { "@type": "AdministrativeArea", name: "西屯區" },
+  { "@type": "AdministrativeArea", name: "西區" },
+]
+
 const jsonLd = (data: object) => ({
   type: "application/ld+json" as any,
   innerHTML: JSON.stringify(data),
@@ -39,7 +47,7 @@ export function buildSiteGraph(description: string) {
         "@type": ["HealthAndBeautyBusiness", "SportsActivityLocation"],
         "@id": ORG_ID,
         name: BRAND.name,
-        alternateName: ["KSE", "Kinetic Sports Enhancement", "KSE 美式筋膜放鬆", "KSE 運動恢復教室"],
+        alternateName: ["KSE", "Kinetic Sports Enhancement", "KSE Release Studio", "KSE 美式筋膜放鬆", "KSE 運動恢復教室"],
         description,
         slogan: BRAND.slogan,
         url: SITE_URL,
@@ -71,22 +79,21 @@ export function buildSiteGraph(description: string) {
           },
         ],
         sameAs: [BRAND.mapUrl, BRAND.fb, BRAND.ig, BRAND.threads, BRAND.line, ...BRAND.sameAsExtra],
-        areaServed: [
-          { "@type": "City", name: "台中市" },
-          { "@type": "AdministrativeArea", name: "南屯區" },
-          { "@type": "AdministrativeArea", name: "西屯區" },
-          { "@type": "AdministrativeArea", name: "西區" },
-        ],
+        areaServed: AREA_SERVED,
         knowsAbout: [
-          "美式筋膜放鬆",
           "運動按摩",
+          "美式筋膜放鬆",
           "肌筋膜放鬆",
+          "筋膜刀放鬆",
+          "運動後放鬆",
+          "肌肉放鬆",
           "運動恢復",
           "運動傷害預防",
           "動作評估",
           "核心穩定訓練",
           "肌力與體能訓練",
         ],
+        keywords: "台中運動按摩, 南屯運動按摩, 台中按摩, 台中筋膜放鬆, 運動後放鬆, 運動恢復, 肩頸放鬆, 下背痠痛",
         makesOffer: SERVICES.map((s) => ({
           "@type": "Offer",
           itemOffered: { "@type": "Service", "@id": serviceId(s.slug), name: s.title, url: abs(servicePath(s.slug)) },
@@ -166,7 +173,7 @@ export function useGeoSchema() {
         jsonLd({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "KSE 美式筋膜放鬆與運動按摩服務項目",
+          name: "KSE 台中南屯運動按摩與筋膜放鬆服務項目",
           itemListElement: SERVICES.map((service, index) => ({
             "@type": "ListItem",
             position: index + 1,
@@ -192,12 +199,14 @@ export function useGeoSchema() {
           "@type": "Service",
           "@id": serviceId(service.slug),
           name: service.title,
+          alternateName: service.aliases,
           serviceType: service.title,
-          description: `${service.short}${service.detail}`,
+          description: service.definition,
+          disambiguatingDescription: service.detail,
           url: abs(servicePath(service.slug)),
           ...(image ? { image: abs(image) } : {}),
           provider: { "@id": ORG_ID },
-          areaServed: { "@type": "City", name: "台中市" },
+          areaServed: AREA_SERVED,
           audience: { "@type": "Audience", audienceType: service.audience },
           hasOfferCatalog: {
             "@type": "OfferCatalog",

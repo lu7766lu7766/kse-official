@@ -13,7 +13,7 @@ export const SERVICE_IMAGES: Record<string, string> = {
 
 export const SERVICE_ALTS: Record<string, string> = {
   fascia: "KSE 放鬆師在台中南屯教室為客人進行腿後側美式筋膜放鬆",
-  "sports-massage": "KSE 放鬆師為客人進行臀腿下肢運動按摩",
+  "sports-massage": "KSE 放鬆師在台中南屯教室為客人進行臀腿下肢運動按摩",
   core: "KSE 教練在校園體育館指導學生進行核心穩定與伸展動作",
   strength: "KSE 教練在育英國中指導校隊學生進行彈力帶下肢肌力訓練",
 }

@@ -7,7 +7,7 @@
       :crumbs="[{ label: '服務項目', to: '/services' }, { label: service.title }]"
     />
 
-    <!-- 適合誰＋服務內容：答案先行，給搜尋摘要與 AI 引用 -->
+    <!-- 是什麼＋適合誰＋服務內容：答案先行，定義句可被搜尋摘要與 AI 整句引用 -->
     <Section>
       <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
         <div class="relative">
@@ -22,8 +22,14 @@
           />
         </div>
         <div>
-          <h2 class="text-3xl sm:text-4xl">{{ service.title }}適合誰？</h2>
-          <p class="mt-5 text-base leading-relaxed text-foreground/85">{{ service.detail }}</p>
+          <h2 class="text-3xl sm:text-4xl">{{ service.title }}是什麼？</h2>
+          <p class="mt-5 text-base font-semibold leading-relaxed text-foreground">{{ service.definition }}</p>
+          <p v-if="service.aliases.length" class="mt-3 text-sm text-muted-foreground">
+            也常被稱為：{{ service.aliases.join("、") }}
+          </p>
+
+          <h3 class="mt-10 text-xl">適合誰？</h3>
+          <p class="mt-4 text-base leading-relaxed text-foreground/85">{{ service.detail }}</p>
 
           <h3 class="mt-10 text-xl">服務內容</h3>
           <ul class="mt-4 space-y-3 text-sm text-foreground">
@@ -40,6 +46,17 @@
             </div>
           </dl>
         </div>
+      </div>
+
+      <!-- 情境清單（選填）：對應「什麼時候適合做」這類問句 -->
+      <div v-if="service.scenarios" class="mt-20">
+        <h2 class="text-2xl sm:text-3xl">{{ service.scenarios.title }}</h2>
+        <dl class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div v-for="item in service.scenarios.items" :key="item.label" class="surface-card p-6">
+            <dt class="text-lg font-bold text-foreground">{{ item.label }}</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-muted-foreground">{{ item.desc }}</dd>
+          </div>
+        </dl>
       </div>
     </Section>
 
