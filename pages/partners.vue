@@ -2,8 +2,8 @@
   <div>
     <PageHero
       eyebrow="Official Partners"
-      title="球隊與校園運動恢復合作"
-      desc="KSE 與職業球隊、學校校隊與運動員深度合作，以動態評估為起點，結合美式筋膜放鬆與專項運動按摩，支援賽季中的身體維護與賽後恢復。"
+      title="中信兄弟（兄弟象）與校園球隊運動恢復合作"
+      desc="KSE 與中信兄弟職棒、學校校隊與運動員深度合作，以動態評估為起點，結合美式筋膜放鬆與專項運動按摩，支援賽季中的身體維護與賽後運動恢復。"
       :crumbs="[{ label: '官方合作夥伴' }]"
     >
       <nav aria-label="合作單位快速導覽" class="mt-8 flex flex-wrap gap-2">
@@ -44,7 +44,7 @@
             BROTHERS BASEBALL CLUB 運動恢復合作團隊
           </p>
           <p class="mt-5 text-base leading-relaxed text-muted-foreground">
-            以動態評估為起點，結合美式筋膜放鬆與專項運動按摩，支援中信兄弟職棒選手在緊湊高張力的賽事週期中，維持最佳活動度與賽後體能恢復。
+            中信兄弟前身為中華職棒創始球隊之一的「兄弟象」。KSE 以動態評估為起點，結合美式筋膜放鬆與專項運動按摩，支援中信兄弟職棒選手在緊湊高張力的賽事週期中，維持最佳活動度與賽後運動恢復。
           </p>
 
           <ol class="mt-8 grid gap-4 sm:grid-cols-3">
@@ -94,6 +94,34 @@
               class="aspect-[3/4] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
           </div>
+        </div>
+      </div>
+
+      <!-- 合作問答＋合作文章：答案直接展開，供搜尋摘要與 AI 引用「兄弟象／中信兄弟 運動恢復」 -->
+      <div class="mt-20 grid gap-12 border-t border-border pt-10 lg:grid-cols-2">
+        <div>
+          <h3 class="text-2xl sm:text-3xl">合作常見問題</h3>
+          <dl class="mt-6 divide-y divide-border border-y border-border">
+            <div v-for="f in BROTHERS_FAQS" :key="f.q" class="py-5">
+              <dt class="font-bold text-foreground">{{ f.q }}</dt>
+              <dd class="mt-2 text-sm leading-relaxed text-muted-foreground">{{ f.a }}</dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="text-2xl sm:text-3xl">合作消息</h3>
+          <ul class="mt-6 space-y-4">
+            <li v-for="post in BROTHERS_POSTS" :key="post.slug">
+              <NuxtLink :to="`/news/${post.slug}`" class="surface-card group block p-6">
+                <p class="text-xs text-muted-foreground"><time :datetime="post.date">{{ post.date }}</time></p>
+                <p class="mt-2 text-lg font-bold leading-snug transition-colors group-hover:text-primary">{{ post.title }}</p>
+                <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">{{ post.excerpt }}</p>
+              </NuxtLink>
+            </li>
+          </ul>
+          <NuxtLink :to="servicePath('sports-massage')" class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
+            了解台中南屯運動按摩與運動恢復 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+          </NuxtLink>
         </div>
       </div>
     </Section>
@@ -159,12 +187,13 @@
 </template>
 
 <script setup lang="ts">
-import { MessageCircle, Phone } from "lucide-vue-next"
+import { ArrowRight, MessageCircle, Phone } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { cn } from "~/utils/cn"
-import { BRAND, PARTNERS } from "~/utils/site-data"
+import { ORG_ID } from "~/composables/useGeoSchema"
+import { BRAND, FAQS, PARTNERS, POSTS, servicePath, SITE_URL } from "~/utils/site-data"
 
 import partnerDazhiImg from "~/assets/images/partner-dazhi.jpg"
 import partnerYuyingImg from "~/assets/images/partner-yuying.jpg"
@@ -194,6 +223,16 @@ const BROTHERS_PHOTOS = [
 const BROTHERS_FEATURED = BROTHERS_PHOTOS.slice(0, 2)
 const BROTHERS_GALLERY = BROTHERS_PHOTOS.slice(2)
 
+const BROTHERS = PARTNERS[0]!
+const BROTHERS_POSTS = (BROTHERS.posts ?? []).map((slug) => POSTS.find((p) => p.slug === slug)).filter((p) => !!p)
+const BROTHERS_FAQS = [
+  FAQS.find((f) => f.id === "brothers")!,
+  {
+    q: "KSE 為中信兄弟選手做哪些運動恢復？",
+    a: "以動作評估找出高負荷部位的活動度限制與代償，針對肩、胸椎、髖等專項受限部位進行美式筋膜放鬆，並依賽程安排運動按摩與身體維護，幫助選手在賽季中維持活動度與賽後恢復。",
+  },
+]
+
 const SCHOOL_PARTNERS = PARTNERS.slice(1)
 const SCHOOL_IMAGES = [partnerDazhiImg, partnerYuyingImg]
 const SCHOOL_ALTS = [
@@ -219,10 +258,39 @@ injectBreadcrumbsSchema([
   { name: "官方合作夥伴", item: "/partners" },
 ])
 
+// 合作球隊實體：讓搜尋引擎與 AI 把「兄弟象」「中信兄弟」「CTBC Brothers」認成同一支球隊，並連到 KSE
+useHead({
+  script: [
+    {
+      type: "application/ld+json" as any,
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "@id": `${SITE_URL}/partners#webpage`,
+        url: `${SITE_URL}/partners`,
+        name: "KSE × 中信兄弟（兄弟象）運動恢復合作",
+        about: { "@id": ORG_ID },
+        mentions: [
+          {
+            "@type": "SportsTeam",
+            "@id": `${SITE_URL}/partners#ctbc-brothers`,
+            name: BROTHERS.name,
+            alternateName: BROTHERS.aliases,
+            sport: "棒球",
+            memberOf: { "@type": "SportsOrganization", name: "中華職業棒球大聯盟" },
+            sameAs: ["https://zh.wikipedia.org/wiki/中信兄弟"],
+          },
+          ...SCHOOL_PARTNERS.map((p) => ({ "@type": "School", name: p.name })),
+        ],
+      }),
+    },
+  ],
+})
+
 usePageSeo({
-  title: "中信兄弟合作｜球隊與校園運動恢復合作｜KSE",
+  title: "中信兄弟（兄弟象）運動恢復合作｜職棒賽後恢復與運動按摩｜KSE",
   description:
-    "KSE 美式筋膜放鬆教室為中信兄弟合作的運動恢復團隊，並與大智國小、育英國中等校園運動團隊合作，提供動作評估、筋膜放鬆、賽後恢復與基礎肌力課程。歡迎球隊洽談。",
+    "KSE 美式筋膜放鬆教室是中信兄弟（前身兄弟象）合作的運動恢復團隊，為職棒選手進行動作評估、筋膜放鬆與運動按摩，並與大智國小、育英國中校隊合作。同樣的恢復流程在台中南屯教室也能預約。",
   path: "/partners",
   image: "/og-image.jpg",
 })

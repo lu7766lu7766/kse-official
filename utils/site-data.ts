@@ -54,12 +54,12 @@ export const NAV = [
  * /news 與文章頁、服務頁的日期分別取自 POSTS、SERVICES。
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  "/": "2026-11-04",
+  "/": "2026-11-05",
   "/services": "2026-10-31",
   "/kse": "2026-10-16",
   "/booking": "2026-10-31",
-  "/faq": "2026-11-04",
-  "/partners": "2026-10-31",
+  "/faq": "2026-11-05",
+  "/partners": "2026-11-05",
 }
 
 export const PROCESS = [
@@ -127,20 +127,20 @@ export const SERVICES = [
   },
   {
     slug: "sports-massage",
-    seoTitle: "台中運動按摩｜運動後放鬆恢復・賽前啟動・週間維護｜南屯 KSE",
+    seoTitle: "台中運動按摩・運動恢復｜賽後放鬆・賽前啟動・週間維護｜南屯 KSE",
     seoDescription:
-      "KSE 台中南屯運動按摩：先做動作評估，再依訓練與比賽週期安排賽前啟動、運動後放鬆恢復與週間維護，針對棒球、籃球、羽球、跑步與久坐族的緊繃部位調整按摩力道，單次約 60 分鐘。",
+      "KSE 台中南屯運動按摩與運動恢復：先做動作評估，再依訓練與比賽週期安排賽前啟動、運動後放鬆恢復與週間維護，與中信兄弟職棒選手相同的恢復流程，運動員與久坐族都適合，單次約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
-    faqs: ["what-sports-massage", "non-athlete", "massage-vs-fascia", "timing", "frequency", "injury", "pain"],
-    posts: ["post-workout-recovery", "does-painful-massage-work-better", "sports-massage-for-everyone"],
+    faqs: ["what-sports-massage", "recovery", "non-athlete", "massage-vs-fascia", "timing", "frequency", "injury", "pain"],
+    posts: ["post-workout-recovery", "does-painful-massage-work-better", "sports-massage-for-everyone", "ctbc-brothers-on-site"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
-    updated: "2026-11-04",
+    updated: "2026-11-05",
     title: "運動按摩",
     aliases: ["運動恢復按摩", "運動放鬆按摩", "運動後按摩", "Sports Massage"],
     definition:
       "運動按摩是以人體解剖構造為基礎，依肌肉、韌帶與筋膜走向，配合訓練與比賽週期調整手法與力道的按摩，目的在幫助運動後放鬆恢復、保持肌肉彈性與關節活動度、降低受傷風險。KSE 在台中南屯提供一對一約 60 分鐘的運動按摩，先做動作評估再處理，運動員與久坐上班族都適合。",
     scenarios: {
-      title: "什麼時候適合做運動按摩？",
+      title: "運動恢復怎麼安排？運動按摩的四個時機",
       items: [
         { label: "運動前・賽前", desc: "強度較輕，以提升組織延展性與神經肌肉啟動為主，讓身體進入狀態。" },
         { label: "運動後・賽後", desc: "安排較完整的放鬆處理，幫助降低疲勞與延遲性痠痛的不適感，加速恢復。" },
@@ -298,8 +298,12 @@ export const TEAM: TeamMember[] = [
 export const PARTNERS = [
   {
     name: "中信兄弟",
+    /** 球迷常用的舊隊名，搜尋與 schema alternateName 用；頁面上以「中信兄弟（前身兄弟象）」呈現 */
+    aliases: ["兄弟象", "CTBC Brothers", "中信兄弟棒球隊"],
     type: "職業棒球",
-    desc: "KSE 為中信兄弟合作的運動恢復團隊，以動作評估、美式筋膜放鬆與運動按摩，支援球員的賽後恢復與日常身體維護。",
+    desc: "KSE 為中信兄弟（前身為兄弟象）合作的運動恢復團隊，以動作評估、美式筋膜放鬆與運動按摩，支援職棒選手的賽後恢復與日常身體維護。",
+    /** 相關合作文章（POSTS 的 slug），合作頁列出、文章頁回連合作頁 */
+    posts: ["ctbc-brothers-partnership", "ctbc-brothers-on-site"],
   },
   {
     name: "大智國小",
@@ -361,6 +365,11 @@ export const FAQS = [
     a: "運動按摩以人體解剖構造為基礎，依肌肉、韌帶與筋膜走向調整手法與力道，目的在平衡身體張力、保持肌肉彈性與關節活動度，幫助運動後放鬆恢復；一般按摩多以經絡穴道按壓、哪裡痠就按哪裡為主，著重當下的舒緩。KSE 的運動按摩會先做動作評估，再決定處理部位與力道。",
   },
   {
+    id: "recovery",
+    q: "運動恢復有哪些方法？運動按摩扮演什麼角色？",
+    a: "運動恢復通常包含充足睡眠、補充水分與營養、伸展與低強度活動，以及運動按摩等軟組織放鬆。運動按摩可能有助於降低延遲性痠痛的不適感、提升肌肉彈性與關節活動度，並重建肌群之間的張力平衡，讓身體更快回到可以再訓練的狀態。KSE 會先做動作評估，再依你的訓練與比賽時程安排恢復重點。",
+  },
+  {
     id: "non-athlete",
     q: "沒有運動習慣，也可以做運動按摩嗎？",
     a: "可以。運動按摩不只給運動員，久坐久站的上班族、長時間用電腦或滑手機造成肩頸痠痛、抱小孩造成媽媽手等，因肌肉長時間維持固定姿勢而緊繃的人也適合。放鬆師會依你的日常習慣與評估結果調整手法與力道。",
@@ -404,6 +413,11 @@ export const FAQS = [
     id: "injury",
     q: "受傷或肌肉拉傷後多久可以做運動按摩？",
     a: "急性受傷或有紅腫熱痛時，請先就醫評估。狀況穩定後，可透過美式筋膜放鬆與運動按摩處理受傷周邊的代償性緊繃，幫助恢復組織彈性與關節活動度。",
+  },
+  {
+    id: "brothers",
+    q: "KSE 和中信兄弟（兄弟象）是什麼合作關係？一般人也能體驗嗎？",
+    a: "KSE 美式筋膜放鬆教室是中信兄弟（前身為兄弟象）的合作夥伴，團隊進入球場為職棒選手進行動作評估、美式筋膜放鬆與運動按摩，支援賽後恢復與賽季中的身體維護。同樣的評估與運動恢復流程，在台中南屯教室也提供給一般客人，線上即可預約。",
   },
   {
     id: "timing",

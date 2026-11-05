@@ -87,6 +87,13 @@
             <p class="text-xl font-extrabold text-white">想知道自己的狀況？從一次評估開始。</p>
             <p class="mt-2 text-sm text-navy-foreground">{{ BRAND.address }}・{{ BRAND.hours.label }}</p>
             <NuxtLink
+              v-if="isBrothersPost"
+              to="/partners"
+              class="mt-6 mr-6 inline-flex items-center gap-2 text-sm font-bold text-gold underline-offset-4 hover:underline"
+            >
+              看 KSE × 中信兄弟（兄弟象）合作 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+            </NuxtLink>
+            <NuxtLink
               v-if="relatedService"
               :to="servicePath(relatedService.slug)"
               class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-gold underline-offset-4 hover:underline"
@@ -121,7 +128,7 @@ import { ArrowRight } from "lucide-vue-next";
 import Section from "~/components/ui/Section.vue";
 import { ORG_ID, personRef, serviceId, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
 import { POST_IMAGES, postImageSize } from "~/utils/post-images";
-import { BRAND, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data";
+import { BRAND, PARTNERS, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data";
 
 const route = useRoute();
 const slug = computed(() => route.params.slug as string);
@@ -150,6 +157,7 @@ const CATEGORY_SERVICE: Record<string, string> = {
   合作消息: "sports-massage",
   KSE活動: "fascia",
 };
+const isBrothersPost = PARTNERS[0]?.posts?.includes(p.slug) ?? false;
 const relatedService =
   SERVICES.find((s) => s.posts.includes(p.slug)) ?? SERVICES.find((s) => s.slug === CATEGORY_SERVICE[p.category]);
 // 有指定作者就用具名的 Person（E-E-A-T），否則以商家為作者
