@@ -23,6 +23,14 @@ server {
   # 正規式排除開頭多重斜線，避免 //evil.com/ 被轉成 //evil.com（open redirect）
   rewrite ^/+([^/].*?)/+\$ /\$1 permanent;
 
+  # 舊網址真正的 301（與 nuxt.config.ts routeRules 同步；靜態檔只有 meta refresh，搜尋引擎較慢才轉移權重）
+  location = /cases { return 301 /; }
+  location = /news/recovery-after-game { return 301 /news/post-workout-recovery; }
+  location = /news/fascia-basics { return 301 /news/muscle-vs-fascia; }
+  location = /news/core-stability-desk { return 301 /news/pelvic-tilt-causes; }
+  location = /news/youth-strength { return 301 /news/yuying-basketball-training; }
+  location = /news/sports-massage-for-everyone { return 301 /news/sports-massage-guide; }
+
   # 帶有 Hash 的 Nuxt 靜態打包資源 (JS/CSS/圖片)
   location /_nuxt/ {
     expires 1y;

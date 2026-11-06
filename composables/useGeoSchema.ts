@@ -1,4 +1,5 @@
 import { BRAND, FAQS, SERVICES, servicePath, SITE_URL, type TeamMember } from "~/utils/site-data"
+import { PRICE_UPDATED, PRICING } from "~/utils/service-info"
 import heroImg from "~/assets/images/hero.jpg"
 import massageImg from "~/assets/images/massage.jpg"
 import stretchImg from "~/assets/images/stretch.jpg"
@@ -208,6 +209,24 @@ export function useGeoSchema() {
           provider: { "@id": ORG_ID },
           areaServed: AREA_SERVED,
           audience: { "@type": "Audience", audienceType: service.audience },
+          // 有公開價格的服務才輸出 offers（價格取自 utils/service-info.ts）
+          ...(service.slug === PRICING.serviceSlug
+            ? {
+                offers: [
+                  { name: `單堂 60 分鐘（${PRICING.includes}）`, price: PRICING.single.price },
+                  { name: "首次到店新客 60 分鐘", price: PRICING.firstVisit.price },
+                  ...PRICING.packages.map((p) => ({ name: `${p.sessions} 堂課程方案`, price: p.total })),
+                ].map((o) => ({
+                  "@type": "Offer",
+                  name: o.name,
+                  price: o.price,
+                  priceCurrency: "TWD",
+                  availability: "https://schema.org/InStock",
+                  url: abs("/pricing"),
+                  validFrom: PRICE_UPDATED,
+                })),
+              }
+            : {}),
           hasOfferCatalog: {
             "@type": "OfferCatalog",
             name: `${service.title}服務內容`,

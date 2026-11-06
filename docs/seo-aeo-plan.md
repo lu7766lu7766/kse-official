@@ -207,3 +207,21 @@
 - 文章（`utils/posts-ig.ts`）整理自 IG 原文，不為了關鍵字改寫標題或內文
 - `兄弟象` 不再擴散到其他頁，避免稀釋「台中南屯運動按摩」的權重；也不要把球隊名稱放進 Google 商家名稱
 - 中信兄弟官方網站網址未經確認，`SportsTeam.sameAs` 暫只放維基百科；確認後可補官方網址
+
+## 10. 價目表、服務注意事項與運動按摩指南（2026-11-06）
+
+起因：Google 搜尋「運動按摩」前兩名為 bgreen 知識文（約 2,400 字、比較表、FAQ、參考資料）與壓王運動按摩（台中 3 店、首頁標價 $1,800）。KSE 缺：完整知識文、公開價格、禁忌說明。
+
+已完成：
+- [x] `utils/service-info.ts`：價目表（`PRICING`）與服務注意事項（`NOTICE`）單一來源，業主 2026-11-06 提供；改價格或注意事項只改這個檔
+- [x] 新頁 `/pricing`（單堂、新客、課程方案表、付款、預約與取消規則；`OfferCatalog` schema）與 `/notice`（禁忌、需告知情況、服務中注意事項、安全提醒）；主選單加「價目表」，頁尾加「服務注意事項」「運動按摩指南」
+- [x] 運動按摩服務頁：重點資訊加「費用」，連到價目表與注意事項；Service schema 加 6 個 `Offer`；商家 `priceRange` 改為 `NT$1,200–NT$1,800`
+- [x] FAQ 新增「運動按摩多少錢？」「哪些情況不適合做運動按摩？」（答案由 `service-info.ts` 自動產生，共 17 題）
+- [x] 新文章 `/news/sports-massage-guide`《運動按摩是什麼？效果、時機、禁忌與價格完整指南》，署名 Eason（副店長・放鬆師）：定義、研究證據、與一般按摩／整復推拿／SPA 比較表、手法、時機表、頻率、適合族群、禁忌、注意事項、價格表、挑選重點、KSE 流程；4 篇統合分析參考文獻（已用 Crossref 核對），輸出為 Article `citation`
+- [x] 舊文 `/news/sports-massage-for-everyone` 整併進指南：nuxt routeRules + nginx 真正 301（`nginx-entrypoint.sh`，已用 nginx 1.24 實測）；原 IG 圖卡移到指南相簿
+- [x] 文章內文支援表格與站內連結區塊（`PostBlock` 的 `table`、`links`），文章可加 `references`
+- [x] llms.txt 加價目表、注意事項、指南
+
+注意：
+- 指南中的研究結論只寫統合分析支持的內容（減輕 DOMS、改善柔軟度、減輕疲勞感；不直接提升運動表現），請 Eason 過目內文，如需修改直接改 `utils/posts-guide.ts`
+- 新增轉址時要同時改 `nuxt.config.ts` 與 `nginx-entrypoint.sh`

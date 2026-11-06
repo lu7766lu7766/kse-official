@@ -46,6 +46,7 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // 轉址新增或修改時，nginx-entrypoint.sh 也要加同一條 return 301（正式站靠 nginx 送真正的 301）
   routeRules: {
     // 案例分享頁已移除，舊網址導回首頁
     "/cases": { redirect: { to: "/", statusCode: 301 } },
@@ -54,6 +55,8 @@ export default defineNuxtConfig({
     "/news/fascia-basics": { redirect: { to: "/news/muscle-vs-fascia", statusCode: 301 } },
     "/news/core-stability-desk": { redirect: { to: "/news/pelvic-tilt-causes", statusCode: 301 } },
     "/news/youth-strength": { redirect: { to: "/news/yuying-basketball-training", statusCode: 301 } },
+    // 短篇「運動按摩是什麼」已整併進完整指南（同主題只留一頁，避免自家文章互搶）
+    "/news/sports-massage-for-everyone": { redirect: { to: "/news/sports-massage-guide", statusCode: 301 } },
   },
   nitro: {
     prerender: {

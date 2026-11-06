@@ -1,4 +1,6 @@
+import { GUIDE_POSTS } from "./posts-guide"
 import { IG_POSTS } from "./posts-ig"
+import { CONTRAINDICATION_SUMMARY, PRICE_SUMMARY } from "./service-info"
 
 export const SITE_URL = "https://www.kse-release.com.tw"
 
@@ -30,7 +32,7 @@ export const BRAND = {
     latitude: 24.1438506,
     longitude: 120.6494393,
   },
-  priceRange: "$$",
+  priceRange: "NT$1,200–NT$1,800",
   mapQuery: "KSE美式筋膜放鬆教室",
   // Google 商家 CID（Maps 網址 data 參數 0x…:0x4ef13ec513d116f 的第二段轉十進位）
   gbpCid: "355524801281724783",
@@ -45,6 +47,7 @@ export const NAV = [
   { to: "/partners", label: "官方合作夥伴" },
   { to: "/news", label: "最新消息" },
   { to: "/faq", label: "常見問題" },
+  { to: "/pricing", label: "價目表" },
   { to: "/booking", label: "線上預約" },
 ] as const
 
@@ -54,11 +57,13 @@ export const NAV = [
  * /news 與文章頁、服務頁的日期分別取自 POSTS、SERVICES。
  */
 export const PAGE_UPDATED: Record<string, string> = {
-  "/": "2026-11-05",
+  "/": "2026-11-06",
   "/services": "2026-10-31",
   "/kse": "2026-10-16",
-  "/booking": "2026-10-31",
-  "/faq": "2026-11-05",
+  "/booking": "2026-11-06",
+  "/faq": "2026-11-06",
+  "/pricing": "2026-11-06",
+  "/notice": "2026-11-06",
   "/partners": "2026-11-05",
 }
 
@@ -105,10 +110,10 @@ export const SERVICES = [
     seoDescription:
       "KSE 台中南屯美式筋膜放鬆：先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限筋膜層，處理後即時複評。適合肩頸緊繃、下背痠痛、深蹲與舉手活動度不足者，單次約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
-    faqs: ["difference", "massage-vs-fascia", "relax", "iastm", "pain", "after", "duration"],
+    faqs: ["difference", "massage-vs-fascia", "relax", "iastm", "pain", "after", "contraindication", "duration"],
     posts: ["muscle-vs-fascia", "kinetic-chain-fascia-tension", "soreness-series-faq"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
-    updated: "2026-11-04",
+    updated: "2026-11-06",
     title: "美式筋膜放鬆",
     aliases: ["筋膜放鬆", "肌筋膜放鬆", "筋膜刀放鬆", "徒手筋膜放鬆"],
     definition:
@@ -131,10 +136,10 @@ export const SERVICES = [
     seoDescription:
       "KSE 台中南屯運動按摩與運動恢復：先做動作評估，再依訓練與比賽週期安排賽前啟動、運動後放鬆恢復與週間維護，與中信兄弟職棒選手相同的恢復流程，運動員與久坐族都適合，單次約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
-    faqs: ["what-sports-massage", "recovery", "non-athlete", "massage-vs-fascia", "timing", "frequency", "injury", "pain"],
-    posts: ["post-workout-recovery", "does-painful-massage-work-better", "sports-massage-for-everyone", "ctbc-brothers-on-site"],
+    faqs: ["what-sports-massage", "price", "recovery", "non-athlete", "massage-vs-fascia", "timing", "frequency", "contraindication", "injury", "pain"],
+    posts: ["sports-massage-guide", "post-workout-recovery", "does-painful-massage-work-better", "ctbc-brothers-on-site"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
-    updated: "2026-11-05",
+    updated: "2026-11-06",
     title: "運動按摩",
     aliases: ["運動恢復按摩", "運動放鬆按摩", "運動後按摩", "Sports Massage"],
     definition:
@@ -238,7 +243,7 @@ export const TEAM: TeamMember[] = [
     slug: "eason",
     expertise: ["肩頸痠痛", "動作調整", "健力舉重重量訓練"],
     name: "Eason",
-    role: "放鬆師",
+    role: "副店長・放鬆師",
     tags: ["專長：肩頸痠痛｜動作調整", "手勁中等｜可依喜好調整"],
     points: ["健力舉重重量訓練專長", "專項運動身體調整", "肩頸痠痛、下背不適調整"],
   },
@@ -319,8 +324,13 @@ export const PARTNERS = [
 
 export const CATEGORIES = ["KSE活動", "合作消息", "運動恢復", "筋膜放鬆", "動作訓練", "肌力與體能"] as const
 
-/** 文章內文區塊：段落、H2 小標、條列清單 */
-export type PostBlock = string | { h2: string } | { ul: string[] }
+/** 文章內文區塊：段落、H2 小標、條列清單、表格、站內連結清單 */
+export type PostBlock =
+  | string
+  | { h2: string }
+  | { ul: string[] }
+  | { table: { caption: string; head: string[]; rows: string[][] } }
+  | { links: { to: string; label: string }[] }
 
 export type Post = {
   slug: string
@@ -342,17 +352,24 @@ export type Post = {
   sources?: string[]
   /** 作者（TEAM 的 slug）；有填才會顯示署名並輸出 Person 作者，未填則以商家為作者 */
   author?: string
+  /** 參考文獻（研究、官方資料），文末列出並輸出為 Article schema 的 citation */
+  references?: { title: string; url: string }[]
   body: PostBlock[]
 }
 
-/** 全部文章，依發布日由新到舊（內容整理自 KSE 官方 IG／FB 貼文，見 utils/posts-ig.ts） */
-export const POSTS: Post[] = [...IG_POSTS].sort((a, b) => b.date.localeCompare(a.date))
+/** 全部文章，依發布日由新到舊（IG／FB 貼文整理見 utils/posts-ig.ts；團隊撰寫的指南見 utils/posts-guide.ts） */
+export const POSTS: Post[] = [...GUIDE_POSTS, ...IG_POSTS].sort((a, b) => b.date.localeCompare(a.date))
 
 export const FAQS = [
   {
     id: "duration",
     q: "一次體驗時間大約多久？",
     a: "體驗時間為 60 分鐘，內容包含身體狀況詢問、動作評估，以及安排適當的徒手與運動按摩並且解釋狀況、給予回家的運動衛教和安排下次身體保養追蹤時間。而身體保養時間與頻率則會因不同客戶各自狀況差異而有所不同，將由按摩師於初次體驗結束時與您討論。",
+  },
+  {
+    id: "price",
+    q: "運動按摩多少錢？有新客優惠嗎？",
+    a: PRICE_SUMMARY,
   },
   {
     id: "access",
@@ -403,6 +420,11 @@ export const FAQS = [
     id: "after",
     q: "按摩或筋膜放鬆後會痠痛嗎？可以馬上運動嗎？",
     a: "第一次放鬆後，有些人會像運動後一樣出現輕微的延遲性痠痛，通常 1–2 天內緩解。做完深層筋膜放鬆建議先休息幾小時再運動，讓身體適應新的活動範圍；若出現尖銳痛、麻或灼熱感，請告知放鬆師或就醫評估。",
+  },
+  {
+    id: "contraindication",
+    q: "哪些情況不適合做運動按摩？",
+    a: CONTRAINDICATION_SUMMARY,
   },
   {
     id: "frequency",

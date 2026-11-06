@@ -45,6 +45,14 @@
               <dd class="mt-1 font-semibold">{{ fact.value }}</dd>
             </div>
           </dl>
+          <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-bold">
+            <NuxtLink v-if="hasPrice" to="/pricing" class="inline-flex items-center gap-2 text-primary">
+              查看價目表與課程方案 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+            </NuxtLink>
+            <NuxtLink to="/notice" class="inline-flex items-center gap-2 text-primary">
+              服務注意事項與禁忌 <ArrowRight class="h-4 w-4" aria-hidden="true" />
+            </NuxtLink>
+          </div>
         </div>
       </div>
 
@@ -139,6 +147,7 @@ import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { cn } from "~/utils/cn"
 import { SERVICE_ALTS, SERVICE_IMAGES, SERVICE_POSITIONS } from "~/utils/service-images"
+import { ntd, PRICING } from "~/utils/service-info"
 import { BRAND, FAQS, POSTS, PROCESS, SERVICES, servicePath } from "~/utils/site-data"
 
 const route = useRoute()
@@ -152,9 +161,13 @@ if (!service) {
 const s = service!
 const path = servicePath(s.slug)
 
+const hasPrice = s.slug === PRICING.serviceSlug
 const facts = [
   { label: "時間", value: s.duration },
   { label: "適合", value: s.audience },
+  ...(hasPrice
+    ? [{ label: "費用", value: `單堂 ${ntd(PRICING.single.price)}・首次到店 ${ntd(PRICING.firstVisit.price)}` }]
+    : []),
   { label: "地點", value: BRAND.address },
   { label: "營業時間", value: `${BRAND.hours.label}（採預約制）` },
 ]

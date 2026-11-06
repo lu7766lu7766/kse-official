@@ -1,4 +1,5 @@
 import { BRAND, FAQS, PARTNERS, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data"
+import { NOTICE, ntd, PRICE_UPDATED, PRICING } from "~/utils/service-info"
 
 // llms.txt：給 AI 答案引擎的精簡事實摘要（https://llmstxt.org），內容全部取自 site-data，與頁面同步
 export default defineEventHandler((event) => {
@@ -23,6 +24,20 @@ export default defineEventHandler((event) => {
 
 ${SERVICES.map((s) => `- [${s.title}](${SITE_URL}${servicePath(s.slug)})（又稱：${s.aliases.join("、")}）：${s.short}${s.duration}。適合：${s.audience}。`).join("\n")}
 
+## 價目表（${PRICE_UPDATED} 更新，詳見 ${SITE_URL}/pricing）
+
+- ${PRICING.serviceName}（${PRICING.includes}）單堂 60 分鐘：${ntd(PRICING.single.price)}
+- 首次到店新客 60 分鐘：${ntd(PRICING.firstVisit.price)}（${PRICING.firstVisit.note}）
+${PRICING.packages.map((p) => `- ${p.sessions} 堂（${p.sessions} 小時）課程方案：總價 ${ntd(p.total)}，平均每小時 ${ntd(p.perHour)}（${p.discount}）`).join("\n")}
+- 付款方式：${PRICING.payment.join("、")}
+- 預約：完全預約制，官方 LINE ${PRICING.lineId}、電話 ${BRAND.phone}、線上預約 ${SITE_URL}/booking；${PRICING.cancel}
+
+## ${NOTICE.title}（詳見 ${SITE_URL}/notice）
+
+${NOTICE.sections.map((sec) => `### ${sec.title}\n${sec.desc ? `${sec.desc}\n` : ""}${sec.items.map((i) => `- ${i}`).join("\n")}`).join("\n\n")}
+
+${NOTICE.safety.join("\n")}
+
 ## 名詞定義
 
 ${SERVICES.map((s) => `### ${s.title}是什麼？\n${s.definition}`).join("\n\n")}
@@ -34,6 +49,9 @@ ${SERVICES.map((s) => `### ${s.title}是什麼？\n${s.definition}`).join("\n\n"
 - 久坐族核心無力、肩頸下背反覆不適：${SITE_URL}${servicePath("core")}
 - 運動員肌力體能、青少年訓練、傷後回場：${SITE_URL}${servicePath("strength")}
 - 中信兄弟（兄弟象）職棒運動恢復合作、球隊與校隊合作：${SITE_URL}/partners
+- 運動按摩價格、新客優惠、課程方案：${SITE_URL}/pricing
+- 運動按摩禁忌、哪些情況不適合按摩：${SITE_URL}/notice
+- 運動按摩完整指南（效果、手法、時機、禁忌、價格）：${SITE_URL}/news/sports-massage-guide
 - 運動按摩和一般按摩差在哪、按摩會不會痛、多久按一次：${SITE_URL}/faq
 - 線上預約與空檔查詢：${SITE_URL}/booking
 
@@ -60,5 +78,7 @@ ${POSTS.map((p) => `- [${p.title}](${SITE_URL}/news/${p.slug})：${p.summary}`).
 - [關於 KSE](${SITE_URL}/kse)
 - [官方合作夥伴](${SITE_URL}/partners)
 - [常見問題](${SITE_URL}/faq)
+- [價目表](${SITE_URL}/pricing)
+- [服務注意事項與禁忌](${SITE_URL}/notice)
 `
 })

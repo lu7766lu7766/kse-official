@@ -51,8 +51,35 @@
             <template v-for="(block, i) in post.body" :key="i">
               <p v-if="typeof block === 'string'">{{ block }}</p>
               <h2 v-else-if="'h2' in block" class="!mt-12 text-2xl text-foreground">{{ block.h2 }}</h2>
-              <ul v-else class="list-disc space-y-2 pl-6 marker:text-primary">
+              <ul v-else-if="'ul' in block" class="list-disc space-y-2 pl-6 marker:text-primary">
                 <li v-for="item in block.ul" :key="item">{{ item }}</li>
+              </ul>
+              <!-- 表格：比較與方案資訊，給精選摘要與 AI 直接引用 -->
+              <div v-else-if="'table' in block" class="overflow-x-auto border border-border bg-card">
+                <table class="w-full min-w-[32rem] border-collapse text-left text-sm leading-relaxed">
+                  <caption class="sr-only">{{ block.table.caption }}</caption>
+                  <thead>
+                    <tr class="bg-navy text-white">
+                      <th v-for="h in block.table.head" :key="h" scope="col" class="whitespace-nowrap px-4 py-3 font-bold">{{ h }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="row in block.table.rows" :key="row[0]" class="border-t border-border">
+                      <template v-for="(cell, ci) in row" :key="ci">
+                        <th v-if="ci === 0" scope="row" class="whitespace-nowrap px-4 py-3 font-semibold text-foreground">{{ cell }}</th>
+                        <td v-else class="px-4 py-3">{{ cell }}</td>
+                      </template>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ul v-else-if="'links' in block" class="!mt-10 grid gap-3 sm:grid-cols-2">
+                <li v-for="l in block.links" :key="l.to">
+                  <NuxtLink :to="l.to" class="surface-card group flex items-center justify-between gap-3 p-4 text-base font-bold text-foreground">
+                    <span class="transition-colors group-hover:text-primary">{{ l.label }}</span>
+                    <ArrowRight class="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                  </NuxtLink>
+                </li>
               </ul>
             </template>
           </div>
@@ -74,8 +101,18 @@
             </ul>
           </section>
 
+          <section v-if="post.references?.length" class="mt-14" aria-label="參考資料">
+            <h2 class="text-2xl text-foreground">參考資料</h2>
+            <ol class="mt-5 list-decimal space-y-3 pl-6 text-sm leading-relaxed text-muted-foreground marker:text-primary">
+              <li v-for="r in post.references" :key="r.url">
+                {{ r.title }}
+                <a :href="r.url" target="_blank" rel="noopener noreferrer" class="break-all text-primary underline-offset-4 hover:underline">{{ r.url }}</a>
+              </li>
+            </ol>
+          </section>
+
           <p v-if="post.sources?.length" class="mt-10 text-sm text-muted-foreground">
-            本文整理自 KSE 官方 Instagram 貼文：
+            {{ post.references?.length ? "部分內容改寫自" : "本文整理自" }} KSE 官方 Instagram 貼文：
             <template v-for="(src, i) in post.sources" :key="src">
               <a :href="src" target="_blank" rel="noopener noreferrer" class="text-primary underline-offset-4 hover:underline">原文{{ post.sources.length > 1 ? i + 1 : "" }}</a>
               <span v-if="i < post.sources.length - 1">、</span>
@@ -208,6 +245,9 @@ useHead({
         dateModified: p.updated ?? p.date,
         articleSection: p.category,
         ...(relatedService ? { about: { "@id": serviceId(relatedService.slug) } } : {}),
+        ...(p.references?.length
+          ? { citation: p.references.map((r) => ({ "@type": "ScholarlyArticle", name: r.title, url: r.url })) }
+          : {}),
         inLanguage: "zh-TW",
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         isPartOf: { "@id": WEBSITE_ID },

@@ -6,7 +6,12 @@
       title="線上預約"
       desc="採預約制，請至少提前 3 小時預約。選擇按摩師與時段，體驗美式筋膜放鬆、運動按摩與動作評估服務。"
       :crumbs="[{ label: '線上預約' }]"
-    />
+    >
+      <p class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-bold">
+        <NuxtLink to="/pricing" class="text-gold underline-offset-4 hover:underline">價目表（新客 {{ ntd(PRICING.firstVisit.price) }}）</NuxtLink>
+        <NuxtLink to="/notice" class="text-gold underline-offset-4 hover:underline">預約前請閱讀服務注意事項</NuxtLink>
+      </p>
+    </PageHero>
 
     <!-- 預約核心區塊元件 -->
     <BookingSection :liff-id="config.public.bookingLiffId" />
@@ -16,6 +21,7 @@
 <script setup lang="ts">
 import PageHero from "~/components/ui/PageHero.vue"
 import BookingSection from "~/components/booking/BookingSection.vue"
+import { ntd, PRICING } from "~/utils/service-info"
 
 const config = useRuntimeConfig()
 

@@ -22,6 +22,8 @@
           <li v-for="item in NAV" :key="item.to">
             <NuxtLink :to="item.to" class="transition-colors hover:text-white">{{ item.label }}</NuxtLink>
           </li>
+          <li><NuxtLink to="/notice" class="transition-colors hover:text-white">服務注意事項</NuxtLink></li>
+          <li><NuxtLink to="/news/sports-massage-guide" class="transition-colors hover:text-white">運動按摩指南</NuxtLink></li>
         </ul>
       </nav>
 
