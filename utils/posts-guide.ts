@@ -148,7 +148,7 @@ export const GUIDE_POSTS: Post[] = [
       },
 
       { h2: "運動按摩多少錢？KSE 價目表" },
-      `以 KSE 為例，${PRICING.serviceName}（${PRICING.includes}）單堂 60 分鐘 ${ntd(PRICING.single.price)}；首次到店新客 60 分鐘 ${ntd(PRICING.firstVisit.price)}，${PRICING.firstVisit.note.replace(/^新客優惠/, "")}需要常態保養的人，可以選擇課程方案：`,
+      `以 KSE 為例，${PRICING.serviceName}（${PRICING.includes}）與美式筋膜放鬆價格相同，單堂 60 分鐘 ${ntd(PRICING.single.price)}；首次到店新客 60 分鐘 ${ntd(PRICING.firstVisit.price)}，${PRICING.firstVisit.note.replace(/^新客優惠/, "")}需要常態保養的人，可以選擇課程方案：`,
       {
         table: {
           caption: "KSE 運動按摩課程方案",
@@ -186,6 +186,172 @@ export const GUIDE_POSTS: Post[] = [
           { to: "/notice", label: NOTICE.title },
           { to: "/services/sports-massage", label: "台中南屯運動按摩服務" },
           { to: "/faq", label: "運動按摩常見問題" },
+          { to: "/news/fascia-release-guide", label: "筋膜放鬆完整指南" },
+          { to: "/services/fascia", label: "台中南屯美式筋膜放鬆服務" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "fascia-release-guide",
+    title: "筋膜放鬆是什麼？效果、筋膜刀、會不會痛、禁忌與價格完整指南",
+    date: "2026-11-07",
+    category: "筋膜放鬆",
+    author: "eason",
+    excerpt:
+      "筋膜放鬆是什麼？筋膜為什麼會緊繃、沾黏？KSE 副店長 Eason 整理筋膜放鬆的研究證據、美式筋膜放鬆與按摩的差異、筋膜刀、會不會痛、居家放鬆、禁忌與價格。",
+    summary:
+      "筋膜是包覆並串聯肌肉的結締組織網絡，筋膜放鬆以徒手或筋膜刀恢復組織滑動與活動度。研究顯示可短期改善活動度，對慢性疼痛的證據仍有限，也不是醫療行為。美式筋膜放鬆會先評估、沿張力鏈處理並即時複評，KSE 單堂 60 分鐘 NT$1,800。",
+    image: "stretch",
+    alt: "KSE 放鬆師在台中南屯教室為客人進行腿後側美式筋膜放鬆",
+    references: [
+      {
+        title:
+          "Ajimsha MS, Al-Mudahka NR, Al-Madzhar JA. Effectiveness of myofascial release: Systematic review of randomized controlled trials. Journal of Bodywork and Movement Therapies, 2015.",
+        url: "https://doi.org/10.1016/j.jbmt.2014.06.001",
+      },
+      {
+        title:
+          "Laimi K, Mäkilä A, Bärlund E, et al. Effectiveness of myofascial release in treatment of chronic musculoskeletal pain: a systematic review. Clinical Rehabilitation, 2018.",
+        url: "https://doi.org/10.1177/0269215517732820",
+      },
+      {
+        title:
+          "Wilke J, Krause F, Vogt L, Banzer W. What Is Evidence-Based About Myofascial Chains: A Systematic Review. Archives of Physical Medicine and Rehabilitation, 2016.",
+        url: "https://doi.org/10.1016/j.apmr.2015.07.023",
+      },
+      {
+        title:
+          "Wilke J, Müller AL, Giesche F, et al. Acute Effects of Foam Rolling on Range of Motion in Healthy Adults: A Systematic Review with Multilevel Meta-analysis. Sports Medicine, 2020.",
+        url: "https://doi.org/10.1007/s40279-019-01205-7",
+      },
+    ],
+    body: [
+      { h2: "筋膜是什麼？" },
+      "筋膜（Fascia）是包覆並串聯全身肌肉、骨骼、神經與血管的結締組織網絡。可以把它想像成包在肌肉外面、又延伸到全身的一層保鮮膜：肌肉負責出力，筋膜負責把力量傳遞出去，並讓各層組織在動作時能互相滑動。",
+      "因為筋膜是連續的，某一處緊繃時，張力會沿著筋膜傳到其他地方。這也是為什麼肩膀卡卡，問題可能出在手臂；下背痠痛，源頭可能在大腿後側。只按壓痛點，往往只能得到短暫的改善。",
+
+      { h2: "筋膜放鬆是什麼？美式筋膜放鬆有什麼不同？" },
+      "筋膜放鬆（Myofascial Release）是以徒手、器械或滾筒等自我放鬆工具，對緊繃或滑動受限的筋膜與軟組織施加持續、可控的壓力與拉伸，目的是恢復組織之間的滑動，讓關節走回應有的活動範圍。",
+      "KSE 的美式筋膜放鬆是先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限的筋膜層，和只按痠痛處的放鬆有幾個不同：",
+      {
+        ul: [
+          "先評估再處理：從站姿排列、呼吸模式到深蹲、弓箭步、單腳穩定等動作，找出限制活動度與代償的真正來源。",
+          "沿張力鏈處理：順著筋膜連結處理張力源頭，而不只是壓痛點所在的局部。",
+          "搭配主動動作：處理的同時請你主動移動關節（Active Release 概念），讓神經系統同步接受新的活動範圍。",
+          "即時複評：處理後立刻重測原本受限的動作，確認改變確實發生。",
+        ],
+      },
+
+      { h2: "筋膜為什麼會緊繃、沾黏？" },
+      "一般說的筋膜「沾黏」，多半是指筋膜層之間滑動變差、局部張力集中，常見的感受是卡卡的、活動範圍變小。常見的原因有四個：",
+      {
+        ul: [
+          "外傷或手術後的疤痕：組織修復時結締組織增生、形成疤痕，可能讓筋膜層之間滑動變差。",
+          "壓力與緊張：情緒壓力會讓肌肉長時間處於緊繃狀態。",
+          "過度使用或重複性動作：長期打字、搬運重物、跑步等，讓局部筋膜長時間承受壓力或摩擦。",
+          "姿勢不良：長期駝背、翹腳、低頭滑手機，讓特定部位持續受壓。",
+        ],
+      },
+
+      { h2: "筋膜放鬆有什麼效果？研究怎麼說" },
+      "筋膜放鬆的研究數量不如運動按摩多，研究品質也參差不齊。以目前的系統性回顧來看：",
+      {
+        ul: [
+          "短期改善活動度：統合分析指出，以滾筒等方式進行筋膜放鬆後，關節活動度在短期內會有小幅增加。",
+          "肌筋膜鏈有解剖證據：系統性回顧發現，部分肌筋膜鏈確實具有結構上的連續性，例如身體後側從足底、小腿、大腿後側一路連到背部的連結，支持「沿張力鏈處理」的思考方式。",
+          "正向結果多，但證據仍有限：針對隨機對照試驗的回顧顯示筋膜放鬆在多種肌肉骨骼問題上有正向結果；但聚焦慢性肌肉骨骼疼痛的回顧則指出，現有研究品質偏低，還不足以下定論。",
+        ],
+      },
+      "所以我們不會把筋膜放鬆說成能「治好」什麼。它比較適合的角色，是幫助恢復活動度、讓緊繃處放鬆，再搭配動作與訓練把改變留下來。筋膜放鬆屬於徒手放鬆服務，不是醫療診斷或治療；有疼痛或受傷問題時，仍應先就醫評估。",
+
+      { h2: "美式筋膜放鬆、運動按摩和一般按摩差在哪？" },
+      {
+        table: {
+          caption: "美式筋膜放鬆、運動按摩與一般按摩的比較",
+          head: ["比較項目", "美式筋膜放鬆", "運動按摩", "一般按摩"],
+          rows: [
+            ["主要目的", "恢復筋膜滑動與關節活動度", "幫助運動後恢復、維持肌肉彈性", "舒緩疲勞、當下放鬆"],
+            ["處理方式", "沿張力鏈以徒手與筋膜刀處理受限筋膜層，搭配主動動作", "依訓練與比賽週期調整手法與力道", "按壓經絡穴道或指定的痠痛處"],
+            ["適合情況", "肩頸緊繃、下背痠痛、活動度受限、動作卡卡", "規律運動者的賽前、賽後與週間維護", "日常疲勞"],
+            ["確認效果", "處理前後即時複評活動度", "觀察恢復感受與動作順暢度", "以當下舒適感為主"],
+          ],
+        },
+      },
+      "在 KSE，兩種服務都會先做動作評估，價格也相同。第一次來不確定要選哪一個，放鬆師會依評估結果建議。",
+
+      { h2: "筋膜刀是什麼？會刮痧、出痧嗎？" },
+      "筋膜刀是器械輔助軟組織鬆動（IASTM，Instrument-Assisted Soft Tissue Mobilization）使用的工具，多為表面平滑的硬質器械，用來處理表層至中層筋膜的滑動受限與局部張力集中處。",
+      "KSE 會依評估結果決定以徒手為主，或搭配筋膜刀輔助。力道溫和可控，不追求刮痧式的疼痛或大片瘀紅，重點在恢復組織滑動與活動度。正在服用抗凝血藥物、容易瘀青或出血，或皮膚有傷口的人，請在服務前告知放鬆師。",
+
+      { h2: "筋膜放鬆會痛嗎？做完會更痠嗎？" },
+      {
+        ul: [
+          "筋膜放鬆不追求越痛越好。比較理想的感受是舒服中帶有一點「到點的痠感」，力道可以隨時溝通調整。",
+          "若出現尖銳疼痛、麻木、電擊感、灼熱感，或痛到需要憋氣忍耐，請立即告知放鬆師。",
+          "第一次放鬆後，有些人會像運動後一樣出現輕微的延遲性痠痛，通常 1–2 天內緩解。",
+          "做完較深層的筋膜放鬆，建議先休息幾小時再進行高強度運動，讓身體適應新的活動範圍。",
+        ],
+      },
+
+      { h2: "哪些人適合筋膜放鬆？" },
+      {
+        ul: [
+          "長時間用電腦、滑手機，肩頸總是緊繃的上班族。",
+          "久坐久站、下背容易痠痛的人。",
+          "深蹲蹲不低、手舉不高，髖關節或胸椎覺得卡卡的人。",
+          "運動後總是緊緊卡卡，伸展了活動度還是上不來的運動族群。",
+          "受傷或手術後已就醫、狀況穩定，但仍覺得緊繃受限的人（請先經醫療人員評估）。",
+        ],
+      },
+
+      { h2: "在家可以怎麼做筋膜放鬆？" },
+      "兩次放鬆之間，可以用以下方式維持效果：",
+      {
+        ul: [
+          "經常伸展與活動身體，避免長時間維持同一個姿勢。",
+          "使用滾筒或按摩球，在緊繃的肌肉上緩慢滾動或停留，以痠但舒服為原則。",
+          "避免直接壓在骨頭突起處、關節上，或出現麻、電感的位置。",
+          "留意駝背、翹腳、長時間低頭等習慣，保持正確姿勢。",
+        ],
+      },
+
+      { h2: "哪些情況不適合做筋膜放鬆？" },
+      `為了安全，${NOTICE.sections[0]!.desc}`,
+      { ul: NOTICE.sections[0]!.items },
+      NOTICE.sections[1]!.desc,
+      { ul: NOTICE.sections[1]!.items },
+
+      { h2: "筋膜放鬆多少錢？KSE 價目表" },
+      `在 KSE，美式筋膜放鬆與運動按摩價格相同：單堂 60 分鐘 ${ntd(PRICING.single.price)}；首次到店新客 60 分鐘 ${ntd(PRICING.firstVisit.price)}，${PRICING.firstVisit.note.replace(/^新客優惠/, "")}需要常態保養的人，可以選擇課程方案：`,
+      {
+        table: {
+          caption: "KSE 課程方案",
+          head: ["方案", "總價", "平均每小時", "折數"],
+          rows: PRICING.packages.map((p) => [`${p.sessions} 堂（${p.sessions} 小時）`, ntd(p.total), ntd(p.perHour), p.discount]),
+        },
+      },
+      `付款方式：${PRICING.payment.join("、")}。本店採完全預約制，${PRICING.cancel}`,
+
+      { h2: "在 KSE 做一次美式筋膜放鬆的流程" },
+      "KSE 美式筋膜放鬆教室位於台中市南屯區大墩七街202號，每次一對一約 60 分鐘：",
+      {
+        ul: [
+          "動作評估：靜態姿勢排列與動態動作篩檢，找出受限與代償的來源。",
+          "沿張力鏈放鬆：以徒手為主，視情況搭配筋膜刀，處理受限的筋膜層與軟組織。",
+          "即時複評：重測原本受限的動作，讓你清楚感受到活動範圍的改變。",
+          "運動衛教：分享與你相關的身體知識、日常活動建議與簡單的居家練習。",
+        ],
+      },
+      "體驗結束後，你會拿到一張「KSE 身體狀態卡」，從肌肉彈性、筋膜張力與活動度三個方向記錄目前的狀態與後續建議。",
+      {
+        links: [
+          { to: "/services/fascia", label: "台中南屯美式筋膜放鬆服務" },
+          { to: "/pricing", label: "KSE 價目表與預約方式" },
+          { to: "/notice", label: NOTICE.title },
+          { to: "/news/self-assessment-at-home", label: "在家做的身體自我檢測" },
+          { to: "/news/kinetic-chain-fascia-tension", label: "從動力鏈看筋膜張力" },
+          { to: "/news/sports-massage-guide", label: "運動按摩完整指南" },
         ],
       },
     ],

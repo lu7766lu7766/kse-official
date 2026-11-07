@@ -4,14 +4,17 @@
  * 這個檔案刻意不 import 其他模組，避免與 site-data / 文章檔互相引用。
  */
 
-export const PRICE_UPDATED = "2026-11-06"
+export const PRICE_UPDATED = "2026-11-07"
 
 /** 金額格式：1800 → "NT$1,800" */
 export const ntd = (n: number) => `NT$${n.toLocaleString("en-US")}`
 
 export const PRICING = {
-  /** 對應 SERVICES 的 slug：價格掛在這項服務的頁面與 schema 上 */
-  serviceSlug: "sports-massage",
+  /** 適用這份價目表的服務（SERVICES 的 slug 與名稱）：價格會顯示在這些服務頁並輸出到其 Service schema。業主確認兩項同價（2026-11-07） */
+  services: [
+    { slug: "sports-massage", name: "運動按摩" },
+    { slug: "fascia", name: "美式筋膜放鬆" },
+  ],
   serviceName: "運動按摩",
   includes: "含動作評估、肌筋膜放鬆",
   single: { label: "單堂課程（原價）", duration: "60 分鐘（1 堂）", price: 1800 },
@@ -33,8 +36,12 @@ export const PRICING = {
   cancel: "取消或改期請於預約時間 3 小時前透過官方 LINE 告知。",
 }
 
+/** 適用價目表的服務名稱，例如「運動按摩、美式筋膜放鬆」 */
+export const PRICED_SERVICE_NAMES = PRICING.services.map((s) => s.name).join("、")
+export const isPricedService = (slug: string) => PRICING.services.some((s) => s.slug === slug)
+
 /** 價格摘要句（FAQ、指南、llms.txt 共用） */
-export const PRICE_SUMMARY = `KSE 運動按摩（${PRICING.includes}）單堂 60 分鐘 ${ntd(PRICING.single.price)}；首次到店新客 60 分鐘 ${ntd(PRICING.firstVisit.price)}，每人限用一次，需於預約時告知。另有 ${PRICING.packages.map((p) => p.sessions).join("、")} 堂課程方案，平均每小時 ${ntd(PRICING.packages[0]!.perHour)} 至 ${ntd(PRICING.packages.at(-1)!.perHour)}。付款方式：${PRICING.payment.join("、")}。`
+export const PRICE_SUMMARY = `KSE 運動按摩（${PRICING.includes}）與美式筋膜放鬆價格相同，單堂 60 分鐘 ${ntd(PRICING.single.price)}；首次到店新客 60 分鐘 ${ntd(PRICING.firstVisit.price)}，每人限用一次，需於預約時告知。另有 ${PRICING.packages.map((p) => p.sessions).join("、")} 堂課程方案，平均每小時 ${ntd(PRICING.packages[0]!.perHour)} 至 ${ntd(PRICING.packages.at(-1)!.perHour)}。付款方式：${PRICING.payment.join("、")}。`
 
 export const NOTICE = {
   title: "運動按摩服務注意事項與禁忌",

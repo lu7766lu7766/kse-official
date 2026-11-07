@@ -2,8 +2,8 @@
   <div>
     <PageHero
       eyebrow="Pricing"
-      title="KSE 價目表｜台中南屯運動按摩價格"
-      :desc="`${PRICING.serviceName}（${PRICING.includes}）單堂 60 分鐘 ${ntd(PRICING.single.price)}，首次到店新客 ${ntd(PRICING.firstVisit.price)}，另有 4–32 堂課程方案。採完全預約制。`"
+      title="KSE 價目表｜台中南屯運動按摩・筋膜放鬆價格"
+      :desc="`${PRICED_SERVICE_NAMES}價格相同（${PRICING.includes}）：單堂 60 分鐘 ${ntd(PRICING.single.price)}，首次到店新客 ${ntd(PRICING.firstVisit.price)}，另有 4–32 堂課程方案。採完全預約制。`"
       :crumbs="[{ label: '價目表' }]"
     />
 
@@ -13,14 +13,15 @@
       <div class="mt-10 grid gap-6 md:grid-cols-2">
         <article class="surface-card flex flex-col p-8">
           <p class="text-xs font-bold tracking-[0.16em] text-primary">{{ PRICING.single.label }}</p>
-          <h2 class="mt-3 text-2xl">{{ PRICING.serviceName }}</h2>
+          <h2 class="mt-3 text-2xl">{{ PRICING.services.map((x) => x.name).join("／") }}</h2>
           <p class="mt-1 text-sm text-muted-foreground">{{ PRICING.includes }}・{{ PRICING.single.duration }}</p>
           <p class="mt-6 font-display text-5xl font-extrabold text-foreground">{{ ntd(PRICING.single.price) }}</p>
         </article>
         <article class="relative isolate flex flex-col overflow-hidden bg-navy p-8 text-white">
           <div class="pointer-events-none absolute inset-0 -z-10 fiber-texture" aria-hidden="true" />
           <p class="text-xs font-bold tracking-[0.16em] text-gold">{{ PRICING.firstVisit.label }}</p>
-          <h2 class="mt-3 text-2xl text-white">{{ PRICING.serviceName }}・首次到店</h2>
+          <h2 class="mt-3 text-2xl text-white">首次到店體驗</h2>
+          <p class="mt-1 text-sm text-navy-foreground">{{ PRICED_SERVICE_NAMES }}皆適用</p>
           <p class="mt-1 text-sm text-navy-foreground">{{ PRICING.firstVisit.duration }}（原價 {{ ntd(PRICING.single.price) }}）</p>
           <p class="mt-6 font-display text-5xl font-extrabold text-gold">{{ ntd(PRICING.firstVisit.price) }}</p>
           <p class="mt-4 text-sm leading-relaxed text-navy-foreground">※ {{ PRICING.firstVisit.note }}</p>
@@ -114,7 +115,7 @@ import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { ORG_ID, serviceId } from "~/composables/useGeoSchema"
-import { NOTICE, ntd, PRICE_UPDATED, PRICING } from "~/utils/service-info"
+import { NOTICE, ntd, PRICE_UPDATED, PRICED_SERVICE_NAMES, PRICING } from "~/utils/service-info"
 import { BRAND, SITE_URL } from "~/utils/site-data"
 
 const { injectBreadcrumbsSchema } = useGeoSchema()
@@ -135,25 +136,28 @@ useHead({
         name: "KSE 美式筋膜放鬆教室價目表",
         url: `${SITE_URL}/pricing`,
         provider: { "@id": ORG_ID },
-        itemListElement: [
-          { name: `${PRICING.serviceName} 單堂 60 分鐘`, price: PRICING.single.price },
-          { name: `${PRICING.serviceName} 首次到店新客 60 分鐘`, price: PRICING.firstVisit.price },
-          ...PRICING.packages.map((p) => ({ name: `${PRICING.serviceName} ${p.sessions} 堂課程方案`, price: p.total })),
-        ].map((o) => ({
-          "@type": "Offer",
-          name: o.name,
-          price: o.price,
-          priceCurrency: "TWD",
-          itemOffered: { "@id": serviceId(PRICING.serviceSlug) },
-        })),
+        // 每項適用服務各列一組方案，itemOffered 指回該服務實體
+        itemListElement: PRICING.services.flatMap((svc) =>
+          [
+            { name: `${svc.name} 單堂 60 分鐘`, price: PRICING.single.price },
+            { name: `${svc.name} 首次到店新客 60 分鐘`, price: PRICING.firstVisit.price },
+            ...PRICING.packages.map((p) => ({ name: `${svc.name} ${p.sessions} 堂課程方案`, price: p.total })),
+          ].map((o) => ({
+            "@type": "Offer",
+            name: o.name,
+            price: o.price,
+            priceCurrency: "TWD",
+            itemOffered: { "@id": serviceId(svc.slug) },
+          })),
+        ),
       }),
     },
   ],
 })
 
 usePageSeo({
-  title: "運動按摩價格｜台中南屯 KSE 價目表・新客優惠・課程方案",
-  description: `KSE 台中南屯運動按摩價目表：${PRICING.includes}，單堂 60 分鐘 ${ntd(PRICING.single.price)}，首次到店新客 ${ntd(PRICING.firstVisit.price)}；4 到 32 堂課程方案平均每小時 ${ntd(PRICING.packages.at(-1)!.perHour)} 起。可付現、刷卡或轉帳，採預約制。`,
+  title: "運動按摩・筋膜放鬆價格｜台中南屯 KSE 價目表・新客優惠",
+  description: `KSE 台中南屯運動按摩與美式筋膜放鬆價目表（兩項同價）：${PRICING.includes}，單堂 60 分鐘 ${ntd(PRICING.single.price)}，首次到店新客 ${ntd(PRICING.firstVisit.price)}；4 到 32 堂課程方案平均每小時 ${ntd(PRICING.packages.at(-1)!.perHour)} 起。可付現、刷卡或轉帳，採預約制。`,
   path: "/pricing",
 })
 </script>

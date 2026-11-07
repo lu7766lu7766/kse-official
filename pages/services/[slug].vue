@@ -147,7 +147,7 @@ import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { cn } from "~/utils/cn"
 import { SERVICE_ALTS, SERVICE_IMAGES, SERVICE_POSITIONS } from "~/utils/service-images"
-import { ntd, PRICING } from "~/utils/service-info"
+import { isPricedService, ntd, PRICING } from "~/utils/service-info"
 import { BRAND, FAQS, POSTS, PROCESS, SERVICES, servicePath } from "~/utils/site-data"
 
 const route = useRoute()
@@ -161,7 +161,7 @@ if (!service) {
 const s = service!
 const path = servicePath(s.slug)
 
-const hasPrice = s.slug === PRICING.serviceSlug
+const hasPrice = isPricedService(s.slug)
 const facts = [
   { label: "時間", value: s.duration },
   { label: "適合", value: s.audience },

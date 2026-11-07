@@ -61,8 +61,8 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/services": "2026-10-31",
   "/kse": "2026-10-16",
   "/booking": "2026-11-06",
-  "/faq": "2026-11-06",
-  "/pricing": "2026-11-06",
+  "/faq": "2026-11-07",
+  "/pricing": "2026-11-07",
   "/notice": "2026-11-06",
   "/partners": "2026-11-05",
 }
@@ -108,12 +108,12 @@ export const SERVICES = [
     slug: "fascia",
     seoTitle: "台中南屯美式筋膜放鬆｜肩頸緊繃・下背痠痛・活動度受限｜KSE",
     seoDescription:
-      "KSE 台中南屯美式筋膜放鬆：先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限筋膜層，處理後即時複評。適合肩頸緊繃、下背痠痛、深蹲與舉手活動度不足者，單次約 60 分鐘。",
+      "KSE 台中南屯美式筋膜放鬆：先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限筋膜層，處理後即時複評。適合肩頸緊繃、下背痠痛、深蹲與舉手活動度不足者，單次 60 分鐘 NT$1,800，新客 NT$1,200。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
-    faqs: ["difference", "massage-vs-fascia", "relax", "iastm", "pain", "after", "contraindication", "duration"],
-    posts: ["muscle-vs-fascia", "kinetic-chain-fascia-tension", "soreness-series-faq"],
+    faqs: ["difference", "massage-vs-fascia", "price", "relax", "iastm", "pain", "after", "contraindication", "duration"],
+    posts: ["fascia-release-guide", "muscle-vs-fascia", "kinetic-chain-fascia-tension", "soreness-series-faq"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
-    updated: "2026-11-06",
+    updated: "2026-11-07",
     title: "美式筋膜放鬆",
     aliases: ["筋膜放鬆", "肌筋膜放鬆", "筋膜刀放鬆", "徒手筋膜放鬆"],
     definition:
@@ -368,7 +368,7 @@ export const FAQS = [
   },
   {
     id: "price",
-    q: "運動按摩多少錢？有新客優惠嗎？",
+    q: "運動按摩、筋膜放鬆多少錢？有新客優惠嗎？",
     a: PRICE_SUMMARY,
   },
   {

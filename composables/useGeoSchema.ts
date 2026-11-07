@@ -1,5 +1,5 @@
 import { BRAND, FAQS, SERVICES, servicePath, SITE_URL, type TeamMember } from "~/utils/site-data"
-import { PRICE_UPDATED, PRICING } from "~/utils/service-info"
+import { isPricedService, PRICE_UPDATED, PRICING } from "~/utils/service-info"
 import heroImg from "~/assets/images/hero.jpg"
 import massageImg from "~/assets/images/massage.jpg"
 import stretchImg from "~/assets/images/stretch.jpg"
@@ -210,7 +210,7 @@ export function useGeoSchema() {
           areaServed: AREA_SERVED,
           audience: { "@type": "Audience", audienceType: service.audience },
           // 有公開價格的服務才輸出 offers（價格取自 utils/service-info.ts）
-          ...(service.slug === PRICING.serviceSlug
+          ...(isPricedService(service.slug)
             ? {
                 offers: [
                   { name: `單堂 60 分鐘（${PRICING.includes}）`, price: PRICING.single.price },
