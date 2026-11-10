@@ -154,6 +154,7 @@
 - 改頁面文案 → 更新 `PAGE_UPDATED` 對應日期；服務頁改 `SERVICES[].updated`，文章改 `POSTS[].updated`（sitemap 不會自動用 build 日期）
 - 新增文章 → 填 `author`（`TEAM` 的 slug），才有署名與具名作者 schema
 - 新增服務 → `SERVICES` 填 `seoTitle`、`seoDescription`、`faqs`（`FAQS` 的 id）、`posts`、`updated`，並在 `utils/service-images.ts` 加照片、alt、裁切位置；頁面、sitemap、schema、llms.txt 會自動產生
+- 新增照片 → 放進 `assets/images/`（文章圖放 `assets/images/news/`），頁面用 `<ResponsiveImage :image="img('檔名')" sizes="…" />` 顯示，不要直接 `<img src="~/assets/…">`：build 會自動產生多寬度 WebP 並帶入實際寬高；原檔建議長邊 1600px 以內、mozjpeg 壓縮
 - 新增成員／證照 → `TEAM.credentials` 只放正式證照，研習與經歷放 `points`
 - 改營業時間 → `BRAND.hours` 與 Google 商家同步
 - 審查用 agy 時，headless 無法執行指令：先把 diff 與建置產物寫成檔案再請它讀（見 Claude 記憶 `agy-review-headless`）
@@ -236,3 +237,23 @@
 - [x] 筋膜放鬆服務頁延伸閱讀第一篇改為指南；兩篇指南互相連結；llms.txt 加入筋膜放鬆指南與兩項同價說明
 
 注意：筋膜刀（IASTM）沒有找到可核對 DOI 的系統性回顧，指南中只描述用途與 KSE 做法，不寫研究結論。
+
+## 12. 效能與技術細節（2026-11-10）
+
+起因：正式站檢查發現每頁都輸出約 90–105 個 `<link rel="prefetch" as="image">`（Nuxt 預設把所有頁面用到的圖片都列為預先下載），手機開任一頁閒置時會把全站照片下載一遍（10MB 以上）；首頁輪播 6 張圖疊在首屏，`loading="lazy"` 無效，會同時下載；全站圖片都是 JPEG／PNG 原檔，沒有 WebP 與 `srcset`。
+
+已完成：
+- [x] `nuxt.config.ts` 的 `build:manifest` hook：圖片不再輸出 prefetch／preload
+- [x] 圖片改為 build 時產生多寬度 WebP（`vite-imagetools`，`?responsive` 預設：320／480／960／1440，最大 1600，只產生小於原圖的寬度）；`utils/images.ts` 依檔名提供 `img()`，`components/ui/ResponsiveImage.vue` 輸出 `<picture>`（WebP `srcset` + `sizes`，原檔 JPEG／PNG 作備援），寬高取自實際檔案（刪除手寫的 `utils/news-image-sizes.json`，也修正運動按摩頁 og:image 尺寸原本誤寫 1200×1600）
+- [x] og:image 與 schema `image` 仍用原檔 JPEG（LINE 等平台對 WebP 支援不一），網址不變
+- [x] 首頁輪播：SSR 只輸出第一張（LCP 圖），頁面 `load` 後才加入第二張，之後每次切換前一個間隔再加入下一張；開啟「減少動態效果」的使用者只會下載第一張
+- [x] 合作隊徽 PNG（366KB、244KB、112KB）改輸出小尺寸 WebP，並補上寬高避免版面位移
+- [x] 標題字 Barlow Condensed 改為自架（`@fontsource/barlow-condensed`，只含拉丁字），移除 Google Fonts 外部樣式表與 preconnect，首屏不再被外部 CSS 阻擋
+- [x] Service schema 移除 `hasOfferCatalog`（原本把「服務內容」條列標成一個個 Offer，語意錯誤；價格已由 `offers` 提供）
+- [x] 文章 `datePublished`／`dateModified`、`article:published_time`／`modified_time`、Offer `validFrom` 補上台灣時區（`isoDateTime()`，`+08:00`）
+- [x] nginx：`/index.html`、`/services/index.html` 等 301 到乾淨網址（用 `$request_uri` 判斷避免內部轉址迴圈，並防 `//evil.com/index.html` open redirect）；`/200.html`、`/404.html` 改為 internal，直接存取回 404
+- [x] 新增 `public/favicon.ico`（16／32／48）與 `public/apple-touch-icon.png`（180×180，黑底），原本兩者都是 404
+
+注意：
+- `bun.lock` 本來就落後 `package.json`（仍是 nuxt 3），這次沒有一併更新；部署用的是 `package-lock.json`（Dockerfile `npm ci`）
+

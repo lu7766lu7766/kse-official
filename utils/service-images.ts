@@ -1,14 +1,11 @@
-import stretchImg from "~/assets/images/stretch.jpg"
-import massageImg from "~/assets/images/sports-massage.jpg"
-import coreImg from "~/assets/images/core.jpg"
-import strengthImg from "~/assets/images/strength.jpg"
+import { img, type Img } from "./images"
 
 /** 服務列表頁與各服務頁共用的照片、alt 與裁切位置（以 SERVICES 的 slug 對應） */
-export const SERVICE_IMAGES: Record<string, string> = {
-  fascia: stretchImg,
-  "sports-massage": massageImg,
-  core: coreImg,
-  strength: strengthImg,
+export const SERVICE_IMAGES: Record<string, Img> = {
+  fascia: img("stretch"),
+  "sports-massage": img("sports-massage"),
+  core: img("core"),
+  strength: img("strength"),
 }
 
 export const SERVICE_ALTS: Record<string, string> = {

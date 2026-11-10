@@ -35,11 +35,10 @@
           class="surface-card group overflow-hidden"
         >
           <div class="overflow-hidden">
-            <img
-              :src="POST_IMAGES[post.image]"
+            <ResponsiveImage
+              :image="postImage(post.image)"
               :alt="post.alt"
-              :width="postImageSize(post.image)[0]"
-              :height="postImageSize(post.image)[1]"
+              sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               :style="{ objectPosition: post.imagePosition ?? '50% 25%' }"
               class="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -76,7 +75,8 @@ import { ArrowRight } from "lucide-vue-next";
 import PageHero from "~/components/ui/PageHero.vue";
 import Section from "~/components/ui/Section.vue";
 import { cn } from "~/utils/cn";
-import { POST_IMAGES, postImageSize } from "~/utils/post-images";
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue";
+import { postImage } from "~/utils/post-images";
 import { CATEGORIES, POSTS } from "~/utils/site-data";
 
 const active = ref<string>("全部");

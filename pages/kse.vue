@@ -19,11 +19,10 @@
         </div>
         <div class="relative">
           <div class="absolute -left-3 -top-3 h-full w-full border border-gold/50" aria-hidden="true" />
-          <img
-            src="~/assets/images/hero.jpg"
+          <ResponsiveImage
+            :image="img('hero')"
             alt="KSE 放鬆師在台中南屯教室依評估結果為客人處理背部筋膜張力"
-            width="1200"
-            height="1600"
+            sizes="(min-width: 1024px) 600px, 100vw"
             loading="lazy"
             class="relative aspect-[4/3] w-full object-cover object-[50%_25%]"
           />
@@ -67,11 +66,10 @@
 
     <Section tone="ink">
       <div class="grid items-center gap-10 lg:grid-cols-2">
-        <img
-          src="~/assets/images/strength.jpg"
+        <ResponsiveImage
+          :image="img('strength')"
           alt="KSE 教練在育英國中指導校隊學生進行彈力帶下肢肌力訓練"
-          width="1200"
-          height="1600"
+          sizes="(min-width: 1024px) 600px, 100vw"
           loading="lazy"
           class="aspect-[4/5] w-full object-cover"
         />
@@ -97,8 +95,10 @@
 
 <script setup lang="ts">
 import PageHero from "~/components/ui/PageHero.vue"
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
+import { img } from "~/utils/images"
 import { PROCESS } from "~/utils/site-data"
 
 const FASCIA_ITEMS = [

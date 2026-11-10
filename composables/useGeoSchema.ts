@@ -1,8 +1,6 @@
 import { BRAND, FAQS, SERVICES, servicePath, SITE_URL, type TeamMember } from "~/utils/site-data"
 import { isPricedService, PRICE_UPDATED, PRICING } from "~/utils/service-info"
-import heroImg from "~/assets/images/hero.jpg"
-import massageImg from "~/assets/images/massage.jpg"
-import stretchImg from "~/assets/images/stretch.jpg"
+import { img } from "~/utils/images"
 
 export const ORG_ID = `${SITE_URL}/#organization`
 export const WEBSITE_ID = `${SITE_URL}/#website`
@@ -13,6 +11,12 @@ export const serviceId = (slug: string) => `${SITE_URL}${servicePath(slug)}#serv
 /** 團隊成員的 Person 實體 @id 與首頁團隊區錨點 */
 export const personId = (slug: string) => `${SITE_URL}/#person-${slug}`
 export const teamAnchor = (slug: string) => `team-${slug}`
+
+/**
+ * 只有日期（YYYY-MM-DD）的欄位補上台灣時區，讓 Google 不必用預設時區猜發布時間。
+ * 時間固定 00:00，已含時間的字串原樣回傳
+ */
+export const isoDateTime = (date: string) => (/^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00+08:00` : date)
 
 const abs = (p: string) => (p.startsWith("http") ? p : `${SITE_URL}${p}`)
 
@@ -53,7 +57,7 @@ export function buildSiteGraph(description: string) {
         slogan: BRAND.slogan,
         url: SITE_URL,
         logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png`, width: 512, height: 512 },
-        image: [`${SITE_URL}/og-image.jpg`, abs(heroImg), abs(massageImg), abs(stretchImg)],
+        image: [`${SITE_URL}/og-image.jpg`, ...["hero", "massage", "stretch"].map((name) => abs(img(name).src))],
         telephone: "+886-901-403990",
         priceRange: BRAND.priceRange,
         currenciesAccepted: "TWD",
@@ -223,18 +227,10 @@ export function useGeoSchema() {
                   priceCurrency: "TWD",
                   availability: "https://schema.org/InStock",
                   url: abs("/pricing"),
-                  validFrom: PRICE_UPDATED,
+                  validFrom: isoDateTime(PRICE_UPDATED),
                 })),
               }
             : {}),
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: `${service.title}服務內容`,
-            itemListElement: service.points.map((point) => ({
-              "@type": "Offer",
-              itemOffered: { "@type": "Service", name: point },
-            })),
-          },
         }),
       ],
     })

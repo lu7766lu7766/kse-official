@@ -24,11 +24,10 @@
         <article v-for="(service, i) in SERVICES" :key="service.slug" :id="service.slug" class="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div :class="cn('relative', i % 2 === 1 && 'lg:order-2')">
             <div class="absolute -left-3 -top-3 h-full w-full border border-gold/50" aria-hidden="true" />
-            <img
-              :src="SERVICE_IMAGES[service.slug]"
-              :alt="SERVICE_ALTS[service.slug]"
-              width="1200"
-              height="1600"
+            <ResponsiveImage
+              :image="SERVICE_IMAGES[service.slug]!"
+              :alt="SERVICE_ALTS[service.slug]!"
+              sizes="(min-width: 1024px) 600px, 100vw"
               loading="lazy"
               :class="cn('relative aspect-[4/3] w-full object-cover', SERVICE_POSITIONS[service.slug] || 'object-[50%_25%]')"
             />
@@ -72,6 +71,7 @@
 <script setup lang="ts">
 import { ArrowRight, Check } from "lucide-vue-next"
 import PageHero from "~/components/ui/PageHero.vue"
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { cn } from "~/utils/cn"

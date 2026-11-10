@@ -34,7 +34,7 @@
           <div class="mt-6 flex items-center gap-4">
             <img src="~/assets/images/kse-logo-circle.png" alt="KSE Logo" width="56" height="56" class="h-12 w-12 object-contain sm:h-14 sm:w-14" />
             <span class="font-display text-2xl font-bold text-gold" aria-hidden="true">×</span>
-            <img :src="BROTHERS_LOGO" alt="中信兄弟棒球隊 Brothers" width="315" height="315" class="h-14 w-auto object-contain sm:h-16" />
+            <ResponsiveImage :image="BROTHERS_LOGO" alt="中信兄弟棒球隊 Brothers" sizes="64px" class="h-14 w-auto object-contain sm:h-16" />
           </div>
 
           <h2 class="mt-6 font-display text-4xl font-extrabold italic leading-none sm:text-5xl">
@@ -61,11 +61,10 @@
           <div class="grid grid-cols-2 gap-4 sm:gap-6">
             <div v-for="(photo, idx) in BROTHERS_FEATURED" :key="idx" :class="cn('relative', idx === 1 && 'mt-12 sm:mt-16')">
               <div class="absolute -left-3 -top-3 h-full w-full border border-gold/50" aria-hidden="true" />
-              <img
-                :src="photo.src"
+              <ResponsiveImage
+                :image="photo.image"
                 :alt="photo.alt"
-                width="800"
-                height="1024"
+                sizes="(min-width: 1024px) 300px, 50vw"
                 loading="lazy"
                 class="relative aspect-[3/4] w-full object-cover"
               />
@@ -85,11 +84,10 @@
         </div>
         <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
           <div v-for="(photo, idx) in BROTHERS_GALLERY" :key="idx" class="group overflow-hidden rounded-[2px] bg-ink">
-            <img
-              :src="photo.src"
+            <ResponsiveImage
+              :image="photo.image"
               :alt="photo.alt"
-              width="800"
-              height="1024"
+              sizes="(min-width: 1024px) 200px, (min-width: 640px) 33vw, 50vw"
               loading="lazy"
               class="aspect-[3/4] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
@@ -131,11 +129,10 @@
       <SectionHeading eyebrow="School Partners" title="校園運動合作" desc="從成長期就建立正確的動作品質，是降低運動傷害最有效的方式。" />
       <div class="mt-12 grid gap-8 lg:grid-cols-2">
         <article v-for="(p, i) in SCHOOL_PARTNERS" :key="p.name" class="surface-card overflow-hidden">
-          <img
-            :src="SCHOOL_IMAGES[i]"
-            :alt="SCHOOL_ALTS[i]"
-            width="1024"
-            height="768"
+          <ResponsiveImage
+            :image="SCHOOL_IMAGES[i]!"
+            :alt="SCHOOL_ALTS[i]!"
+            sizes="(min-width: 1024px) 600px, 100vw"
             loading="lazy"
             class="aspect-[4/3] w-full object-cover"
           />
@@ -195,31 +192,15 @@ import { cn } from "~/utils/cn"
 import { ORG_ID } from "~/composables/useGeoSchema"
 import { BRAND, FAQS, PARTNERS, POSTS, servicePath, SITE_URL } from "~/utils/site-data"
 
-import partnerDazhiImg from "~/assets/images/partner-dazhi.jpg"
-import partnerYuyingImg from "~/assets/images/partner-yuying.jpg"
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue"
+import { img } from "~/utils/images"
 
-import brothersLogoImg from "~/assets/images/brothers-logo.png"
-import partnerBrothers1 from "~/assets/images/partner-brothers-1.jpg"
-import partnerBrothers2 from "~/assets/images/partner-brothers-2.jpg"
-import partnerBrothers3 from "~/assets/images/partner-brothers-3.jpg"
-import partnerBrothers4 from "~/assets/images/partner-brothers-4.jpg"
-import partnerBrothers5 from "~/assets/images/partner-brothers-5.jpg"
-import partnerBrothers6 from "~/assets/images/partner-brothers-6.jpg"
-import partnerBrothers7 from "~/assets/images/partner-brothers-7.jpg"
-import partnerBrothers8 from "~/assets/images/partner-brothers-8.jpg"
+const BROTHERS_LOGO = img("brothers-logo")
 
-const BROTHERS_LOGO = brothersLogoImg
-
-const BROTHERS_PHOTOS = [
-  partnerBrothers1,
-  partnerBrothers2,
-  partnerBrothers3,
-  partnerBrothers4,
-  partnerBrothers5,
-  partnerBrothers6,
-  partnerBrothers7,
-  partnerBrothers8,
-].map((src) => ({ src, alt: "中信兄弟職業棒球選手與 KSE 團隊運動恢復合影" }))
+const BROTHERS_PHOTOS = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({
+  image: img(`partner-brothers-${n}`),
+  alt: "中信兄弟職業棒球選手與 KSE 團隊運動恢復合影",
+}))
 const BROTHERS_FEATURED = BROTHERS_PHOTOS.slice(0, 2)
 const BROTHERS_GALLERY = BROTHERS_PHOTOS.slice(2)
 
@@ -234,7 +215,7 @@ const BROTHERS_FAQS = [
 ]
 
 const SCHOOL_PARTNERS = PARTNERS.slice(1)
-const SCHOOL_IMAGES = [partnerDazhiImg, partnerYuyingImg]
+const SCHOOL_IMAGES = [img("partner-dazhi"), img("partner-yuying")]
 const SCHOOL_ALTS = [
   "大智國小女童籃球隊榮獲臺中市國小學生籃球聯賽冠軍，與 KSE 美式筋膜放鬆教室合影",
   "育英國中籃球隊與 KSE 美式筋膜放鬆教室團隊於體育館合影",

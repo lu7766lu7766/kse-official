@@ -5,21 +5,21 @@
       class="sticky top-0 z-0 -mt-[68px] flex min-h-[100svh] flex-col justify-end overflow-hidden bg-navy pt-[68px] text-white lg:-mt-[84px] lg:pt-[84px]"
     >
       <div class="absolute inset-0">
-        <img
-          v-for="(slide, i) in HERO_SLIDES"
-          :key="slide.src"
-          :src="slide.src"
-          :alt="slide.alt"
-          :width="slide.width"
-          :height="slide.height"
-          :loading="i === 0 ? 'eager' : 'lazy'"
-          :fetchpriority="i === 0 ? 'high' : 'auto'"
-          :class="[
-            'absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms] ease-in-out',
-            slide.position,
-            i === activeSlide ? 'opacity-100' : 'opacity-0',
-          ]"
-        />
+        <!-- 只先輸出第一張（LCP）；其餘在頁面載入完成後，於輪到前一張時才加入，避免首屏同時下載 6 張 -->
+        <template v-for="(slide, i) in HERO_SLIDES" :key="slide.alt">
+          <ResponsiveImage
+            v-if="renderedSlides.has(i)"
+            :image="slide.image"
+            :alt="slide.alt"
+            :loading="i === 0 ? 'eager' : undefined"
+            :fetchpriority="i === 0 ? 'high' : undefined"
+            :class="[
+              'absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms] ease-in-out',
+              slide.position,
+              i === activeSlide ? 'opacity-100' : 'opacity-0',
+            ]"
+          />
+        </template>
       </div>
       <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" aria-hidden="true" />
       <div class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/85 via-black/45 to-transparent" aria-hidden="true" />
@@ -112,11 +112,10 @@
           class="surface-card group flex flex-col overflow-hidden"
         >
           <div v-if="PROCESS_IMAGES[step.no]" class="overflow-hidden">
-            <img
-              :src="PROCESS_IMAGES[step.no]"
-              :alt="PROCESS_ALTS[step.no]"
-              width="681"
-              height="1024"
+            <ResponsiveImage
+              :image="PROCESS_IMAGES[step.no]!"
+              :alt="PROCESS_ALTS[step.no]!"
+              sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               :class="['aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105', PROCESS_POSITIONS[step.no]]"
             />
@@ -134,11 +133,9 @@
 
     <!-- 中信兄弟合作 -->
     <section class="relative isolate overflow-hidden bg-navy text-white">
-      <img
-        src="~/assets/images/baseball.jpg"
+      <ResponsiveImage
+        :image="img('baseball')"
         alt="KSE 美式筋膜放鬆教室與職業棒球運動恢復合作形象照"
-        width="1600"
-        height="912"
         loading="lazy"
         class="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
       />
@@ -163,9 +160,10 @@
         <ul class="grid grid-cols-3 gap-4 sm:gap-6">
           <li v-for="p in PARTNERS" :key="p.name" class="flex flex-col items-center text-center">
             <div class="flex h-24 w-full items-center justify-center sm:h-36 lg:h-40">
-              <img
-                :src="PARTNER_LOGOS[p.name]"
+              <ResponsiveImage
+                :image="PARTNER_LOGOS[p.name]!"
                 :alt="`${p.name}隊徽`"
+                sizes="(min-width: 1024px) 240px, (min-width: 640px) 200px, 33vw"
                 loading="lazy"
                 :class="['max-h-full max-w-full object-contain', p.name === '大智國小' && 'rounded-md']"
               />
@@ -192,11 +190,10 @@
           class="surface-card group flex scroll-mt-28 flex-col overflow-hidden"
         >
           <div class="overflow-hidden">
-            <img
-              :src="TEAM_IMAGES[member.slug]"
+            <ResponsiveImage
+              :image="TEAM_IMAGES[member.slug]!"
               :alt="`KSE ${member.role} ${member.name}`"
-              width="720"
-              height="1082"
+              sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               class="aspect-[4/5] w-full object-cover object-[50%_20%] transition-transform duration-500 group-hover:scale-105"
             />
@@ -276,11 +273,10 @@
       <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <article v-for="(service, i) in SERVICES" :key="service.slug" class="surface-card group flex flex-col overflow-hidden">
           <div class="overflow-hidden">
-            <img
-              :src="HOME_SERVICE_IMAGES[i]"
-              :alt="HOME_SERVICE_ALTS[i]"
-              width="1200"
-              height="1600"
+            <ResponsiveImage
+              :image="HOME_SERVICE_IMAGES[i]!"
+              :alt="HOME_SERVICE_ALTS[i]!"
+              sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               class="aspect-[4/3] w-full object-cover object-[50%_25%] transition-transform duration-500 group-hover:scale-105"
             />
@@ -333,11 +329,10 @@
         <article v-for="post in POSTS.slice(0, 3)" :key="post.slug" class="surface-card group overflow-hidden">
           <NuxtLink :to="`/news/${post.slug}`" class="block">
             <div class="overflow-hidden">
-              <img
-                :src="POST_IMAGES[post.image]"
+              <ResponsiveImage
+                :image="postImage(post.image)"
                 :alt="post.alt"
-                :width="postImageSize(post.image)[0]"
-                :height="postImageSize(post.image)[1]"
+                sizes="(min-width: 1024px) 400px, 100vw"
                 loading="lazy"
                 :style="{ objectPosition: post.imagePosition ?? '50% 25%' }"
                 class="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -434,51 +429,24 @@ import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import Accordion from "~/components/ui/Accordion.vue"
 import AccordionItem from "~/components/ui/AccordionItem.vue"
-import { POST_IMAGES, postImageSize } from "~/utils/post-images"
-
-import stretchImg from "~/assets/images/stretch.jpg"
-import massageImg from "~/assets/images/massage.jpg"
-import coreImg from "~/assets/images/core.jpg"
-import strengthImg from "~/assets/images/strength.jpg"
-import movementImg from "~/assets/images/movement.jpg"
-import releaseImg from "~/assets/images/release.jpg"
-import teamKdImg from "~/assets/images/team-kd.jpg"
-import teamEasonImg from "~/assets/images/team-eason.jpg"
-import teamJoeyImg from "~/assets/images/team-joey.jpg"
-import teamLinImg from "~/assets/images/team-lin.jpg"
-import teamRexImg from "~/assets/images/team-rex.jpg"
-import teamBirdyImg from "~/assets/images/team-birdy.jpg"
-import heroSlide1 from "~/assets/images/hero-slide-1.jpg"
-import heroSlide2 from "~/assets/images/hero-slide-2.jpg"
-import heroSlide3 from "~/assets/images/hero-slide-3.jpg"
-import heroSlide4 from "~/assets/images/hero-slide-4.jpg"
-import heroSlide5 from "~/assets/images/hero-slide-5.jpg"
-import heroSlide6 from "~/assets/images/hero-slide-6.jpg"
-import partnerLogoBrothers from "~/assets/images/partner-logo-brothers.png"
-import partnerLogoDazhi from "~/assets/images/partner-logo-dazhi.jpg"
-import partnerLogoYuying from "~/assets/images/partner-logo-yuying.png"
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue"
+import { img, type Img } from "~/utils/images"
+import { postImage } from "~/utils/post-images"
 
 import { teamAnchor } from "~/composables/useGeoSchema"
 import { AUDIENCES, BRAND, COMPARISON, FAQS, PARTNERS, POSTS, PROCESS, SERVICES, servicePath, TEAM } from "~/utils/site-data"
 
-const TEAM_IMAGES: Record<string, string> = {
-  kd: teamKdImg,
-  eason: teamEasonImg,
-  joey: teamJoeyImg,
-  lin: teamLinImg,
-  rex: teamRexImg,
-  birdy: teamBirdyImg,
+const TEAM_IMAGES: Record<string, Img> = Object.fromEntries(TEAM.map((m) => [m.slug, img(`team-${m.slug}`)]))
+
+const PARTNER_LOGOS: Record<string, Img> = {
+  中信兄弟: img("partner-logo-brothers"),
+  大智國小: img("partner-logo-dazhi"),
+  育英國中: img("partner-logo-yuying"),
 }
 
-const PARTNER_LOGOS: Record<string, string> = {
-  中信兄弟: partnerLogoBrothers,
-  大智國小: partnerLogoDazhi,
-  育英國中: partnerLogoYuying,
-}
-
-const PROCESS_IMAGES: Record<string, string> = {
-  "01": movementImg,
-  "02": releaseImg,
+const PROCESS_IMAGES: Record<string, Img> = {
+  "01": img("movement"),
+  "02": img("release"),
 }
 const PROCESS_POSITIONS: Record<string, string> = {
   "01": "object-[50%_35%]",
@@ -491,7 +459,7 @@ const PROCESS_ALTS: Record<string, string> = {
 
 const SERVICE_ICONS = [Waves, HeartPulse, Activity, Dumbbell]
 // 首頁服務卡片用的照片（與服務頁的 utils/service-images.ts 刻意不同，取景較適合小卡）
-const HOME_SERVICE_IMAGES = [stretchImg, massageImg, coreImg, strengthImg]
+const HOME_SERVICE_IMAGES = [img("stretch"), img("massage"), img("core"), img("strength")]
 const HOME_SERVICE_ALTS = [
   "KSE 放鬆師為客人進行腿後側美式筋膜放鬆",
   "KSE 放鬆師為運動員進行小腿運動按摩",
@@ -501,26 +469,42 @@ const HOME_SERVICE_ALTS = [
 
 // 首屏背景輪播：中信兄弟球員合影（已裁到頭頂～看板），交叉淡入淡出
 const HERO_SLIDES = [
-  { src: heroSlide1, width: 1053, height: 940, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（一）" },
-  { src: heroSlide2, width: 955, height: 920, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（二）" },
-  { src: heroSlide3, width: 1031, height: 915, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（三）" },
-  { src: heroSlide4, width: 1118, height: 1100, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（四）" },
-  { src: heroSlide5, width: 1401, height: 1035, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（五）" },
-  { src: heroSlide6, width: 1348, height: 1185, position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（六）" },
+  { image: img("hero-slide-1"), position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（一）" },
+  { image: img("hero-slide-2"), position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（二）" },
+  { image: img("hero-slide-3"), position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（三）" },
+  { image: img("hero-slide-4"), position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（四）" },
+  { image: img("hero-slide-5"), position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（五）" },
+  { image: img("hero-slide-6"), position: "object-[50%_15%]", alt: "KSE 美式筋膜放鬆教室團隊與中信兄弟職棒選手運動恢復合作合影（六）" },
 ]
 const HERO_INTERVAL = 6000
 
 const activeSlide = ref(0)
+/** 已加入 DOM 的輪播張數：SSR 只有第一張，下一張在輪到前一個間隔才加入 */
+const renderedSlides = ref(new Set([0]))
+const renderSlide = (i: number) => {
+  if (!renderedSlides.value.has(i)) renderedSlides.value = new Set([...renderedSlides.value, i])
+}
 let slideTimer: ReturnType<typeof setInterval> | undefined
+
+const startSlides = () => {
+  renderSlide(1)
+  slideTimer = setInterval(() => {
+    activeSlide.value = (activeSlide.value + 1) % HERO_SLIDES.length
+    renderSlide((activeSlide.value + 1) % HERO_SLIDES.length)
+  }, HERO_INTERVAL)
+}
 
 onMounted(() => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-  slideTimer = setInterval(() => {
-    activeSlide.value = (activeSlide.value + 1) % HERO_SLIDES.length
-  }, HERO_INTERVAL)
+  // 等首屏與其他資源載完再開始，第二張不跟 LCP 圖搶頻寬
+  if (document.readyState === "complete") startSlides()
+  else window.addEventListener("load", startSlides, { once: true })
 })
 
-onBeforeUnmount(() => clearInterval(slideTimer))
+onBeforeUnmount(() => {
+  clearInterval(slideTimer)
+  window.removeEventListener("load", startSlides)
+})
 
 const HERO_FACTS = [
   { label: "單次服務", value: "60 分鐘" },
@@ -531,7 +515,7 @@ const HERO_FACTS = [
 
 // 團隊只在首頁顯示，Person schema 也只在這裡注入（結構化資料需對應頁面上看得到的內容）
 const { injectTeamSchema } = useGeoSchema()
-injectTeamSchema(TEAM, TEAM_IMAGES)
+injectTeamSchema(TEAM, Object.fromEntries(Object.entries(TEAM_IMAGES).map(([slug, image]) => [slug, image.src])))
 
 usePageSeo({
   title: "台中運動按摩・南屯美式筋膜放鬆｜KSE 美式筋膜放鬆教室",

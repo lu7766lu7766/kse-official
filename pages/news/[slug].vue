@@ -38,11 +38,10 @@
             <p class="mt-2 text-base font-semibold leading-relaxed text-foreground">{{ post.summary }}</p>
           </aside>
 
-          <img
-            :src="POST_IMAGES[post.image]"
+          <ResponsiveImage
+            :image="cover"
             :alt="post.alt"
-            :width="coverSize[0]"
-            :height="coverSize[1]"
+            sizes="(min-width: 768px) 768px, 100vw"
             fetchpriority="high"
             class="mx-auto mt-10 h-auto max-h-[70vh] w-auto max-w-full"
           />
@@ -89,11 +88,10 @@
             <h2 class="text-2xl text-foreground">相片</h2>
             <ul class="mt-6 grid gap-4 sm:grid-cols-2">
               <li v-for="g in post.gallery" :key="g.key">
-                <img
-                  :src="POST_IMAGES[g.key]"
+                <ResponsiveImage
+                  :image="postImage(g.key)"
                   :alt="g.alt"
-                  :width="postImageSize(g.key)[0]"
-                  :height="postImageSize(g.key)[1]"
+                  sizes="(min-width: 768px) 376px, (min-width: 640px) 50vw, 100vw"
                   loading="lazy"
                   class="h-auto w-full bg-ink"
                 />
@@ -163,8 +161,9 @@
 import { computed } from "vue";
 import { ArrowRight } from "lucide-vue-next";
 import Section from "~/components/ui/Section.vue";
-import { ORG_ID, personRef, serviceId, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
-import { POST_IMAGES, postImageSize } from "~/utils/post-images";
+import { isoDateTime, ORG_ID, personRef, serviceId, teamAnchor, WEBSITE_ID } from "~/composables/useGeoSchema";
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue";
+import { postImage } from "~/utils/post-images";
 import { BRAND, PARTNERS, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data";
 
 const route = useRoute();
@@ -201,24 +200,23 @@ const relatedService =
 const author = p.author ? TEAM.find((m) => m.slug === p.author) : undefined;
 const path = `/news/${p.slug}`;
 const url = `${SITE_URL}${path}`;
-const postImage = POST_IMAGES[p.image] ?? "/og-image.jpg";
-const coverSize = postImageSize(p.image);
-const imageUrl = absoluteUrl(postImage);
+const cover = postImage(p.image);
+const imageUrl = absoluteUrl(cover.src);
 
 usePageSeo({
   title: `${p.title}｜KSE`,
   description: p.excerpt,
   path,
   type: "article",
-  image: postImage,
+  image: cover.src,
   imageAlt: p.alt,
-  imageWidth: coverSize[0],
-  imageHeight: coverSize[1],
+  imageWidth: cover.width,
+  imageHeight: cover.height,
 });
 
 useSeoMeta({
-  articlePublishedTime: p.date,
-  articleModifiedTime: p.updated ?? p.date,
+  articlePublishedTime: isoDateTime(p.date),
+  articleModifiedTime: isoDateTime(p.updated ?? p.date),
   articleSection: p.category,
 });
 
@@ -240,9 +238,9 @@ useHead({
         headline: p.title,
         description: p.excerpt,
         abstract: p.summary,
-        image: [imageUrl, ...(p.gallery ?? []).map((g) => absoluteUrl(POST_IMAGES[g.key] ?? ""))],
-        datePublished: p.date,
-        dateModified: p.updated ?? p.date,
+        image: [imageUrl, ...(p.gallery ?? []).map((g) => absoluteUrl(postImage(g.key).src))],
+        datePublished: isoDateTime(p.date),
+        dateModified: isoDateTime(p.updated ?? p.date),
         articleSection: p.category,
         ...(relatedService ? { about: { "@id": serviceId(relatedService.slug) } } : {}),
         ...(p.references?.length

@@ -23,6 +23,17 @@ server {
   # 正規式排除開頭多重斜線，避免 //evil.com/ 被轉成 //evil.com（open redirect）
   rewrite ^/+([^/].*?)/+\$ /\$1 permanent;
 
+  # /index.html、/services/index.html 等實體檔名 301 到乾淨網址，避免同一頁有兩個可收錄網址
+  # 用 \$request_uri（原始請求）判斷，nginx 內部 index 轉到 index.html 時不會再被轉址而形成迴圈
+  # 開頭多重斜線一併吃掉，避免 //evil.com/index.html 被轉成 //evil.com（open redirect）
+  if (\$request_uri ~ "^/+(?:([^/?][^?]*?)/+)?index\.html(?:\?.*)?\$") {
+    return 301 /\$1;
+  }
+
+  # SPA 備援頁只給 error_page 內部使用，直接存取回 404（原本回 200，會被當成一般頁面）
+  location = /200.html { internal; }
+  location = /404.html { internal; }
+
   # 舊網址真正的 301（與 nuxt.config.ts routeRules 同步；靜態檔只有 meta refresh，搜尋引擎較慢才轉移權重）
   location = /cases { return 301 /; }
   location = /news/recovery-after-game { return 301 /news/post-workout-recovery; }

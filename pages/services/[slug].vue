@@ -12,11 +12,10 @@
       <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
         <div class="relative">
           <div class="absolute -left-3 -top-3 h-full w-full border border-gold/50" aria-hidden="true" />
-          <img
-            :src="SERVICE_IMAGES[service.slug]"
-            :alt="SERVICE_ALTS[service.slug]"
-            width="1200"
-            height="1600"
+          <ResponsiveImage
+            :image="SERVICE_IMAGES[service.slug]!"
+            :alt="SERVICE_ALTS[service.slug]!"
+            sizes="(min-width: 1024px) 600px, 100vw"
             fetchpriority="high"
             :class="cn('relative aspect-[4/3] w-full object-cover', SERVICE_POSITIONS[service.slug] || 'object-[50%_25%]')"
           />
@@ -143,6 +142,7 @@
 import { ArrowRight, Check } from "lucide-vue-next"
 import BookingButton from "~/components/ui/BookingButton.vue"
 import PageHero from "~/components/ui/PageHero.vue"
+import ResponsiveImage from "~/components/ui/ResponsiveImage.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { cn } from "~/utils/cn"
@@ -177,7 +177,7 @@ const posts = s.posts.map((slug) => POSTS.find((p) => p.slug === slug)).filter((
 const otherServices = SERVICES.filter((x) => x.slug !== s.slug)
 
 const { injectServiceSchema, injectBreadcrumbsSchema } = useGeoSchema()
-injectServiceSchema(s, SERVICE_IMAGES[s.slug])
+injectServiceSchema(s, SERVICE_IMAGES[s.slug]?.src)
 injectBreadcrumbsSchema([
   { name: "首頁", item: "/" },
   { name: "服務項目", item: "/services" },
@@ -188,9 +188,9 @@ usePageSeo({
   title: s.seoTitle,
   description: s.seoDescription,
   path,
-  image: SERVICE_IMAGES[s.slug],
+  image: SERVICE_IMAGES[s.slug]?.src,
   imageAlt: SERVICE_ALTS[s.slug],
-  imageWidth: 1200,
-  imageHeight: 1600,
+  imageWidth: SERVICE_IMAGES[s.slug]?.width,
+  imageHeight: SERVICE_IMAGES[s.slug]?.height,
 })
 </script>
