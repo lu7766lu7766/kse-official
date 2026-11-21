@@ -1,5 +1,5 @@
 import { BRAND, FAQS, PARTNERS, POSTS, SERVICES, servicePath, SITE_URL, TEAM } from "~/utils/site-data"
-import { NOTICE, ntd, PRICE_UPDATED, PRICED_SERVICE_NAMES, PRICING } from "~/utils/service-info"
+import { activePromotions, NOTICE, ntd, PRICE_UPDATED, PRICED_SERVICE_NAMES, PRICING } from "~/utils/service-info"
 
 // llms.txt：給 AI 答案引擎的精簡事實摘要（https://llmstxt.org），內容全部取自 site-data，與頁面同步
 export default defineEventHandler((event) => {
@@ -32,6 +32,7 @@ ${SERVICES.map((s) => `- [${s.title}](${SITE_URL}${servicePath(s.slug)})（又�
 ${PRICING.packages.map((p) => `- ${p.sessions} 堂（${p.sessions} 小時）課程方案：總價 ${ntd(p.total)}，平均每小時 ${ntd(p.perHour)}（${p.discount}）`).join("\n")}
 - 付款方式：${PRICING.payment.join("、")}
 - 預約：完全預約制，官方 LINE ${PRICING.lineId}、電話 ${BRAND.phone}、線上預約 ${SITE_URL}/booking；${PRICING.cancel}
+${activePromotions().map((p) => `- 期間限定（${p.start} 至 ${p.end}，過期即不適用）：${p.title}，${p.target} ${ntd(p.price)}`).join("\n")}
 
 ## ${NOTICE.title}（詳見 ${SITE_URL}/notice）
 

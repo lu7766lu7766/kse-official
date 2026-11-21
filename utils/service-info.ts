@@ -36,6 +36,45 @@ export const PRICING = {
   cancel: "取消或改期請於預約時間 3 小時前透過官方 LINE 告知。",
 }
 
+/**
+ * 期間限定優惠（取自 IG 活動貼文，只寫貼文上明確寫出的內容）。
+ * start／end 為台灣日期（含當天）。/pricing 只在期間內顯示，過期由每週 IG 同步排程刪除。
+ * 不另開文章：過期價格留在站上會被搜尋與 AI 當成現行價格引用。
+ */
+export type Promotion = {
+  id: string
+  title: string
+  price: number
+  /** 適用對象與內容，例如「首次到店體驗」 */
+  target: string
+  start: string
+  end: string
+  /** 貼文上的其他說明（選填） */
+  note?: string
+  /** IG 原文網址 */
+  source: string
+}
+
+export const PROMOTIONS: Promotion[] = [
+  {
+    id: "double-11-2026",
+    title: "KSE 雙11｜11 月限定活動",
+    price: 1100,
+    target: "首次到店體驗",
+    start: "2026-11-01",
+    end: "2026-11-30",
+    note: "內容包含身體評估、深層筋膜放鬆與個人化動作指導，適用條件請於預約時向官方 LINE 確認。",
+    source: "https://www.instagram.com/p/DfL4wtatN6W/",
+  },
+]
+
+/** 台灣今天的日期（YYYY-MM-DD），不受 build 機器或瀏覽器時區影響 */
+export const taipeiToday = (now = new Date()) =>
+  new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit" }).format(now)
+
+/** 指定日期仍在活動期間內的優惠 */
+export const activePromotions = (today = taipeiToday()) => PROMOTIONS.filter((p) => p.start <= today && today <= p.end)
+
 /** 適用價目表的服務名稱，例如「運動按摩、美式筋膜放鬆」 */
 export const PRICED_SERVICE_NAMES = PRICING.services.map((s) => s.name).join("、")
 export const isPricedService = (slug: string) => PRICING.services.some((s) => s.slug === slug)

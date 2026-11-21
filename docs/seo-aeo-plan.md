@@ -205,7 +205,7 @@
 - [x] llms.txt：合作單位列出別名、「依需求找頁面」加運動恢復與兄弟象
 
 注意：
-- 文章（`utils/posts-ig.ts`）整理自 IG 原文，不為了關鍵字改寫標題或內文
+- 文章（`utils/posts-ig.ts`）整理自 IG 原文。2026-11-21 起業主同意依 SEO／AEO／GEO 調整標題與內文結構，但事實只能來自原文與官網既有資料（見 `docs/ig-sync.md`）
 - `兄弟象` 不再擴散到其他頁，避免稀釋「台中南屯運動按摩」的權重；也不要把球隊名稱放進 Google 商家名稱
 - 中信兄弟官方網站網址未經確認，`SportsTeam.sameAs` 暫只放維基百科；確認後可補官方網址
 
@@ -288,3 +288,11 @@
 - [x] 運動按摩服務頁 title 改為「南屯運動按摩・運動恢復」開頭（「台中運動按摩」留給首頁）
 - [x] 服務頁標題區顯示「最後更新：YYYY-MM-DD」（取自 `SERVICES[].updated`），並輸出 WebPage `dateModified`；改服務頁內文時要同步更新 `updated`
 - 待辦（網域商設定）：`kse-release.com.tw` 由 GoDaddy 轉址到 www 時會丟掉路徑（`/pricing` 回 404），見報告中的 Cloudflare 轉址步驟
+
+## 14. IG 每週同步與期間限定優惠（2026-11-21）
+
+- [x] `scripts/ig-sync.cjs`：以未登入的瀏覽器讀 IG 帳號頁最新約 12 則，找出官網還沒有的貼文，抓內文、日期與輪播圖片
+- [x] `docs/ig-sync.md`：每週排程的完整流程與寫作規則（排程照這份執行，改規則改這份）
+- [x] `scripts/seo-check.cjs`：build 後檢查 sitemap 每頁的 canonical、noindex、H1、麵包屑、FAQ 與站內連結
+- [x] `/pricing` 新增「期間限定」區塊（`utils/service-info.ts` 的 `PROMOTIONS`）：只在活動期間顯示，瀏覽器開啟時也會以台灣日期再判斷一次；Offer 帶 `validFrom`／`validThrough`，llms.txt 同步列出
+- 第一次同步（2026-11-21）：官網缺 4 則，都不做成文章——雙11 優惠放進 /pricing，兩週年優惠與 2024 開幕優惠已過期，寶琳娜工作室的合作貼文不是 KSE 帳號的內容

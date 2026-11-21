@@ -7,6 +7,30 @@
       :crumbs="[{ label: '價目表' }]"
     />
 
+    <!-- 期間限定優惠：只在活動期間顯示（build 時判斷一次，瀏覽器開啟時再用台灣日期判斷一次） -->
+    <Section v-if="promos.length" class="!pb-0">
+      <div class="space-y-4">
+        <article
+          v-for="promo in promos"
+          :key="promo.id"
+          class="relative isolate flex flex-col gap-4 overflow-hidden border-2 border-gold bg-ink p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"
+        >
+          <div>
+            <p class="text-xs font-bold tracking-[0.16em] text-primary">期間限定</p>
+            <h2 class="mt-2 text-2xl">{{ promo.title }}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+              活動期間：<time :datetime="promo.start">{{ promo.start }}</time>–<time :datetime="promo.end">{{ promo.end }}</time>
+            </p>
+            <p v-if="promo.note" class="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{{ promo.note }}</p>
+          </div>
+          <div class="shrink-0 sm:text-right">
+            <p class="text-sm font-semibold text-foreground">{{ promo.target }}</p>
+            <p class="font-display text-5xl font-extrabold text-foreground">{{ ntd(promo.price) }}</p>
+          </div>
+        </article>
+      </div>
+    </Section>
+
     <!-- 單堂與新客：最常被問的兩個價格放最前面 -->
     <Section>
       <SectionHeading eyebrow="Single Session" title="單堂與新客優惠" :desc="`價目表更新日：${PRICE_UPDATED}`" />
@@ -115,8 +139,17 @@ import PageHero from "~/components/ui/PageHero.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
 import { ORG_ID, serviceId } from "~/composables/useGeoSchema"
-import { NOTICE, ntd, PRICE_UPDATED, PRICED_SERVICE_NAMES, PRICING } from "~/utils/service-info"
+import { onMounted, ref } from "vue"
+import { isoDateTime } from "~/composables/useGeoSchema"
+import { activePromotions, NOTICE, ntd, PRICE_UPDATED, PRICED_SERVICE_NAMES, PRICING } from "~/utils/service-info"
 import { BRAND, SITE_URL } from "~/utils/site-data"
+
+// 靜態頁在 build 當下決定要不要輸出；過了活動期間，瀏覽器開啟時就不再顯示（下次部署也會從 HTML 移除）
+const promosAtBuild = activePromotions()
+const promos = ref(promosAtBuild)
+onMounted(() => {
+  promos.value = activePromotions()
+})
 
 const { injectBreadcrumbsSchema } = useGeoSchema()
 injectBreadcrumbsSchema([
@@ -150,6 +183,18 @@ useHead({
             offeredBy: { "@id": ORG_ID },
             itemOffered: { "@id": serviceId(svc.slug) },
           })),
+        ).concat(
+          // 期間限定優惠：標上有效期間，過期後搜尋引擎與 AI 也能判斷不再適用
+          promosAtBuild.map((promo) => ({
+            "@type": "Offer",
+            name: `${promo.title}：${promo.target}`,
+            price: promo.price,
+            priceCurrency: "TWD",
+            validFrom: isoDateTime(promo.start),
+            validThrough: `${promo.end}T23:59:59+08:00`,
+            priceValidUntil: promo.end,
+            offeredBy: { "@id": ORG_ID },
+          })) as any[],
         ),
       }),
     },
