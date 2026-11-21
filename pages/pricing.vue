@@ -135,7 +135,6 @@ useHead({
         "@id": `${SITE_URL}/pricing#catalog`,
         name: "KSE 美式筋膜放鬆教室價目表",
         url: `${SITE_URL}/pricing`,
-        provider: { "@id": ORG_ID },
         // 每項適用服務各列一組方案，itemOffered 指回該服務實體
         itemListElement: PRICING.services.flatMap((svc) =>
           [
@@ -147,6 +146,8 @@ useHead({
             name: o.name,
             price: o.price,
             priceCurrency: "TWD",
+            // OfferCatalog 沒有 provider 欄位（schema.org 驗證會警告），商家改標在每個 Offer 的 offeredBy
+            offeredBy: { "@id": ORG_ID },
             itemOffered: { "@id": serviceId(svc.slug) },
           })),
         ),
@@ -155,9 +156,11 @@ useHead({
   ],
 })
 
+// 數字取自 PRICING，改價時 title 與 description 會跟著頁面同步
+const num = (n: number) => n.toLocaleString("en-US")
 usePageSeo({
-  title: "運動按摩・筋膜放鬆價格｜台中南屯 KSE 價目表・新客優惠",
-  description: `KSE 台中南屯運動按摩與美式筋膜放鬆價目表（兩項同價）：${PRICING.includes}，單堂 60 分鐘 ${ntd(PRICING.single.price)}，首次到店新客 ${ntd(PRICING.firstVisit.price)}；4 到 32 堂課程方案平均每小時 ${ntd(PRICING.packages.at(-1)!.perHour)} 起。可付現、刷卡或轉帳，採預約制。`,
+  title: `台中運動按摩價格｜單堂 ${num(PRICING.single.price)}・新客 ${num(PRICING.firstVisit.price)}｜南屯 KSE`,
+  description: `KSE 台中南屯運動按摩、筋膜放鬆價格：單堂 ${ntd(PRICING.single.price)}，首次新客 ${ntd(PRICING.firstVisit.price)}（限用一次），另有 ${PRICING.packages.map((p) => p.sessions).join("、")} 堂方案。位於南屯區大墩七街，可線上、LINE 或電話預約。`,
   path: "/pricing",
 })
 </script>

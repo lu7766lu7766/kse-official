@@ -26,6 +26,9 @@
           <p v-if="service.aliases.length" class="mt-3 text-sm text-muted-foreground">
             也常被稱為：{{ service.aliases.join("、") }}
           </p>
+          <NuxtLink v-if="service.guide" :to="service.guide.to" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
+            {{ service.guide.label }} <ArrowRight class="h-4 w-4" aria-hidden="true" />
+          </NuxtLink>
 
           <h3 class="mt-10 text-xl">適合誰？</h3>
           <p class="mt-4 text-base leading-relaxed text-foreground/85">{{ service.detail }}</p>

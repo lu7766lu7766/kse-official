@@ -257,3 +257,31 @@
 注意：
 - `bun.lock` 本來就落後 `package.json`（仍是 nuxt 3），這次沒有一併更新；部署用的是 `package-lock.json`（Dockerfile `npm ci`）
 
+
+## 13. 依 Search Console 調整 title 與內部連結（2026-11-21）
+
+起因：近 3 週點擊幾乎都進首頁，內頁有曝光、沒有點擊（運動按摩禁忌 5.9 名、/pricing 6.4 名、/services/fascia 10.5 名、「頭的重量」2 名都是 0 點擊）。
+
+關鍵字分工（每個詞只由一頁負責）：
+
+| 主要關鍵字 | 負責頁面 |
+|---|---|
+| 台中運動按摩、KSE 品牌 | `/` |
+| 南屯運動按摩、運動恢復 | `/services/sports-massage` |
+| 台中筋膜放鬆、筋膜刀 | `/services/fascia` |
+| 運動按摩是什麼、禁忌、效果 | `/news/sports-massage-guide` |
+| 運動按摩價格、筋膜刀費用 | `/pricing` |
+
+已完成：
+- [x] 文章新增 `seoTitle`（選填）：只改搜尋結果的 `<title>`，H1 與 Article `headline` 不變。用在運動按摩指南（「禁忌」往前）、`text-neck-weight`、`forearm-fascia-network`
+- [x] 文章內文新增 `{ p: [文字, { to, text }, 文字] }` 區塊，可在段落中放站內連結（錨點內連）；4 篇筋膜文章各加一次連到 `/services/fascia`
+- [x] 運動按摩指南：摘要第一句改為完整定義、禁忌小標改為「運動按摩禁忌：哪些情況不適合做？」且正下方即為 7 點條列、價格段加「完整價目表」連結
+- [x] `/pricing` title／description 改為價格先行，數字取自 `PRICING`
+- [x] `/services/fascia` title 改為「台中筋膜放鬆・筋膜刀」先行
+- [x] 運動按摩服務頁定義下方加「完整說明請看運動按摩指南」（`SERVICES[].guide`）
+- [x] 文章頁麵包屑最後一層改顯示文章標題，與 BreadcrumbList schema 一致（原本畫面顯示分類、schema 寫標題）
+- [x] `/pricing` OfferCatalog 移除不合法的 `provider`，改在每個 Offer 標 `offeredBy`（validator.schema.org 0 錯誤 0 警告）
+
+規則：
+- 只改 title／meta 的頁面不更新 lastmod；內文有改才更新 `updated`／`PAGE_UPDATED`
+- 新文章要搶搜尋詞時，優先用 `seoTitle` 調整搜尋結果標題，不要為了 SEO 改 H1

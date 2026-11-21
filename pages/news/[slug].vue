@@ -10,7 +10,8 @@
               <li aria-hidden="true">/</li>
               <li><NuxtLink to="/news" class="hover:text-white">最新消息</NuxtLink></li>
               <li aria-hidden="true">/</li>
-              <li aria-current="page" class="text-white">{{ post.category }}</li>
+              <!-- 與 BreadcrumbList schema 的最後一層一致（文章標題） -->
+              <li aria-current="page" class="text-white">{{ post.title }}</li>
             </ol>
           </nav>
           <h1 class="mt-6 max-w-4xl text-3xl leading-tight text-white sm:text-5xl">{{ post.title }}</h1>
@@ -49,6 +50,12 @@
           <div class="mt-10 space-y-5 text-[1.0625rem] leading-[1.9] text-foreground/85">
             <template v-for="(block, i) in post.body" :key="i">
               <p v-if="typeof block === 'string'">{{ block }}</p>
+              <p v-else-if="'p' in block">
+                <template v-for="(part, pi) in block.p" :key="pi">
+                  <template v-if="typeof part === 'string'">{{ part }}</template>
+                  <NuxtLink v-else :to="part.to" class="font-semibold text-primary underline underline-offset-4 hover:no-underline">{{ part.text }}</NuxtLink>
+                </template>
+              </p>
               <h2 v-else-if="'h2' in block" class="!mt-12 text-2xl text-foreground">{{ block.h2 }}</h2>
               <ul v-else-if="'ul' in block" class="list-disc space-y-2 pl-6 marker:text-primary">
                 <li v-for="item in block.ul" :key="item">{{ item }}</li>
@@ -204,7 +211,7 @@ const cover = postImage(p.image);
 const imageUrl = absoluteUrl(cover.src);
 
 usePageSeo({
-  title: `${p.title}｜KSE`,
+  title: p.seoTitle ?? `${p.title}｜KSE`,
   description: p.excerpt,
   path,
   type: "article",

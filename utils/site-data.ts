@@ -106,7 +106,7 @@ export const servicePath = (slug: string) => `/services/${slug}`
 export const SERVICES = [
   {
     slug: "fascia",
-    seoTitle: "台中南屯美式筋膜放鬆｜肩頸緊繃・下背痠痛・活動度受限｜KSE",
+    seoTitle: "台中筋膜放鬆・筋膜刀｜南屯美式筋膜放鬆｜KSE",
     seoDescription:
       "KSE 台中南屯美式筋膜放鬆：先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限筋膜層，處理後即時複評。適合肩頸緊繃、下背痠痛、深蹲與舉手活動度不足者，單次 60 分鐘 NT$1,800，新客 NT$1,200。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */
@@ -139,7 +139,9 @@ export const SERVICES = [
     faqs: ["what-sports-massage", "price", "recovery", "non-athlete", "massage-vs-fascia", "timing", "frequency", "contraindication", "injury", "pain"],
     posts: ["sports-massage-guide", "post-workout-recovery", "does-painful-massage-work-better", "ctbc-brothers-on-site"],
     /** 服務頁內容最後修改日（sitemap lastmod） */
-    updated: "2026-11-06",
+    updated: "2026-11-21",
+    /** 「是什麼」一節只放短定義，完整說明交給指南文章（同一個問題只由一頁負責，避免自家頁面互搶） */
+    guide: { to: "/news/sports-massage-guide", label: "完整說明請看運動按摩指南" },
     title: "運動按摩",
     aliases: ["運動恢復按摩", "運動放鬆按摩", "運動後按摩", "Sports Massage"],
     definition:
@@ -324,9 +326,13 @@ export const PARTNERS = [
 
 export const CATEGORIES = ["KSE活動", "合作消息", "運動恢復", "筋膜放鬆", "動作訓練", "肌力與體能"] as const
 
-/** 文章內文區塊：段落、H2 小標、條列清單、表格、站內連結清單 */
+/** 段落中的站內連結（關鍵字錨點內連） */
+export type InlineLink = { to: string; text: string }
+
+/** 文章內文區塊：段落、含站內連結的段落、H2 小標、條列清單、表格、站內連結清單 */
 export type PostBlock =
   | string
+  | { p: (string | InlineLink)[] }
   | { h2: string }
   | { ul: string[] }
   | { table: { caption: string; head: string[]; rows: string[][] } }
@@ -334,7 +340,10 @@ export type PostBlock =
 
 export type Post = {
   slug: string
+  /** 頁面 H1 與 Article headline */
   title: string
+  /** 搜尋結果的 <title>（選填）：要把搜尋詞往前放、但不想改 H1 時使用，未填則用「title｜KSE」 */
+  seoTitle?: string
   date: string
   updated?: string
   category: (typeof CATEGORIES)[number]

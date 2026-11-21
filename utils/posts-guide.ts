@@ -12,13 +12,15 @@ export const GUIDE_POSTS: Post[] = [
   {
     slug: "sports-massage-guide",
     title: "運動按摩是什麼？效果、時機、禁忌與價格完整指南",
+    seoTitle: "運動按摩是什麼？禁忌、效果、時機與價格完整指南｜KSE",
     date: "2026-11-06",
+    updated: "2026-11-21",
     category: "運動恢復",
     author: "eason",
     excerpt:
       "運動按摩是什麼？和一般按摩、整復推拿、SPA 差在哪？KSE 副店長 Eason 整理運動按摩的研究證據、常見手法、運動前後時機、適合族群、禁忌症、價格與挑選重點。",
     summary:
-      "運動按摩依解剖構造與訓練週期調整手法與力道；研究顯示可能有助減輕延遲性肌肉痠痛、改善柔軟度與恢復感受，但不會直接提升運動表現，也不是醫療行為。發燒、血栓、急性骨折等情況應暫緩，KSE 單堂 60 分鐘 NT$1,800。",
+      "運動按摩是以人體解剖構造為基礎，依肌肉、韌帶與筋膜走向，配合訓練與比賽週期調整手法與力道的徒手放鬆方式。研究顯示可能有助減輕延遲性肌肉痠痛、改善柔軟度與恢復感受，但不會直接提升運動表現，也不是醫療行為。發燒、血栓、急性骨折等情況應暫緩，KSE 單堂 60 分鐘 NT$1,800。",
     image: "massage",
     imagePosition: "50% 40%",
     alt: "KSE 放鬆師在台中南屯教室為運動員進行小腿運動按摩",
@@ -131,9 +133,10 @@ export const GUIDE_POSTS: Post[] = [
         ],
       },
 
-      { h2: "哪些情況不適合做運動按摩？" },
-      `為了安全，${NOTICE.sections[0]!.desc}`,
+      // 條列放在小標正下方，「運動按摩禁忌」這類問句可直接取用；內容即 /notice 的不建議清單
+      { h2: "運動按摩禁忌：哪些情況不適合做？" },
       { ul: NOTICE.sections[0]!.items },
+      "為了安全，有以上情況時請暫緩預約，並先尋求醫療專業人員評估。",
       NOTICE.sections[1]!.desc,
       { ul: NOTICE.sections[1]!.items },
 
@@ -156,7 +159,13 @@ export const GUIDE_POSTS: Post[] = [
           rows: PRICING.packages.map((p) => [`${p.sessions} 堂（${p.sessions} 小時）`, ntd(p.total), ntd(p.perHour), p.discount]),
         },
       },
-      `付款方式：${PRICING.payment.join("、")}。本店採完全預約制，${PRICING.cancel}`,
+      {
+        p: [
+          `付款方式：${PRICING.payment.join("、")}。本店採完全預約制，${PRICING.cancel}各方案與預約方式請見`,
+          { to: "/pricing", text: "完整價目表" },
+          "。",
+        ],
+      },
 
       { h2: "怎麼挑選適合的運動按摩？" },
       "不論在哪裡做運動按摩，都可以用以下幾點判斷：",
@@ -196,6 +205,7 @@ export const GUIDE_POSTS: Post[] = [
     slug: "fascia-release-guide",
     title: "筋膜放鬆是什麼？效果、筋膜刀、會不會痛、禁忌與價格完整指南",
     date: "2026-11-07",
+    updated: "2026-11-21",
     category: "筋膜放鬆",
     author: "eason",
     excerpt:
@@ -233,7 +243,13 @@ export const GUIDE_POSTS: Post[] = [
 
       { h2: "筋膜放鬆是什麼？美式筋膜放鬆有什麼不同？" },
       "筋膜放鬆（Myofascial Release）是以徒手、器械或滾筒等自我放鬆工具，對緊繃或滑動受限的筋膜與軟組織施加持續、可控的壓力與拉伸，目的是恢復組織之間的滑動，讓關節走回應有的活動範圍。",
-      "KSE 的美式筋膜放鬆是先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限的筋膜層，和只按痠痛處的放鬆有幾個不同：",
+      {
+        p: [
+          "KSE 的",
+          { to: "/services/fascia", text: "美式筋膜放鬆" },
+          "是先做靜態與動態動作評估，再沿張力鏈以徒手與筋膜刀處理受限的筋膜層，和只按痠痛處的放鬆有幾個不同：",
+        ],
+      },
       {
         ul: [
           "先評估再處理：從站姿排列、呼吸模式到深蹲、弓箭步、單腳穩定等動作，找出限制活動度與代償的真正來源。",
