@@ -5,7 +5,12 @@
       :title="`台中南屯${service.title}`"
       :desc="service.short"
       :crumbs="[{ label: '服務項目', to: '/services' }, { label: service.title }]"
-    />
+    >
+      <!-- 內容最後修改日（同 sitemap lastmod 與 WebPage dateModified），讓讀者與搜尋引擎知道資訊是否仍有效 -->
+      <p class="mt-6 text-sm text-navy-foreground">
+        最後更新：<time :datetime="service.updated">{{ service.updated }}</time>
+      </p>
+    </PageHero>
 
     <!-- 是什麼＋適合誰＋服務內容：答案先行，定義句可被搜尋摘要與 AI 整句引用 -->
     <Section>
@@ -148,10 +153,11 @@ import PageHero from "~/components/ui/PageHero.vue"
 import ResponsiveImage from "~/components/ui/ResponsiveImage.vue"
 import Section from "~/components/ui/Section.vue"
 import SectionHeading from "~/components/ui/SectionHeading.vue"
+import { isoDateTime, serviceId, WEBSITE_ID } from "~/composables/useGeoSchema"
 import { cn } from "~/utils/cn"
 import { SERVICE_ALTS, SERVICE_IMAGES, SERVICE_POSITIONS } from "~/utils/service-images"
 import { isPricedService, ntd, PRICING } from "~/utils/service-info"
-import { BRAND, FAQS, POSTS, PROCESS, SERVICES, servicePath } from "~/utils/site-data"
+import { BRAND, FAQS, POSTS, PROCESS, SERVICES, servicePath, SITE_URL } from "~/utils/site-data"
 
 const route = useRoute()
 const service = SERVICES.find((s) => s.slug === route.params.slug)
@@ -186,6 +192,26 @@ injectBreadcrumbsSchema([
   { name: "服務項目", item: "/services" },
   { name: s.title, item: path },
 ])
+
+// 頁面本身的 WebPage：Service 沒有 dateModified 欄位，更新日標在頁面上（與畫面顯示的「最後更新」相同）
+useHead({
+  script: [
+    {
+      type: "application/ld+json" as any,
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${SITE_URL}${path}`,
+        url: `${SITE_URL}${path}`,
+        name: s.seoTitle,
+        inLanguage: "zh-TW",
+        dateModified: isoDateTime(s.updated),
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: { "@id": serviceId(s.slug) },
+      }),
+    },
+  ],
+})
 
 usePageSeo({
   title: s.seoTitle,

@@ -132,7 +132,7 @@ export const SERVICES = [
   },
   {
     slug: "sports-massage",
-    seoTitle: "台中運動按摩・運動恢復｜賽後放鬆・賽前啟動・週間維護｜南屯 KSE",
+    seoTitle: "南屯運動按摩・運動恢復｜賽前啟動・賽後放鬆｜台中 KSE",
     seoDescription:
       "KSE 台中南屯運動按摩與運動恢復：先做動作評估，再依訓練與比賽週期安排賽前啟動、運動後放鬆恢復與週間維護，與中信兄弟職棒選手相同的恢復流程，運動員與久坐族都適合，單次約 60 分鐘。",
     /** 服務頁顯示的相關 FAQ（對應 FAQS 的 id）與延伸文章（對應 POSTS 的 slug） */

@@ -285,3 +285,6 @@
 規則：
 - 只改 title／meta 的頁面不更新 lastmod；內文有改才更新 `updated`／`PAGE_UPDATED`
 - 新文章要搶搜尋詞時，優先用 `seoTitle` 調整搜尋結果標題，不要為了 SEO 改 H1
+- [x] 運動按摩服務頁 title 改為「南屯運動按摩・運動恢復」開頭（「台中運動按摩」留給首頁）
+- [x] 服務頁標題區顯示「最後更新：YYYY-MM-DD」（取自 `SERVICES[].updated`），並輸出 WebPage `dateModified`；改服務頁內文時要同步更新 `updated`
+- 待辦（網域商設定）：`kse-release.com.tw` 由 GoDaddy 轉址到 www 時會丟掉路徑（`/pricing` 回 404），見報告中的 Cloudflare 轉址步驟
